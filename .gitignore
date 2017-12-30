@@ -1,0 +1,2 @@
+#exclude compiled python files
+**/__pycache__/
