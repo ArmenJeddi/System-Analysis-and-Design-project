@@ -1,2 +1,6 @@
+#exclude anything but the project directory
+/*
+!/ptssite
+
 #exclude compiled python files
 **/__pycache__/
