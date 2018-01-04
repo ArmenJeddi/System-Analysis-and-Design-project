@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+    <link rel="stylesheet" href="w3.css">
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+}
+
+.top-container {
+  background-color: #f1f1f1;
+  padding: 30px;
+  text-align: center;
+}
+
+.header {
+  padding: 10px 16px;
+  background: #555;
+  color: #f1f1f1;
+}
+
+.search{
+  background: LightGreen;
+}
+
+.content {
+  padding: 16px;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.top-button {
+    width: 100px;
+}
+
+.cart {
+    position: fixed;
+    top: 6px;
+    left: 0px;
+}
+
+.sticky + .content {
+  padding-top: 102px;
+}
+</style>
+</head>
+<body>
+
+<div class="header" id="myHeader">
+    <form action="login.html"> 
+        <a href="register.html" class="w3-button w3-gray top-button"> ثبت نام </a> 
+        <a href="login.html" class="w3-button w3-gray top-button"> ورود </a>
+        <a href="login.html" class="w3-button w3-gray top-button"> ارتباط با ما </a>
+        <input type="text" name="searchText"> 
+        <input type="submit" value="جستجو" class="w3-button w3-green top-button"> 
+    </form>
+    <a href="login.html" class="w3-button top-button cart"> <img src="images/cart.png" width="30px" height="30px"> </a>
+</div>
+
+
+<div class="content">
+
+</div>
+
+<script>
+window.onscroll = function() {myFunction()};
+
+var header = document.getElementById("myHeader");
+var sticky = header.offsetTop;
+
+function myFunction() {
+  if (window.pageYOffset >= sticky) {
+    header.classList.add("sticky");
+  } else {
+    header.classList.remove("sticky");
+  }
+}
+</script>
+
+</body>
+</html>
