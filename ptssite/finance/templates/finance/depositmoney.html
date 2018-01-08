@@ -1,0 +1,18 @@
+{% extends "navbar_signedin.html" %}
+
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="/static/finance/styles/depositmoney.css">
+{% endblock %}
+
+{% block main %}
+  <form id="deposit-form">
+    <p type="text" name="current-amount">  موجودی فعلی به تومان: {{ current_amount }} </p>
+    <label> <input type="text" name="add-amount" placeholder="مبلغ"> تومان </label>
+    <div>
+        <label> <input type="radio" name="bank-gateway" id="tejarat-bank"> <img src="/static/finance/images/tejarat.png"> </label>
+        <label> <input type="radio" name="bank-gateway" id="melli-bank"> <img src="/static/finance/images/melli.png"> </label>
+        <label> <input type="radio" name="bank-gateway" id="parsian-bank"> <img src="/static/finance/images/parsian.png"> </label>
+    </div>
+    <input type="submit" value="پرداخت">
+  </form>
+{% endblock %}

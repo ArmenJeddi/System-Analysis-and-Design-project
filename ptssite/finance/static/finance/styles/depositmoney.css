@@ -1,0 +1,31 @@
+#deposit-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+}
+#deposit-form > * {
+    margin: 10px;
+}
+#deposit-form input[type=text] {
+    border-style: none;
+    background-color: LightGrey;
+    padding: 10px 15px;
+}
+#deposit-form p[type=text] {
+    border-style: none;
+    background-color: Cornsilk;
+    padding: 10px 15px;
+}
+#deposit-form input[type=text]:focus {
+    background-color:Azure;
+}
+#deposit-form input[type=submit] {
+    border-style: none;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+#deposit-form input[type=submit]:hover {
+    background-color: Azure;
+}
