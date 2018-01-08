@@ -30,3 +30,9 @@ a.nav-link:hover {
     left: 0px;
     padding: 10px;
 }
+.timer {
+    display: inline;
+    font-size: 20px;
+    position: relative;
+    left: -695px;
+}
