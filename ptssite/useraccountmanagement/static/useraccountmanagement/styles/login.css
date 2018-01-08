@@ -1,0 +1,26 @@
+#login-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+}
+#login-form > * {
+    margin: 10px;
+}
+#login-form > input[type=text], #login-form > input[type=password] {
+    border-style: none;
+    background-color: LightGrey;
+    padding: 10px 15px;
+}
+#login-form > input[type=text]:focus, #login-form > input[type=password]:focus {
+    background-color:Azure;
+}
+#login-form > input[type=submit] {
+    border-style: none;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+#login-form > input[type=submit]:hover {
+    background-color: Azure;
+}

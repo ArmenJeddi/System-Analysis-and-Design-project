@@ -1,91 +1,14 @@
-<!DOCTYPE html>
-<html dir="rtl">
-<head>
-    <link rel="stylesheet" href="w3.css">
-<style>
-body {
-  margin: 0;
-  font-family: Arial;
-}
+{% extends "navbar.html" %}
 
-.top-container {
-  background-color: #f1f1f1;
-  padding: 30px;
-  text-align: center;
-}
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="/static/useraccountmanagement/styles/login.css">
+{% endblock %}
 
-.header {
-  padding: 10px 16px;
-  background: #555;
-  color: #f1f1f1;
-}
-
-.search{
-  background: LightGreen;
-}
-
-.content {
-  padding: 16px;
-}
-
-.sticky {
-  position: fixed;
-  top: 0;
-  width: 100%;
-}
-
-.top-button {
-    width: 100px;
-}
-
-.cart {
-    position: fixed;
-    top: 6px;
-    left: 0px;
-}
-
-.sticky + .content {
-  padding-top: 102px;
-}
-</style>
-</head>
-<body>
-
-<div class="header" id="myHeader">
-    <form action="login.html"> 
-        <a href="register.html" class="w3-button w3-gray top-button"> ثبت نام </a> 
-        <a href="login.html" class="w3-button w3-gray top-button"> ورود </a>
-        <a href="login.html" class="w3-button w3-gray top-button"> ارتباط با ما </a>
-        <input type="text" name="searchText"> 
-        <input type="submit" value="جستجو" class="w3-button w3-green top-button"> 
-    </form>
-    <a href="login.html" class="w3-button top-button cart"> <img src="images/cart.png" width="30px" height="30px"> </a>
-</div>
-
-
-<div class="w3-displayer-container content">
-    <form class="w3-display-middle">
-        <input type="text" name="usernameEntry" placeholder="نام کاربری"> <br>
-        <input type="text" name="passwordEntry" placeholder="گذر واژه" class="w3-margin-top"> <br>
-        <input type="submit" value="ورود" class="w3-button w3-red w3-margin-top" style="margin-right:35%;"> <br>
-        <a href="login.html" style="margin-right:5%;"> رمز عبور خود را فراموش کرده ام </a>
-    </form>
-</div>
-
-<script>
-window.onscroll = function() {myFunction()};
-
-var header = document.getElementById("myHeader");
-var sticky = header.offsetTop;
-
-function myFunction() {
-  if (window.pageYOffset >= sticky) {
-    header.classList.add("sticky");
-  } else {
-    header.classList.remove("sticky");
-  }
-}
-</script>
-
-</body>
-</html>
+{% block main %}
+  <form id="login-form">
+    <input type="text" name="username" placeholder="نام کاربری">
+    <input type="password" name="password" placeholder="گذرواژه">
+    <a href="">گذرواژه خود را فراموش کرده ام</a>
+    <input type="submit" value="ورود">
+  </form>
+{% endblock %}

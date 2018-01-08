@@ -1,0 +1,32 @@
+body {
+    margin: 0;
+}
+#nav {
+    position: sticky;
+    top: 0px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    height: 50px;
+    background-color: SeaGreen;
+}
+a.nav-link {
+    text-align: center;
+    line-height: 30px;
+    text-decoration: none;
+    color: White;
+    display: inline-block;
+    height: 30px;   
+    padding: 10px;
+}
+a.nav-link:hover {
+    color: Black;
+    background-color: LightCyan;
+}
+#nav-link-last {
+    position: absolute;
+    left: 0px;
+    padding: 10px;
+}

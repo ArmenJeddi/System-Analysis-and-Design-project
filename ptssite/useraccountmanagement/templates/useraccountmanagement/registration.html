@@ -1,0 +1,126 @@
+{% extends "navbar.html" %}
+
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="styles/registration.css">
+{% endblock %}
+
+{% block main %}
+  <form id="registration-form">
+    <label>ثبت نام به عنوان:
+      <label><input type="radio" name="role" value="customer" checked="checked">مشتری</label>
+      <label><input type="radio" name="role" value="driver">راننده</label>
+    </label>
+    <input type="text" name="fname" placeholder="نام">
+    <input type="text" name="lname" placeholder="نام خانوادگی">
+    <input type="text" name="username" placeholder="نام کاربری">
+    <input type="password" name="password1" placeholder="گذرواژه">
+    <input type="password" name="password2" placeholder="تکرار گذرواژه">
+    <input type="text" name="national_id" placeholder="کد ملی">
+    <input type="text" name="phone_number" placeholder="شماره تلفن همراه">
+    <input type="text" name="account_num" placeholder="شماره کارت">
+    <input type="text" name="license_plate" placeholder="شماره پلاک">
+    <input type="text" name="driving_license" placeholder="شماره گواهینامه">
+    <label>در چه استان هایی آمادگی جا به جایی دارید؟
+      <label>
+	<input type="checkbox" name="province1" value="east_azerbaijan">آذربایجان شرقی
+      </label>
+      <label>
+	<input type="checkbox" name="province2" value="west_azerbaijan">آذربایجان غربی
+      </label>
+      <label>
+	<input type="checkbox" name="province3" value="ardabil">اردبیل
+      </label>
+      <label>
+	<input type="checkbox" name="province4" value="isfahan">اصفهان
+      </label>
+      <label>
+	<input type="checkbox" name="province5" value="alborz">البرز
+      </label>
+      <label>
+	<input type="checkbox" name="province6" value="ilam">ایلام
+      </label>
+      <label>
+	<input type="checkbox" name="province7" value="bushehr">بوشهر
+      </label>
+      <label>
+	<input type="checkbox" name="province8" value="tehran">تهران
+      </label>
+      <label>
+	<input type="checkbox" name="province9" value="chaharmahal_and_bakhtiari">چهارمحال و بختیاری
+      </label>
+      <label>
+	<input type="checkbox" name="province10" value="south_khorasan">خراسان جنوبی
+      </label>
+      <label>
+	<input type="checkbox" name="province11" value="razavi_khorasan">خراسان رضوی
+      </label>
+      <label>
+	<input type="checkbox" name="province12" value="north_khorasan">خراسان شمالی
+      </label>
+      <label>
+	<input type="checkbox" name="province13" value="khuzestan">خوزستان
+      </label>
+      <label>
+	<input type="checkbox" name="province14" value="zanjan">زنجان
+      </label>
+      <label>
+	<input type="checkbox" name="province15" value="semnan">سمنان
+      </label>
+      <label>
+	<input type="checkbox" name="province16" value="sistan_and_baluchestan">سیستان و بلوچستان
+      </label>
+      <label>
+	<input type="checkbox" name="province17" value="fars">فارس
+      </label>
+      <label>
+	<input type="checkbox" name="province18" value="qazvin">قزوین
+      </label>
+      <label>
+	<input type="checkbox" name="province19" value="qom">قم
+      </label>
+      <label>
+	<input type="checkbox" name="province20" value="kurdistan">کردستان
+      </label>
+      <label>
+	<input type="checkbox" name="province21" value="kerman">کرمان
+      </label>
+      <label>
+	<input type="checkbox" name="province22" value="kermanshah">کرمانشاه
+      </label>
+      <label>
+	<input type="checkbox" name="province23" value="kohgiluyeh_and_boyer_ahmad">کهگیلویه و بویراحمد
+      </label>
+      <label>
+	<input type="checkbox" name="province24" value="golestan">گلستان
+      </label>
+      <label>
+	<input type="checkbox" name="province25" value="gilan">گیلان
+      </label>
+      <label>
+	<input type="checkbox" name="province26" value="lorestan">لرستان
+      </label>
+      <label>
+	<input type="checkbox" name="province27" value="mazandaran">مازندران
+      </label>
+      <label>
+	<input type="checkbox" name="province28" value="markazi">مرکزی
+      </label>
+      <label>
+	<input type="checkbox" name="province29" value="hormozgan">هرمزگان
+      </label>
+      <label>
+	<input type="checkbox" name="province30" value="hamadan">همدان
+      </label>
+      <label>
+	<input type="checkbox" name="province31" value="yazd">یزد
+      </label>
+    </label>
+    <section>
+      قوانین و مقررات
+    </section>
+    <label>
+      <input type="checkbox" name="license_agreement" value="agree">شرایط و ضوابط مذکور را قبول دارم
+    </label>
+    <input type="submit" value="ثبت نام">
+  </form>
+{% endblock %}

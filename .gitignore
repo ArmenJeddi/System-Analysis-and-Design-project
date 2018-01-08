@@ -4,3 +4,9 @@
 
 #exclude compiled python files
 **/__pycache__/
+
+#exclude migration files for now
+**/migrations/
+
+#excude database file
+ptssite/db.sqlite3

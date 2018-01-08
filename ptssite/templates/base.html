@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html dir="rtl">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/static/styles/navbar.css">
+    {% block head %}
+    {% endblock %}
+  </head>
+  <body>
+    <nav id="nav">
+      {% block nav %}
+      {% endblock %}
+      <a href="" class="nav-link">جستجوی محصولات</a>
+      <a href="" class="nav-link">جستجوی راننده ها</a>
+      <a href="" class="nav-link">ارتباط با ما</a>
+      <a href="" id="nav-link-last"><img src="/static/images/cart.png" width="30px"></a>
+    </nav>
+    <main>
+      {% block main %}
+      {% endblock %}
+    </main>
+  </body>
+</html>
