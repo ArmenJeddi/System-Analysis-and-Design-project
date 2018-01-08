@@ -6,7 +6,7 @@
 **/__pycache__/
 
 #exclude migration files for now
-**/migrations/
+**/migrations/*
 
 #excude database file
 ptssite/db.sqlite3
