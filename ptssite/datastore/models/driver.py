@@ -1,5 +1,6 @@
 from django.db import models
 from . import user
+from django.core import validators
 
 provinces = [('east_azerbaijan', 'آذربایجان شرقی'),
           ('west_azerbaijan', 'آذربایجان غربی'),
@@ -33,13 +34,35 @@ provinces = [('east_azerbaijan', 'آذربایجان شرقی'),
           ('hamadan', 'همدان'),
           ('yazd', 'یزد')]
 
+certificate_validator = [validators.RegexValidator(regex=r'\A[a-zA-Z0-9۰۱۲۳۴۵۶۷۸۹]{17}\Z',
+                                                   message='شماره گواهینامه باید شبیه IR111111111111111 باشد',
+                                                   code='invalid_certificate_number')]
+license_validator = [validators.RegexValidator(regex=r'\A[0-9۰۱۲۳۴۵۶۷۸۹]{2}[ابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی][0-9۰۱۲۳۴۵۶۷۸۹]{5}\Z',
+                                               message='شماره  پلاک باید شبیه ۱۲ب۱۲۳۱۲ باشد',
+                                               code='invalid_license_number')]
+
+num_tab = str.maketrans('۰۱۲۳۴۵۶۷۸۹', '0123456789')
+
 class Driver(user.User):
-    certificate_number = models.CharField(max_length=20,
-                                   verbose_name="شماره گواهینامه")
-    rate = models.PositiveSmallIntegerField(verbose_name="امتیاز")
+    certificate_number = models.CharField(max_length=17,
+                                          verbose_name="شماره گواهینامه",
+                                          validators=certificate_validator)
+    rate = models.PositiveSmallIntegerField(verbose_name="امتیاز",
+                                            default=0)
     availability = models.BooleanField(default=False,
                                        verbose_name="آمادگی برای انتقال")
-    region_field = models.PositiveIntegerField()
+    vehicle_model = models.CharField(max_length=50,
+                             verbose_name="نوع وسیله نقلیه")
+    license_plate = models.CharField(max_length=8,
+                                     verbose_name="شماره پلاک",
+                                     validators=license_validator)
+    vehicle_capacity = models.PositiveIntegerField(verbose_name="ظرفیت")
+    region_field = models.PositiveIntegerField(default=0)
+
+    def clean(self):
+        self.license_plate = self.license_plate.translate(user.num_tab)
+        self.certificate_number = self.certificate_number.translate(num_tab)
+        user.User.clean(self)
 
     def add_province(self, province):
         index = prov_ind(province)
