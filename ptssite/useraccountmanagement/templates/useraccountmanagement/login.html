@@ -5,9 +5,8 @@
 {% endblock %}
 
 {% block main %}
-  <form id="login-form">
-    <input type="text" name="username" placeholder="نام کاربری">
-    <input type="password" name="password" placeholder="گذرواژه">
+  <form id="login-form" action="/useraccountmanagement/login/" method="post">
+    {{ form }}
     <a href="">گذرواژه خود را فراموش کرده ام</a>
     <input type="submit" value="ورود">
   </form>
