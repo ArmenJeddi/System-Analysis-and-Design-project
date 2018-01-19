@@ -1,0 +1,40 @@
+{% extends "navbar_signedin.html" %}
+
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="/static/finance/styles/payorder.css">
+{% endblock %}
+
+{% block main %}
+  <div id="details-confirmation">
+      <div>
+        <h2> محصول </h2>
+        <p type="details-text">
+           <div type="floating-box">نام) {{ product_name }} </div>
+           <div type="floating-box">نوع) {{ product_type }} </div>
+           <div type="floating-box">قیمت هر کیلوگرم) {{ product_price }} تومان </div>
+           <div type="floating-box">وزن) {{ product_weight }} کیلوگرم </div>
+           <div type="floating-box">قیمت نهایی) {{ product_final_price }} تومان </div>
+           <div type="floating-box">فروشنده) {{ farmer_name }} </div>
+           <div type="floating-box">موقعیت فروشنده) {{ farmer_location }} </div>
+           <div type="floating-box">شماره فروشنده) {{ farmer_phone_number }} </div>
+        </p>
+      </div>
+      <div>
+        <h2> راننده </h2>
+        <p type="details-text">
+           <div type="floating-box">نام) {{ driver_name }} </div>
+           <div type="floating-box">وسیله) {{ vehicle_type }} </div>
+           <div type="floating-box">ظرفیت) {{ vehicle_capacity }} </div>
+           <div type="floating-box">پلاک) {{ vehicle_number }} </div>
+           <div type="floating-box">شماره راننده) {{ driver_phone_number }} </div>
+        </p>
+      </div>
+      <form id="address-form">
+        <input type="details-text" name="customer-address" placeholder="خواهشا آدرس خود را وارد کنید">
+        <input type="submit" value="ثبت و پرداخت">
+        <input type="submit" value="انصراف از خرید">
+      </form>
+      <p type="warning-text"> فشردن دکمه پرداخت به منزله تایید مشخصات محصول و کسر مبلغ مذکور از حساب شما می باشد
+      <br><br> دقت کنید تنها تا انتهای زمان سنج بالای صفحه فرصت پرداخت دارید، در غیر این صورت سفارش خود به خود ملغی می شود</p>
+  </div>
+{% endblock %}
