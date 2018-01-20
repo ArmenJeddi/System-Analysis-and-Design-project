@@ -8,7 +8,7 @@
 #deposit-form > * {
     margin: 10px;
 }
-#deposit-form input[type=text] {
+#deposit-form input[type=number] {
     border-style: none;
     background-color: LightGrey;
     padding: 10px 15px;
@@ -18,7 +18,7 @@
     background-color: Cornsilk;
     padding: 10px 15px;
 }
-#deposit-form input[type=text]:focus {
+#deposit-form input[type=number]:focus {
     background-color:Azure;
 }
 #deposit-form input[type=submit] {

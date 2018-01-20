@@ -5,9 +5,9 @@
 {% endblock %}
 
 {% block main %}
-  <form id="deposit-form">
-    <p type="text" name="current-amount">  موجودی فعلی به تومان: {{ current_amount }} </p>
-    <label> <input type="text" name="add-amount" placeholder="مبلغ"> تومان </label>
+  <form id="deposit-form" action="/finance/depositmoney/" method="post">
+    <p type="text">  موجودی فعلی به تومان: {{ current_amount }} </p>
+    <label> <input type="number" name="balance" placeholder="مبلغ"> تومان </label>
     <div>
         <label> <input type="radio" name="bank-gateway" id="tejarat-bank"> <img src="/static/finance/images/tejarat.png"> </label>
         <label> <input type="radio" name="bank-gateway" id="melli-bank"> <img src="/static/finance/images/melli.png"> </label>
