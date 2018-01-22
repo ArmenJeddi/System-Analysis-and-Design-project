@@ -34,3 +34,15 @@ def removeProduct(request):
 def submit_details(request, prodsub_id):
     subprod = get_object_or_404(ProductSubmit, pk=prodsub_id)
     return render(request, 'tradeproduct/submittedProduct_details.html', {'submittedProduct': subprod})
+
+def delete_submittedProduct(request, delete_id):
+    if request.method == "POST":
+        ps = ProductSubmit.objects.get(pk=delete_id)
+        ps.delete()
+        # send a message that it was successfully deleted
+        # submittedList = ProductSubmit.objects.filter(submitter = ?)
+        submittedList = ProductSubmit.objects.all()
+        return redirect('/tradeproduct/updateSubmittedProduct/', {'submittedList': submittedList})
+    else:
+        None
+        # error
