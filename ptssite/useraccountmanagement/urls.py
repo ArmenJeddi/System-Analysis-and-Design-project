@@ -8,5 +8,5 @@ urlpatterns = [
     path('registration/', views.registration),
     path('registration/driver/', views.registration),
     path('registration/customer/', views.registration),
-    path('passwordrecovery/', views.passwordrecovery),
+    path('passwordrecovery/', views.PasswordRecoveryView.as_view()),
 ]
