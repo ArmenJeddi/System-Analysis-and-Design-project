@@ -1,0 +1,33 @@
+{% extends "navbar_signedin.html" %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href=""> <!-- needs to add the link address for style sheet -->
+{% endblock %}
+
+{% block main %}
+    <h2>فهرست محصولات شما در سامانه</h2>
+    <div>
+
+        {% if submittedList %}
+            <ol>
+            {% for product in submittedList %}
+                <div>
+                    <li>{{ product.name }}
+                        <span>در تاریخ</span>
+                        {{ product.date }}
+                        <a href="{% url 'tradeproduct:submit_details' product.id %}"> <button>مشاهده جزییات</button> </a>
+                        <a href=""> <button>حذف محصول</button> </a>
+                        <a href=""> <button>کاهش حجم محصول</button> </a>
+
+                    </li>
+                </div>
+            {% endfor %}
+            </ol>
+        {% else %}
+            <p>شما هیچ محصولی را در سامانه ثبت نکرده اید.</p>
+        {% endif %}
+
+
+
+    </div>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "navbar_signedin.html" %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href=""> <!-- needs to add the link address for style sheet -->
+{% endblock %}
+
+{% block main %}
+    <h2>ثبت محصول جدید در سامانه</h2>
+    <div>
+        <form method="POST" action=""> <!-- action ?? -->
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">ارسال</button>
+        </form>
+    </div>
+{% endblock %}
