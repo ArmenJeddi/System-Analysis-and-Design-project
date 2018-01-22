@@ -1,0 +1,41 @@
+{% extends "navbar_signedin.html" %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href=""> <!-- needs to add the link address for style sheet -->
+{% endblock %}
+
+{% block main %}
+    <h2>جزییات محصول</h2>
+    <div>
+        <ul>
+            <li>
+                <span>نام فروشنده: </span>
+                {{ submittedProduct.submitter }}
+            </li>
+            <li>
+                <span>نوع محصول: </span>
+                {{ submittedProduct.product }}
+            </li>
+            <li>
+                <span>تاریخ ثبت: </span>
+                {{ submittedProduct.date }}
+            </li>
+            <li>
+                <span>مقدار باقی مانده از محصول: </span>
+                {{ submittedProduct.quantity }}
+            </li>
+            <li>
+                <span>قیمت: </span>
+                {{ submittedProduct.price }}
+            </li>
+            <li>
+                <span>آدرس: </span>
+                {{ submittedProduct.location }}
+            </li>
+
+
+        </ul>
+
+    </div>
+
+{% endblock %}
