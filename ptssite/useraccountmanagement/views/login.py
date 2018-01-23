@@ -35,8 +35,8 @@ def login(request):
                         role = 'customer'
                     request.session['role'] = role
                     response = HttpResponse(status=303)
-                    response['Location'] = ''
-                    raise NotImplementedError
+                    response['Location'] = '/useraccountmanagement/updateprofile'
+                    #raise NotImplementedError
                 else:
                     form.add_error(None, ValidationError('نام کاربری یا گذرواژه وارد شده اشتباه است',
                                                          code='invalid-username-password'))

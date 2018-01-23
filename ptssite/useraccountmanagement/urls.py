@@ -9,4 +9,7 @@ urlpatterns = [
     path('registration/driver/', views.registration),
     path('registration/customer/', views.registration),
     path('passwordrecovery/', views.PasswordRecoveryView.as_view()),
+    path('profile/', views.profile),
+    path('updateprofile/', views.UpdateProfileView.as_view()),
+    path('logout/', views.logout)
 ]
