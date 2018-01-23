@@ -7,5 +7,4 @@ class Customer(user.User):
 
     def __str__(self):
         fullname = self.first_name + " " + self.last_name
-        print(fullname)
         return fullname
