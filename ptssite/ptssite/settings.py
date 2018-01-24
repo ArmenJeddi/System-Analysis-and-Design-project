@@ -29,6 +29,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'authentication.middleware.AuthenticationMiddleware'
 ]
 
 ROOT_URLCONF = 'ptssite.urls'
