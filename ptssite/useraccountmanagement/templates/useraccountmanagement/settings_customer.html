@@ -2,12 +2,7 @@
 
 {% block main %}
   <form id="settings-form">
-    <input type="text" name="fname" placeholder="نام">
-    <input type="text" name="lname" placeholder="نام خانوادگی">
-    <input type="password" name="password1" placeholder="گذرواژه">
-    <input type="password" name="password2" placeholder="تکرار گذرواژه">
-    <input type="text" name="phone_number" placeholder="شماره تلفن همراه">
-    <input type="text" name="account_num" placeholder="شماره کارت">
+    {{ form.as_p }}
     <input type="submit" value="ثبت تغییرات">
   </form>
 {% endblock %}
