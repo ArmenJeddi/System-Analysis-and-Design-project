@@ -2,4 +2,6 @@ from django.urls import path
 
 app_name = 'systemmanagement'
 
-urlpatterns = []
+urlpatterns = [
+    #path('login/', views.login)
+]

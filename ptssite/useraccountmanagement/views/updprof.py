@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from datastore.models import User, Driver, Customer
+from datastore.models import UnprivilegedUser, Driver, Customer
 from datastore.models.driver import provinces
 from django.http import HttpResponseForbidden, HttpResponseNotAllowed
 from django.views import View
@@ -12,14 +12,14 @@ class UserForm(forms.ModelForm):
     field_order = ['password', 'password2', 'first_name', 'last_name',
                    'national_id', 'phone_number', 'account_number']
     class Meta:
-        model = User
+        model = UnprivilegedUser
         fields = ['first_name', 'last_name', 'password',
                   'national_id', 'phone_number', 'account_number']
         widgets = {'password': forms.PasswordInput}
         
     password2 = forms.CharField(label='تکرار گذرواژه',
                                 widget=forms.PasswordInput,
-                                max_length=User._meta.get_field(
+                                max_length=UnprivilegedUser._meta.get_field(
                                     'password').max_length)
     
     def clean(self):

@@ -2,7 +2,6 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from datastore.models import User
 from django import forms
-from .register import max_length_msg
 from django.core.exceptions import ValidationError
 
 template = 'useraccountmanagement/login.html'

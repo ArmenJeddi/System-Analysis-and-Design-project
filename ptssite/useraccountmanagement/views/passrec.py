@@ -6,9 +6,9 @@ from datastore.models import User
 template = 'useraccountmanagement/password_recovery.html'
 
 class PasswordRecoveryForm(forms.Form):
-    user_name = forms.CharField(label=User._meta.get_field('user_name').
+    username = forms.CharField(label=User._meta.get_field('username').
                                 verbose_name,
-                                max_length=User._meta.get_field('user_name').
+                                max_length=User._meta.get_field('username').
                                 max_length)
 
 class PasswordRecoveryView(View):

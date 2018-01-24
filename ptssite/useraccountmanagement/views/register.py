@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.forms import ModelForm
-from datastore.models import User, Driver, Customer
+from datastore.models import UnprivilegedUser, Driver, Customer
 from datastore.models.driver import provinces
 from django.forms import widgets
 from django import forms
@@ -9,56 +8,21 @@ from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 
 template = 'useraccountmanagement/registration.html'
-max_length_msg = 'مقدار وارد شده باید حداکثر {} کاراکتر باشد'
 
-class UserForm(ModelForm):
-    field_order = ['first_name', 'last_name', 'user_name', 'password',
+class UserForm(forms.ModelForm):
+    field_order = ['first_name', 'last_name', 'username', 'password',
                    'password2', 'national_id', 'phone_number',
                    'account_number', 'license_agreement']
     class Meta:
-        model = User
-        fields = ['first_name', 'last_name', 'user_name', 'password',
+        model = UnprivilegedUser
+        fields = ['first_name', 'last_name', 'username', 'password',
                   'national_id', 'phone_number', 'account_number']
         widgets = {'password': widgets.PasswordInput}
-        error_messages = {
-            'first_name': {
-                'required': 'لطفا نام خود را وارد کنید',
-                'max_length': max_length_msg.format(User._meta.get_field('first_name').max_length)
-            },
-            'last_name': {
-                'required': 'لطفا نام خانوادگی خود را وارد کنید',
-                'max_length': max_length_msg.format(User._meta.get_field('last_name').max_length)
-            },
-            'user_name': {
-                'required': 'لطفا یک نام کاربری برای خود وارد کنید',
-                'max_length': max_length_msg.format(User._meta.get_field('user_name').max_length)
-            },
-            'password': {
-                'required': 'لطفا یک گذرواژه برای خود وارد کنید',
-                'max_length': max_length_msg.format(User._meta.get_field('password').max_length)
-            },
-            'national_id': {
-                'required': 'لطفاکد ملی خود را وارد کنید',
-                'max_length': max_length_msg.format(User._meta.get_field('national_id').max_length)
-            },
-            'phone_number': {
-                'required': 'لطفا شماره تلفن همراه خود را وارد کنید',
-                'max_length': max_length_msg.format(User._meta.get_field('phone_number').max_length)
-            },
-            'account_number': {
-                'required': 'لطفا شماره کارت بانکی خود را وارد کنید',
-                'max_length': max_length_msg.format(User._meta.get_field('account_number').max_length)
-            }
-        }
         
     password2 = forms.CharField(label='تکرار گذرواژه',
                                 widget=widgets.PasswordInput,
-                                max_length=User._meta.get_field(
-                                    'password').max_length,
-                                error_messages={
-                                    'required': 'لطفا تکرار گذرواژه خود را وارد کنید',
-                                    'max_length': max_length_msg.format(User._meta.get_field('password').max_length)
-                                })
+                                max_length=UnprivilegedUser._meta.get_field(
+                                    'password').max_length)
     
 
     def license_agreed(value):
@@ -77,22 +41,15 @@ class UserForm(ModelForm):
         ModelForm.clean(self)
 
 class DriverForm(UserForm):
-    field_order = ['first_name', 'last_name', 'user_name', 'password',
+    field_order = ['first_name', 'last_name', 'username', 'password',
                    'password2', 'national_id', 'phone_number',
                    'account_number', 'license_plate', 'certificate_number',
                    'regions', 'license_agreement']
+
     class Meta(UserForm.Meta):
         model = Driver
         fields = UserForm.Meta.fields + ['license_plate', 'certificate_number']
-        error_messages = {
-            **UserForm.Meta.error_messages,
-            'license_plate': {
-                'max_length': max_length_msg.format(Driver._meta.get_field('license_plate').max_length)
-            },
-            'certificate_number': {
-                'max_length': max_length_msg.format(Driver._meta.get_field('certificate_number').max_length)
-            }
-        }
+        
     regions = forms.MultipleChoiceField(label='از چه مناطقی درخواست جا به جایی می پذیرید؟',
                                         choices=provinces,
                                         widget=widgets.CheckboxSelectMultiple)
