@@ -12,7 +12,7 @@ def _pass_test(test, redirect_url):
         return wrapper
     return decorator
 
-def login_required(view=None, login_url):
+def login_required(view=None, login_url='/useraccountmanagement/login/'):
     decorator = _pass_test(lambda request: request.user.is_authenticated(),
                            login_url)
     if view:
@@ -21,30 +21,31 @@ def login_required(view=None, login_url):
 
 def privileged_required(view=None, login_url='/useraccountmanagement/login/'):
     decorator = _pass_test(lambda request: request.user.is_authenticated()
-                           and not request.user.is_privileged(), login_url)
+                           and not request.user.is_unprivileged(), login_url)
     if view:
         return decorator(view)
     return decorator
 
 def unprivileged_required(view=None, login_url='/useraccountmanagement/login/'):
     decorator = _pass_test(lambda request: request.user.is_authenticated()
-                           and request.user.is_privileged(), login_url)
+                           and request.user.is_unprivileged(), login_url)
     if view:
         return decorator(view)
     return decorator
 
 def driver_required(view=None, login_url='/useraccountmanagement/login/'):
     decorator = _pass_test(lambda request: request.user.is_authenticated()
-                           and request.user.is_privileged()
-                           and request.user.is_driver(), login_url)
+                           and request.user.is_unprivileged()
+                           and request.user.unprivilegeduser.is_driver(),
+                           login_url)
     if view:
         return decorator(view)
     return decorator
 
 def customer_required(view=None, login_url='/useraccountmanagement/login/'):
     decorator = _pass_test(lambda request: request.user.is_authenticated()
-                           and request.user.is_privileged()
-                           and request.user.is_customer(), login_url)
+                           and request.user.is_unprivileged()
+                           and request.user.unprivilegeduser.is_customer(), login_url)
     if view:
         return decorator(view)
     return decorator
