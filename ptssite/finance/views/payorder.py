@@ -1,16 +1,14 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-from datastore.models import Driver, ProductSubmit
+from datastore.models import Driver, ProductSubmit, Order
 from django import forms
 from django.core.exceptions import ValidationError
 
 template = 'finance/payorder.html'
 
 class PayForm(forms.Form):
-    balance = forms.IntegerField(min_value= 1000,
-                                error_messages={
-                                    'required': 'لطفا مبلغی را مشخص کنید',
-                                    'min_value': 'مبلغ وارده باید حداقل 1000 تومان باشد'
+    address = forms.CharField(error_messages={
+                                    'required': 'لطفا آدرسی را مشخص کنید',
                                 })
 
 def payorder(request):
@@ -28,13 +26,15 @@ def payorder(request):
         else:
             response = render(request, template)
     elif request.method == 'POST':
-        form = DepositForm(request.POST)
+        form = PayForm(request.POST)
         if form.is_valid():
-            customer = Customer.objects.get(pk=request.session['user_name'])
-            customer.account_balance += form.cleaned_data['balance']
-            customer.save()
+            order = Order.objects.get(pk=request.session['username'])
+            order.location = form.cleanes_data['address']
+            order.save()
             response = HttpResponse(status=303)
-            response['Location'] = '/finance/depositmoney/'
+            response['Location'] = '/reporting/listpurchases/'
+            #set timer
+            #resign from purchasing
         else:
             response = render(request, template, context=dict(form=form))
     return response
