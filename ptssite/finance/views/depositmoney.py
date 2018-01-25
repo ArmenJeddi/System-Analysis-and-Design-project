@@ -6,7 +6,7 @@ from django.core.exceptions import ValidationError
 
 template = 'finance/depositmoney.html'
 
-class FinanceForm(forms.Form):
+class DepositForm(forms.Form):
     balance = forms.IntegerField(min_value= 1000,
                                 error_messages={
                                     'required': 'لطفا مبلغی را مشخص کنید',
@@ -17,12 +17,12 @@ def depositmoney(request):
     if request.method == 'GET':
         if 'user_name' in request.session and request.session['role'] == 'customer':
             current_amount = Customer.objects.get(pk=request.session['user_name']).account_balance
-            response = render(request, template, context=dict(form=FinanceForm(), current_amount=current_amount))
+            response = render(request, template, context=dict(form=DepositForm(), current_amount=current_amount))
         else:
             response = HttpResponse(status=303)
             response['Location']='/useraccountmanagement/login/'
     elif request.method == 'POST':
-        form = FinanceForm(request.POST)
+        form = DepositForm(request.POST)
         if form.is_valid():
             customer = Customer.objects.get(pk=request.session['user_name'])
             customer.account_balance += form.cleaned_data['balance']
