@@ -15,6 +15,14 @@ account_validator = [validators.RegexValidator(regex=r'\A[0-9۰۱۲۳۴۵۶۷۸�
                                                code='invalid_account_number')]
 num_tab = str.maketrans('0123456789', '۰۱۲۳۴۵۶۷۸۹')
 
+class AnonymousUser:
+
+    def is_anonymous(self):
+        return True
+
+    def is_authenticated(self):
+        return False
+    
 class User(models.Model):
     username = models.CharField(max_length=200,
                                  primary_key=True,
@@ -42,6 +50,12 @@ class User(models.Model):
 
     def is_unprivileged(self):
         return hasattr(self, 'unprivilegeduser')
+
+    def is_anonymous(self):
+        return False
+
+    def is_authenticated(self):
+        return True
 
 class UnprivilegedUser(User):
     national_id = models.CharField(max_length=10,
