@@ -7,13 +7,8 @@ class AuthenticationMiddleware:
         
     def __call__(self, request):
         try:
-            user = User.objects.get(pk=request.session['username'])
+            request.user = User.objects.get(pk=request.session['username'])
         except(User.DoesNotExist, KeyError):
             request.user = AnonymousUser()
-        else:
-            if user.is_unprivileged() and user.banned:
-                request.user = AnonymousUser()
-            else:
-                request.user = user
 
         return self.get_response(request)
