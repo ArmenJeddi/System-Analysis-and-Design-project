@@ -1,13 +1,12 @@
-from django.shortcuts import render
-from django.http import HttpResponse
 from datastore.models import UnprivilegedUser, Driver, Customer
 from datastore.models.driver import provinces
 from django.forms import widgets
 from django import forms
 from django.core.exceptions import ValidationError
-from django.db import IntegrityError
-
-template = 'useraccountmanagement/registration.html'
+from django.views.generic.edit import CreateView
+from django.views.generic.base import TemplateView
+from django.http import HttpResponseBadRequest
+from django.utils.datastructures import MultiValueDictKeyError
 
 class UserForm(forms.ModelForm):
     field_order = ['first_name', 'last_name', 'username', 'password',
@@ -37,7 +36,7 @@ class UserForm(forms.ModelForm):
         if 'password' in self.cleaned_data and 'password2' in self.cleaned_data\
            and self.cleaned_data['password'] != self.cleaned_data['password2']:
             raise ValidationError('گذرواژه وارد شده و تکرار آن همخوانی ندارند',
-                                  code='password-disagreement')
+                                  code='password_disagreement')
         ModelForm.clean(self)
 
 class DriverForm(UserForm):
@@ -54,70 +53,46 @@ class DriverForm(UserForm):
                                         choices=provinces,
                                         widget=widgets.CheckboxSelectMultiple)
 
+    def register_regions(self):
+        for province in self.cleaned_data['regions']:
+            self.instance.add_province(province)
+
+class DriverRegistrationView(CreateView):
+    form_class = DriverForm
+    success_url = '/useraccountmanagement/login/'
+
+    def form_valid(self, form):
+        for province in form.cleaned_data['regions']:
+            form.instance.add_province(province)
+        super().form_valid(form)
+        
 class CustomerForm(UserForm):
     class Meta(UserForm.Meta):
         model = Customer
 
-def registration(request):
-    if 'user_name' in request.session:
-        response = HttpResponse(status=307)
-        response['Location'] = ''
-        raise NotImplementedError
-    elif request.method == 'GET':
-        response = render(request, template,
-                          context={
-                              'driver_form': DriverForm(),
-                              'customer_form': CustomerForm()
-                          })
-    elif request.method == 'POST':
-        if request.path.endswith('customer/'):
-            form = CustomerForm(request.POST)
-            if form.is_valid():
-                try:
-                    form.save()
-                except IntegrityError:
-                    response = render(render, template,
-                                      context={
-                                          'driver_form': DriverForm(),
-                                          'customer_form': CustomerForm()
-                                      })
-                else:
-                    response = HttpResponse(status=303)
-                    response['Location'] = '/useraccountmanagement/login/'
+class CustomerRegistrationView(CreateView):
+    form_class = CustomerForm
+    success_url = '/useraccountmanagement/login/'
+    
+class RegistrationView(TemplateView):
+
+    template_name = 'useraccountmanagement/registration.html'
+
+    def get_context_data(self, **kwargs):
+        context = DriverRegistrationView().get_context_data()
+        context['driver_form'] = context.pop('form')
+        context.update(CustomerRegistrationView().get_context_data())
+        context['customer_form'] = context.pop('form')
+        return context
+
+    def post(self, request, *args, **kwargs):
+        try:
+            role = request.POST['role']
+            if role == 'driver':
+                return DriverRegistrationView.as_view()(reqeust, *args, **kwargs)
+            elif role == 'customer':
+                return CustomerRegistrationView.as_view()(request, *args, **kwargs)
             else:
-                response = render(request, template,
-                                  context={
-                                      'driver_form': DriverForm(),
-                                      'customer_form': form
-                                  })
-        elif request.path.endswith('driver/'):
-            form = DriverForm(request.POST)
-            if form.is_valid():
-                for province in form.cleaned_data['regions']:
-                    form.instance.add_province(province)
-                form.instance.vehicle_model = 'کامیون'
-                form.instance.vehicle_capacity = 20000
-                try:
-                    form.save()
-                except IntegrityError:
-                    response = render(render, template,
-                                      context={
-                                          'driver_form': DriverForm(),
-                                          'customer_form': CustomerForm()
-                                      })
-                else:
-                    response = HttpResponse(status=303)
-                    response['Location'] = '/useraccountmanagement/login/'
-            else:
-                response = render(request, template,
-                                  context={
-                                      'driver_form': form,
-                                      'customer_form': CustomerForm()
-                                  })
-        else:
-            response = render(request, template,
-                              context={
-                                  'driver_form': DriverForm(),
-                                  'customer_form': CustomerForm()
-                              })
-    return response
+                raise MultiValueDictKeyError()
+        except MultiValueDictKeyError:
+            return HttpResponseBadRequest()

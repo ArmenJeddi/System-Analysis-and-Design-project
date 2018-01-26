@@ -1,17 +1,10 @@
-from django.shortcuts import render
-from django.http import HttpResponseForbidden, HttpResponseNotAllowed
+from django.views.generic.base import TemplateView
+from authentication.mixins import UnprivilegedRequired
 
-driver_template = 'useraccountmanagement/profile_driver.html'
-customer_template = 'useraccountmanagement/profile_customer.html'
+class ProfileView(UnprivilegedRequired, TemplateView):
 
-def profile(request):
-    if request.method == 'GET':
-        role = request.session.get('role')
-        if role == 'driver':
-            return render(request, driver_template)
-        elif role == 'customer':
-            return render(request, customer_template)
-        else:
-            return HttpResponseForbidden()
-    else:
-        return HttpResponseNotAllowed(['GET'])
+    def get_template_names(self):
+        if self.request.user.unprivilegeduser.is_customer():
+            return 'useraccountmanagement/profile_customer.html'
+        elif self.request.user.unprivilegeduser.is_driver():
+            return 'useraccountmanagement/profile_driver.html'

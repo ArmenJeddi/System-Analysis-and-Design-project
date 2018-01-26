@@ -25,11 +25,12 @@ class AnonymousUser:
     
 class User(models.Model):
     username = models.CharField(max_length=200,
-                                 primary_key=True,
-                                 verbose_name="نام کاربری",
-                                 error_messages={
-                                     'unique': 'نام کاربری استفاده شده قبلا در سیستم ثبت شده است'
-                                 })
+                                primary_key=True,
+                                verbose_name="نام کاربری",
+                                editable=False,
+                                error_messages={
+                                    'unique': 'نام کاربری استفاده شده قبلا در سیستم ثبت شده است'
+                                })
     password = models.CharField(max_length=200,
                                 verbose_name="گذرواژه")
     first_name = models.CharField(max_length=20,
