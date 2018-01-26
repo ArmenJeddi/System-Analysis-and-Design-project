@@ -37,7 +37,7 @@ class UserForm(forms.ModelForm):
            and self.cleaned_data['password'] != self.cleaned_data['password2']:
             raise ValidationError('گذرواژه وارد شده و تکرار آن همخوانی ندارند',
                                   code='password_disagreement')
-        ModelForm.clean(self)
+        super().clean()
 
 class DriverForm(UserForm):
     field_order = ['first_name', 'last_name', 'username', 'password',
@@ -79,10 +79,10 @@ class RegistrationView(TemplateView):
     template_name = 'useraccountmanagement/registration.html'
 
     def get_context_data(self, **kwargs):
-        context = DriverRegistrationView().get_context_data()
-        context['driver_form'] = context.pop('form')
-        context.update(CustomerRegistrationView().get_context_data())
-        context['customer_form'] = context.pop('form')
+        context = {
+            'driver_form': DriverForm(),
+            'customer_form': CustomerForm()
+            }
         return context
 
     def post(self, request, *args, **kwargs):

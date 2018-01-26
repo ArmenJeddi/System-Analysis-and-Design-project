@@ -7,4 +7,4 @@ class LogoutView(RedirectView):
 
     def get(self, request, *args, **kwargs):
         logout(request)
-        super().get(request, *args, **kwargs)
+        return super().get(request, *args, **kwargs)

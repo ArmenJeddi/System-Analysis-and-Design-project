@@ -1,7 +1,7 @@
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView, ModelFormMixin
 from datastore.models import User
-from django.http import HttpResonseNotFound
+from django.http import HttpResponseNotFound
 
 class PasswordRecoveryView(ModelFormMixin, FormView):
 
