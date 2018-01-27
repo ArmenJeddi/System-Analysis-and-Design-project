@@ -1,0 +1,37 @@
+{% extends "navbar_signedin.html" %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href=""> <!-- needs to add the link address for style sheet -->
+{% endblock %}
+
+{% block main %}
+    <h2>اسناد یافت شده</h2>
+    <div>
+        <ol>
+            {% for product in searchResult %}
+                <div>
+                    <li><p>{{ product }}</p>
+                    <p> <span>در تاریخ:</span>
+                    {{ product.date }} </p>
+                    <p><span>توسط:</span>
+                    {{ product.submitter }} </p>
+                    <p>
+                        <span>قیمت:</span>
+                        {{ product.price }}
+                    </p>
+                    <p>
+                        <span>مقدار:</span>
+                        {{ product.quantity }}
+                    </p>
+                    <p>
+                        <span>آدرس:</span>
+                        {{ product.province }}<br>
+                        {{ product.location }}
+                    </p>
+                    <a href="{% url 'tradeproduct:select' product.id %}"><button>انتخاب</button></a>
+                </li>
+                </div>
+            {% endfor %}
+        </ol>
+    </div>
+{% endblock %}
