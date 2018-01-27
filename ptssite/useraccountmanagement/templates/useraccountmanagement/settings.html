@@ -1,7 +1,7 @@
 {% extends "navbar_signedin.html" %}
 
 {% block main %}
-  <form id="settings-form">
+  <form id="settings-form" action="/useraccountmanagement/updateprofile/{{ view.request.user.username }}/" method="post">
     {{ form.as_p }}
     <input type="submit" value="ثبت تغییرات">
   </form>

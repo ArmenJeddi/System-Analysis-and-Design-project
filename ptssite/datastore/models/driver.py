@@ -1,6 +1,8 @@
 from django.db import models
 from . import user
 from django.core import validators
+from external.dmv import get_vehicle
+from django.core.exceptions import ValidationError
 
 provinces = [('east_azerbaijan', 'آذربایجان شرقی'),
           ('west_azerbaijan', 'آذربایجان غربی'),
@@ -37,9 +39,18 @@ provinces = [('east_azerbaijan', 'آذربایجان شرقی'),
 certificate_validator = [validators.RegexValidator(regex=r'\A[a-zA-Z0-9۰۱۲۳۴۵۶۷۸۹]{17}\Z',
                                                    message='شماره گواهینامه باید شبیه IR111111111111111 باشد',
                                                    code='invalid_certificate_number')]
-license_validator = [validators.RegexValidator(regex=r'\A[0-9۰۱۲۳۴۵۶۷۸۹]{2}[ابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی][0-9۰۱۲۳۴۵۶۷۸۹]{5}\Z',
-                                               message='شماره  پلاک باید شبیه ۱۲ب۱۲۳۱۲ باشد',
-                                               code='invalid_license_number')]
+
+def validate_vehicle(license_plate):
+    if get_vehicle(license_plate) is None:
+        raise ValidationError('وسیله نقلیه شما مناسب حمل محصولات باغی نمی باشد',
+                              code='invalid_vehicle')
+    
+license_validator = [
+    validators.RegexValidator(regex=r'\A[0-9۰۱۲۳۴۵۶۷۸۹]{2}[ابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی][0-9۰۱۲۳۴۵۶۷۸۹]{5}\Z',
+                              message='شماره  پلاک باید شبیه ۱۲ب۱۲۳۱۲ باشد',
+                              code='invalid_license_number'),
+    validate_vehicle
+]
 
 num_tab = str.maketrans('۰۱۲۳۴۵۶۷۸۹', '0123456789')
 
@@ -60,9 +71,9 @@ class Driver(user.UnprivilegedUser):
     region_field = models.PositiveIntegerField(default=0)
 
     def clean(self):
-        super().clean()
         self.license_plate = self.license_plate.translate(user.num_tab)
         self.certificate_number = self.certificate_number.translate(num_tab)
+        self.vehicle_model, self.vehicle_capacity = get_vehicle(self.license_plate)
 
     def add_province(self, province):
         index = prov_ind(province)
@@ -98,5 +109,5 @@ class Driver(user.UnprivilegedUser):
 
 def prov_ind(province):
     for ind, prov in enumerate(provinces):
-        if province == prov[0] or province == prov[1]:
+        if province in prov or province == prov:
             return ind

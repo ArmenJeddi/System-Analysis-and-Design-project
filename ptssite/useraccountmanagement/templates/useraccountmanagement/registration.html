@@ -6,7 +6,7 @@
 
   {% block main %}
   <form id="customer-form" action="/useraccountmanagement/registration/" method="post">
-    <input type="radio" name="role" value="customer"  style="visibility: hidden;" checked>
+    <input type="hidden" name="role" value="customer">
     <table>
       {{ customer_form }}
     </table>
@@ -16,7 +16,7 @@
     <input type="submit" value="ثبت نام">
   </form>
   <form id="driver-form" action="/useraccountmanagement/registration/" method="post">
-    <input type="radio" name="role" value="driver" style="visibility: hidden;" checked>
+    <input type="hidden" name="role" value="driver">
     <table>
       {{ driver_form }}
     </table>

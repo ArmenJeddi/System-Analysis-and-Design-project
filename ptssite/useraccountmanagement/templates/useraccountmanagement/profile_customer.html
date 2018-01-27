@@ -1,7 +1,7 @@
 {% extends "navbar_signedin.html" %}
 
 {% block main %}
-  <a href="/useraccountmanagement/updateprofile/">اطلاعات حساب</a>
+  <a href="/useraccountmanagement/updateprofile/{{ view.request.user.username }}/">اطلاعات حساب</a>
   <a href="">افزایش اعتبار</a>
   <a href="">گزارش مالی</a>
   <a href="">گزارش سفارشات</a>
