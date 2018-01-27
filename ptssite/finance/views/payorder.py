@@ -14,8 +14,9 @@ class PayForm(forms.Form):
 @customer_required
 def payorder(request):
     if request.method == 'GET':
-        submittedProduct = ProductSubmit.objects.get(pk=request.session['name'])
-        assignedDriver = Driver.objects.get(pk=request.session['username'])
+        #to complete the form. what data is passed to payOrder?
+        submittedProduct = ProductSubmit.objects.get(submitter=request.user.username)
+        assignedDriver = Driver.objects.get(pk=request.user.session['username'])
         product_final_price = submittedProduct.quantity * submittedProduct.price
         driver_name = assignedDriver.first_name + " " + assignedDriver.last_name
         response = render(request, template, context=dict(form=PayForm(), 
@@ -33,7 +34,6 @@ def payorder(request):
                 response = HttpResponse(status=303)
                 response['Location'] = '/reporting/listpurchases/'
                 #set timer
-                #resign from purchasing
             elif 'cancel' in request.POST:
                 response = HttpResponse(status=303)
                 response['Location'] = '/finance/depositmoney/'
