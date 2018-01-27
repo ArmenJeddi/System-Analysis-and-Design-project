@@ -1,0 +1,26 @@
+{% extends "navbar_signedin.html" %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href=""> <!-- needs to add the link address for style sheet -->
+{% endblock %}
+
+{% block main %}
+    <h2>اسناد یافت شده</h2>
+    <div>
+        <form method="POST" action="">
+            {% csrf_token %}
+            <input type="range" name="rangeInput" min="0" max="100" onchange="updateTextInput(this.value);">
+            <input type="text" id="textInput" value="">
+
+        </form>
+    </div>
+
+
+    <script>
+        function updateTextInput(val) {
+          document.getElementById('textInput').value=val;
+        }
+
+    </script>
+
+{% endblock %}

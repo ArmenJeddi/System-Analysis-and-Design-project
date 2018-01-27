@@ -1,0 +1,27 @@
+{% extends "navbar_signedin.html" %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href=""> <!-- needs to add the link address for style sheet -->
+{% endblock %}
+
+{% block main %}
+    <h2>جستجوی محصول</h2>
+    <div>
+        <form method="POST" action="">
+            {% csrf_token %}
+            <label>محصول</label>
+            {{ form.product }}<br><br>
+            <label>قیمت(به تومان): از</label>
+            {{ form.from }}
+            <label>تا</label>
+            {{ form.to }}
+            <br><br><br>
+            <label> استان ها</label>
+            {{ form.province }}
+            <br>
+
+            <button type="submit">جستجو</button>
+
+        </form>
+    </div>
+{% endblock %}
