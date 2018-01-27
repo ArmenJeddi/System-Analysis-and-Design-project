@@ -1,8 +1,10 @@
-from django.shortcuts import render
+from django.views.generic.base import RedirectView
+from authentication.auth import logout
 
-template =''
+class LogoutView(RedirectView):
 
-def logout(request):
-    request.session.flush()
-    #return render(request, template)
-    raise NotImplementedError
+    url = '/'
+
+    def get(self, request, *args, **kwargs):
+        logout(request)
+        return super().get(request, *args, **kwargs)

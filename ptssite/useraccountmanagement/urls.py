@@ -1,15 +1,14 @@
 from django.urls import path
-from . import views
+from .views import *
 
 app_name = 'useraccountmanagement'
 
 urlpatterns = [
-    path('login/', views.login),
-    path('registration/', views.registration),
-    path('registration/driver/', views.registration),
-    path('registration/customer/', views.registration),
-    path('passwordrecovery/', views.PasswordRecoveryView.as_view()),
-    path('profile/', views.profile),
-    path('updateprofile/', views.UpdateProfileView.as_view()),
-    path('logout/', views.logout)
+    path('login/', LoginView.as_view()),
+    path('registration/', RegistrationView.as_view()),
+    path('passwordrecovery/', PasswordRecoveryView.as_view()),
+    path('passwordrecoverysuccess/', PasswordRecoverySuccessView.as_view()),
+    path('profile/', ProfileView.as_view()),
+    #path('updateprofile/', UpdateProfileView.as_view()),
+    path('logout/', LogoutView.as_view())
 ]

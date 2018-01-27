@@ -5,8 +5,8 @@
 {% endblock %}
 
   {% block main %}
-  <button onclick="myFunction('customer-form')" class="w3-btn w3-block w3-green w3-right-align">ثبت نام به عنوان مشتری</button>
-  <form id="customer-form" class="w3-hide" action="/useraccountmanagement/registration/customer/" method="post">
+  <form id="customer-form" action="/useraccountmanagement/registration/" method="post">
+    <input type="radio" name="role" value="customer"  style="visibility: hidden;" checked>
     <table>
       {{ customer_form }}
     </table>
@@ -15,8 +15,8 @@
     </section>
     <input type="submit" value="ثبت نام">
   </form>
-  <button onclick="myFunction('driver-form')" class="w3-btn w3-block w3-green w3-right-align">ثبت نام به عنوان راننده</button>
-  <form id="driver-form" class="w3-hide" action="/useraccountmanagement/registration/driver/" method="post">
+  <form id="driver-form" action="/useraccountmanagement/registration/" method="post">
+    <input type="radio" name="role" value="driver" style="visibility: hidden;" checked>
     <table>
       {{ driver_form }}
     </table>
@@ -25,14 +25,4 @@
     </section>
     <input type="submit" value="ثبت نام">
   </form>
-  <script>
-function myFunction(id) {
-    var x = document.getElementById(id);
-    if (x.className.indexOf("w3-show") == -1) {
-        x.className += " w3-show";
-    } else { 
-        x.className = x.className.replace(" w3-show", "");
-    }
-}
-</script>
 {% endblock %}

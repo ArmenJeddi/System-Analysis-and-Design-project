@@ -1,4 +1,4 @@
-from .user import User
+from .user import User, UnprivilegedUser
 from .comt import Comment
 from .customer import Customer
 from .driver import Driver

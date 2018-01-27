@@ -43,7 +43,7 @@ license_validator = [validators.RegexValidator(regex=r'\A[0-9۰۱۲۳۴۵۶۷۸�
 
 num_tab = str.maketrans('۰۱۲۳۴۵۶۷۸۹', '0123456789')
 
-class Driver(user.User):
+class Driver(user.UnprivilegedUser):
     certificate_number = models.CharField(max_length=17,
                                           verbose_name="شماره گواهینامه",
                                           validators=certificate_validator)
@@ -60,9 +60,9 @@ class Driver(user.User):
     region_field = models.PositiveIntegerField(default=0)
 
     def clean(self):
+        super().clean()
         self.license_plate = self.license_plate.translate(user.num_tab)
         self.certificate_number = self.certificate_number.translate(num_tab)
-        user.User.clean(self)
 
     def add_province(self, province):
         index = prov_ind(province)

@@ -15,14 +15,22 @@ account_validator = [validators.RegexValidator(regex=r'\A[0-9۰۱۲۳۴۵۶۷۸�
                                                code='invalid_account_number')]
 num_tab = str.maketrans('0123456789', '۰۱۲۳۴۵۶۷۸۹')
 
+class AnonymousUser:
+
+    def is_anonymous(self):
+        return True
+
+    def is_authenticated(self):
+        return False
+    
 class User(models.Model):
-    user_name = models.CharField(max_length=20,
-                                 primary_key=True,
-                                 verbose_name="نام کاربری",
-                                 error_messages={
-                                     'unique': 'نام کاربری استفاده شده قبلا در سیستم ثبت شده است'
-                                 })
-    password = models.CharField(max_length=20,
+    username = models.CharField(max_length=200,
+                                primary_key=True,
+                                verbose_name="نام کاربری",
+                                error_messages={
+                                    'unique': 'نام کاربری استفاده شده قبلا در سیستم ثبت شده است'
+                                })
+    password = models.CharField(max_length=200,
                                 verbose_name="گذرواژه")
     first_name = models.CharField(max_length=20,
                                   verbose_name="نام",
@@ -30,18 +38,42 @@ class User(models.Model):
     last_name = models.CharField(max_length=20,
                                  verbose_name="نام خانوادگی",
                                  validators=name_validator)
-    national_id = models.CharField(max_length=10,
-                                   verbose_name="کد ملی",
-                                   validators=id_validator)
     phone_number = models.CharField(max_length=11,
                                     verbose_name="شماره تلفن همراه",
                                     validators=phone_validator)
+    def clean(self):
+        self.phone_number = self.phone_number.translate(num_tab)
+
+    def __str__(self):
+        fullname = self.first_name + " " + self.last_name
+        return fullname
+
+    def is_unprivileged(self):
+        return hasattr(self, 'unprivilegeduser')
+
+    def is_anonymous(self):
+        return False
+
+    def is_authenticated(self):
+        return True
+
+class UnprivilegedUser(User):
+    national_id = models.CharField(max_length=10,
+                                   verbose_name="کد ملی",
+                                   validators=id_validator)
     banned = models.BooleanField(verbose_name="ممنوعیت استفاده از سامانه",
                                  default=False)
     account_number = models.CharField(max_length=16,
                                       verbose_name="شماره کارت",
                                       validators=account_validator)
+
     def clean(self):
+        super().clean()
         self.national_id = self.national_id.translate(num_tab)
-        self.phone_number = self.phone_number.translate(num_tab)
         self.account_number = self.account_number.translate(num_tab)
+
+    def is_driver(self):
+        return hasattr(self, 'driver')
+
+    def is_customer(self):
+        return hasattr(self, 'customer')

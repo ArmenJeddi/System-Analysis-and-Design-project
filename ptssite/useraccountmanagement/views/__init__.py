@@ -1,6 +1,6 @@
-from .login import login
-from .register import registration
-from .passrec import PasswordRecoveryView
-from .profile import profile
+from .login import LoginView
+from .register import RegistrationView
+from .passrec import PasswordRecoveryView, PasswordRecoverySuccessView
+from .profile import ProfileView
 from .updprof import UpdateProfileView
-from .logout import logout
+from .logout import LogoutView

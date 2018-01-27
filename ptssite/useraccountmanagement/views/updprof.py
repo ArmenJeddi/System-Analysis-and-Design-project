@@ -1,33 +1,28 @@
-from django.shortcuts import render
-from datastore.models import User, Driver, Customer
+from datastore.models import UnprivilegedUser, Driver, Customer
 from datastore.models.driver import provinces
-from django.http import HttpResponseForbidden, HttpResponseNotAllowed
 from django.views import View
 from django import forms
-
-temp_driv = 'useraccountmanagement/settings_driver.html'
-temp_cust = 'useraccountmanagement/settings_customer.html'
 
 class UserForm(forms.ModelForm):
     field_order = ['password', 'password2', 'first_name', 'last_name',
                    'national_id', 'phone_number', 'account_number']
     class Meta:
-        model = User
+        model = UnprivilegedUser
         fields = ['first_name', 'last_name', 'password',
                   'national_id', 'phone_number', 'account_number']
         widgets = {'password': forms.PasswordInput}
         
     password2 = forms.CharField(label='تکرار گذرواژه',
                                 widget=forms.PasswordInput,
-                                max_length=User._meta.get_field(
+                                max_length=UnprivilegedUser._meta.get_field(
                                     'password').max_length)
     
     def clean(self):
         if 'password' in self.cleaned_data and 'password2' in self.cleaned_data\
            and self.cleaned_data['password'] != self.cleaned_data['password2']:
             raise ValidationError('گذرواژه وارد شده و تکرار آن همخوانی ندارند',
-                                  code='password-disagreement')
-        ModelForm.clean(self)
+                                  code='password_disagreement')
+        super().clean()
 
 class DriverForm(UserForm):
     field_order = UserForm.field_order + ['license_plate', 'certificate_number',
