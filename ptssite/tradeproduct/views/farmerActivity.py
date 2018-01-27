@@ -3,7 +3,6 @@ from ..forms.tradeForm import SubmitForm
 from datastore.models.product import Product
 from datastore.models.prodsub import ProductSubmit
 from django.utils import timezone
-from django import forms
 
 def submitProduct(request):
     if request.method == 'POST':
@@ -47,7 +46,7 @@ def delete_submittedProduct(request, delete_id):
         # send a message that it was successfully deleted
         # submittedList = ProductSubmit.objects.filter(submitter = ?)
         submittedList = ProductSubmit.objects.all()
-        return redirect('/tradeproduct/updateSubmittedProduct/', {'submittedList': submittedList})
+        return redirect('/tradeproduct/updateSubmittedProduct/')
     else:
         None
         # error
@@ -73,4 +72,5 @@ def change_details(request, change_id):
         subprod = get_object_or_404(ProductSubmit, pk=change_id)
         form = SubmitForm(instance=subprod)
         form.fields['product'].widget.attrs['disabled'] = 'disabled'
+        form.fields['province'].widget.attrs['disabled'] = 'disabled'
         return render(request, 'tradeproduct/change_details.html', {'form': form, 'subp_id': change_id})
