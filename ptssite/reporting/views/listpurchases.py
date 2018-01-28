@@ -8,15 +8,15 @@ from authentication.decorators import customer_required
 def listpurchases(request):
     if request.method == 'GET':
         
-        purchase_list = Order.objects.get(buyer=request.user.username)
-        page = request.GET.get('page', 1)
+        purchase_list = Order.objects.filter(buyer=request.user.username)
+        page = request.GET.get('page')
 
-        paginator = Paginator(purchase_list, 10)
+        paginator = Paginator(purchase_list, 15)
         try:
-            purchases = paginator.page(page)
+            purchases = paginator.get_page(page)
         except PageNotAnInteger:
-            purchases = paginator.page(1)
+            purchases = paginator.get_page(1)
         except EmptyPage:
-            purchases = paginator.page(paginator.num_pages)
+            purchases = paginator.get_page(paginator.num_pages)
 
         return render(request, 'reporting/listpurchases.html', { 'purchases': purchases })
