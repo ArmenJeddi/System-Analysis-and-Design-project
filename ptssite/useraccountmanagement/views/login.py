@@ -12,7 +12,7 @@ class LoginForm(Form):
         try:
             user = authenticate(self.cleaned_data['username'],
                                 self.cleaned_data['password'])
-            if user is None:
+            if user is None or not user.is_unprivileged():
                 raise ValidationError('نام کاربری یا گذرواژه اشتباه است',
                                       code='invalid_username_password')
             else:

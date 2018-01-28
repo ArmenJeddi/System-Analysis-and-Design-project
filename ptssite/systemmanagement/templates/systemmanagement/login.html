@@ -1,0 +1,9 @@
+{% extends "systemmanagement/base.html" %}
+
+{% block main %}
+<form action="/systemmanagement/login/" method="post">
+  {{ form.as_p }}
+  <p><a href="/systemmanagement/passwordrecovery/">گذرواژه خود را فراموش کرده ام.</a></p>
+  <p><input type="submit" value="ورود"></p>
+</form>
+{% endblock %}

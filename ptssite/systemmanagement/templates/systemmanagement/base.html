@@ -3,14 +3,13 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block head %}
+    {% endblock %}
   </head>
   <body>
     <main>
-      <ul>
-	{% for user in users %}
-	<li>{{ user.first_name }} {{ user.last_name }}</li>
-	{% endfor %}
-      </ul>
+      {% block main %}
+      {% endblock %}
     </main>
   </body>
 </html>
