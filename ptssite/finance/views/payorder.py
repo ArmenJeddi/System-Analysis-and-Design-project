@@ -14,9 +14,12 @@ class PayForm(forms.Form):
 @customer_required
 def payorder(request):
     if request.method == 'GET':
-        #to complete the form. what data is passed to payOrder?
-        submittedProduct = ProductSubmit.objects.get(submitter=request.user.username)
-        assignedDriver = Driver.objects.get(pk=request.user.session['username'])
+        buyer = request.GET['buyer']
+        product = request.GET['product']
+        driver = request.GET['driver']
+        order = Order.objects.get(buyer = buyer, product = product, driver = driver)
+        submittedProduct = order.product
+        assignedDriver = order.driver
         product_final_price = submittedProduct.quantity * submittedProduct.price
         driver_name = assignedDriver.first_name + " " + assignedDriver.last_name
         response = render(request, template, context=dict(form=PayForm(), 
