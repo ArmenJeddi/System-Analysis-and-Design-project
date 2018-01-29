@@ -10,7 +10,7 @@
         <ol>
             {% for product in searchResult %}
                 <div>
-                    <li><p>{{ product }}</p>
+                    <li><p>{{ product.product }}</p>
                     <p> <span>در تاریخ:</span>
                     {{ product.date }} </p>
                     <p><span>توسط:</span>
@@ -25,7 +25,7 @@
                     </p>
                     <p>
                         <span>آدرس:</span>
-                        {{ product.province }}<br>
+                        {{ product.getProvince }}<br>
                         {{ product.location }}
                     </p>
                     <a href="{% url 'tradeproduct:select' product.id %}"><button>انتخاب</button></a>

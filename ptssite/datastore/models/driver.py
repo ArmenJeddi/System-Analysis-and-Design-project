@@ -96,6 +96,15 @@ class Driver(user.UnprivilegedUser):
             mask = mask << 1
         return prov_ls
 
+    def province_list_keys(self):
+        output = []
+        mask = 1
+        for prov in provinces:
+            if self.region_field & mask != 0:
+                output.append(prov[0])
+            mask = mask << 1
+        return output
+
 def prov_ind(province):
     for ind, prov in enumerate(provinces):
         if province == prov[0] or province == prov[1]:

@@ -1,0 +1,58 @@
+{% extends "navbar_signedin.html" %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href=""> <!-- needs to add the link address for style sheet -->
+{% endblock %}
+
+{% block main %}
+    <h2>راننده های موجود</h2>
+    <div>
+        <form method="POST" action="">
+            {% csrf_token %}
+            <label for="rule_select">مرتب سازی بر اساس</label>
+            <select name="rule_select">
+                <option value="1">قیمت صعودی</option>
+                <option value="2">قیمت نزولی</option>
+                <option value="3">امتیاز</option>
+            </select>
+
+            <button type="submit">انتخاب</button>
+
+        </form>
+    </div>
+
+    <div>
+        {% if driverMap %}
+            {% if option > 2 %}
+                <h4>مرتب شده بر اساس امتیاز</h4>
+                <ul>
+                {% for instance in driverMap %}
+                    <li>
+                        <span>{{ instance.0 }}</span> &nbsp &nbsp &nbsp
+                        <span>امتیاز: </span>
+                        <span>{{ instance.1 }} </span>
+                        <span> از 10</span>
+                    </li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <h4>مرتب شده بر اساس
+                {{ select_value }}
+                </h4>
+                <ul>
+                {% for instance in driverMap %}
+                    <li>
+                        <span>{{ instance.0 }}</span> &nbsp &nbsp &nbsp
+                        <span>قیمت: </span>
+                        <span>{{ instance.1 }} </span>
+                        <a href="" target="_blank"><button>مشاهده مشخصات راننده</button></a>
+                        <a href=""><button>انتخاب راننده</button></a>
+                    </li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% else %}
+
+        {% endif %}
+    </div>
+{% endblock %}
