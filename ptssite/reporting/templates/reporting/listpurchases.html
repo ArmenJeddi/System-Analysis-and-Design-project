@@ -11,6 +11,7 @@
     <table id="myTable">
       <thead>
         <tr class="header">
+          <th> ردیف </th>
           <th> محصول </th>
           <th> وزن </th>
           <th> قیمت </th>
@@ -20,9 +21,10 @@
       <tbody>
         {% for order in purchases %}
           <tr>
-            <td>{{ order.prodsub.product.name }}</td>
+            <td>{{ forloop.counter }} </td>
+            <td>{{ order.product.product.name }}</td>
             <td>{{ order.quantity }}</td>
-            <td>{{ order.prodsub.price }}</td>
+            <td>{{ order.product.price }}</td>
             <td>{{ order.final }}</td>
             <!-- to change the last column to a link reporting delivery state -->            
           </tr>
@@ -30,22 +32,22 @@
       </tbody>
     </table>
 
-    {% if users.has_other_pages %}
+    {% if purchases.has_other_pages %}
       <ul class="pagination">
-        {% if users.has_previous %}
-          <li><a href="?page={{ users.previous_page_number }}">&laquo;</a></li>
+        {% if purchases.has_previous %}
+          <li><a href="?page={{ purchases.previous_page_number }}">&laquo;</a></li>
         {% else %}
           <li class="disabled"><span>&laquo;</span></li>
         {% endif %}
-        {% for i in users.paginator.page_range %}
-          {% if users.number == i %}
+        {% for i in purchases.paginator.page_range %}
+          {% if purchases.number == i %}
             <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
           {% else %}
             <li><a href="?page={{ i }}">{{ i }}</a></li>
           {% endif %}
         {% endfor %}
-        {% if users.has_next %}
-          <li><a href="?page={{ users.next_page_number }}">&raquo;</a></li>
+        {% if purchases.has_next %}
+          <li><a href="?page={{ purchases.next_page_number }}">&raquo;</a></li>
         {% else %}
           <li class="disabled"><span>&raquo;</span></li>
         {% endif %}
