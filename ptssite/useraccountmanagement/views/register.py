@@ -33,8 +33,9 @@ class UserForm(forms.ModelForm):
                                            validators=[license_agreed])
     
     def clean(self):
-        if 'password' in self.cleaned_data and 'password2' in self.cleaned_data\
-           and self.cleaned_data['password'] != self.cleaned_data['password2']:
+        password1 = self.cleaned_data.get('password', '1')
+        password2 = self.cleaned_data.get('password2', '2')
+        if password1 != password2:
             raise ValidationError('گذرواژه وارد شده و تکرار آن همخوانی ندارند',
                                   code='password_disagreement')
         super().clean()
@@ -57,14 +58,14 @@ class DriverForm(UserForm):
         for province in self.cleaned_data['regions']:
             self.instance.add_province(province)
 
+
 class DriverRegistrationView(CreateView):
     form_class = DriverForm
-    success_url = '/useraccountmanagement/login/'
+    success_url = '/useraccountmanagement/registrationsuccess/'
 
     def form_valid(self, form):
-        for province in form.cleaned_data['regions']:
-            form.instance.add_province(province)
-        super().form_valid(form)
+        form.register_regions()
+        return super().form_valid(form)
         
 class CustomerForm(UserForm):
     class Meta(UserForm.Meta):
@@ -72,7 +73,7 @@ class CustomerForm(UserForm):
 
 class CustomerRegistrationView(CreateView):
     form_class = CustomerForm
-    success_url = '/useraccountmanagement/login/'
+    success_url = '/useraccountmanagement/registrationsuccess/'
     
 class RegistrationView(TemplateView):
 
@@ -89,10 +90,13 @@ class RegistrationView(TemplateView):
         try:
             role = request.POST['role']
             if role == 'driver':
-                return DriverRegistrationView.as_view()(reqeust, *args, **kwargs)
+                return DriverRegistrationView.as_view()(request, *args, **kwargs)
             elif role == 'customer':
                 return CustomerRegistrationView.as_view()(request, *args, **kwargs)
             else:
                 raise MultiValueDictKeyError()
         except MultiValueDictKeyError:
             return HttpResponseBadRequest()
+
+class RegistrationSuccessView(TemplateView):
+    template_name = 'useraccountmanagement/registration_success.html'

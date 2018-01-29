@@ -28,10 +28,10 @@
            <div type="floating-box">شماره راننده) {{ assignedDriver.phone_number }} </div>
         </p>
       </div>
-      <form id="address-form">
-        <input type="details-text" name="customer-address" placeholder="خواهشا آدرس خود را وارد کنید">
-        <input type="submit" value="ثبت و پرداخت">
-        <input type="submit" value="انصراف از خرید">
+      <form id="address-form" action="" method="post">
+        <input type="details-text" name="customer_address" placeholder="خواهشا آدرس خود را وارد کنید">
+        <input type="submit" name="pay" value="ثبت و پرداخت">
+        <input type="submit" name="cancel" value="انصراف از خرید">
       </form>
       <p type="warning-text"> فشردن دکمه پرداخت به منزله تایید مشخصات محصول و کسر مبلغ مذکور از حساب شما می باشد
       <br><br> دقت کنید تنها تا انتهای زمان سنج بالای صفحه فرصت پرداخت دارید، در غیر این صورت سفارش خود به خود ملغی می شود</p>

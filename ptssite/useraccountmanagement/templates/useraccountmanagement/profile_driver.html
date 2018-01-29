@@ -1,8 +1,7 @@
 {% extends "navbar_signedin.html" %}
 
 {% block main %}
-  <a href="/useraccountmanagement/updateprofile/">اطلاعات حساب</a>
+  <a href="/useraccountmanagement/updateprofile/{{ view.request.user.username }}/">اطلاعات حساب</a>
   <a href="">گزارش مالی</a>
   <a href="">گزارش جا به جایی ها</a>
-  <lable><input type="checkbox" id="available" {% if available %} checked="checked" {% endif %} >آماده برای انجام جا به جایی هستم</lable>
 {% endblock %}

@@ -1,6 +1,10 @@
 from django.db import models
 from django.core import validators
 
+username_validator = [validators.RegexValidator(regex=r'/',
+                                                message='از کاراکتر / استفاده نکنید',
+                                                code='invalid_username',
+                                                inverse_match=True)]
 name_validator = [validators.RegexValidator(regex=r'\A[ابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهیءٔ‌ٰٓكةآأإيئؤًٌٍَُِّْ ]+\Z',
                                             message='تنها از الفبای فارسی استفاده کنید',
                                             code='invalid_name')]
@@ -27,6 +31,7 @@ class User(models.Model):
     username = models.CharField(max_length=200,
                                 primary_key=True,
                                 verbose_name="نام کاربری",
+                                validators=username_validator,
                                 error_messages={
                                     'unique': 'نام کاربری استفاده شده قبلا در سیستم ثبت شده است'
                                 })

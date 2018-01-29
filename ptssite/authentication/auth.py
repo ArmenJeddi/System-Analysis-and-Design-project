@@ -1,10 +1,16 @@
 from datastore.models import User
 
 def login(request, user):
-    request.session['username'] = user.username
+    try:
+        request.session['username'] = user.username
+    except:
+        pass
 
 def logout(request):
-    request.session.flush()
+    try:
+        request.session.flush()
+    except:
+        pass
 
 def authenticate(username, password):
     try:

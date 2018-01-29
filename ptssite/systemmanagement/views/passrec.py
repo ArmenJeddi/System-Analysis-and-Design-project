@@ -15,8 +15,8 @@ password_alphabet = string.ascii_letters + string.digits
 class PasswordRecoveryView(FormView):
 
     form_class = PasswordRecoveryForm
-    success_url = '/useraccountmanagement/passwordrecoverysuccess/'
-    template_name = 'useraccountmanagement/password_recovery.html'
+    success_url = '/systemmanagement/passwordrecoverysuccess/'
+    template_name = 'systemmanagement/password_recovery.html'
 
     def post(self, request, *args, **kwargs):
         if request.user.is_anonymous():
@@ -43,4 +43,4 @@ class PasswordRecoveryView(FormView):
         return super().form_valid(form)
 
 class PasswordRecoverySuccessView(TemplateView):
-    template_name = 'useraccountmanagement/password_recovery_success.html'
+    template_name = 'systemmanagement/password_recovery_success.html'

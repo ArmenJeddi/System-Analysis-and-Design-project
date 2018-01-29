@@ -1,0 +1,38 @@
+{% extends "systemmanagement/base.html" %}
+
+{% block main %}
+<a href="/systemmanagement/profile/">صفحه اصلی</a>
+<form action="/systemmanagement/browseusers/" method="get">
+  <label>نام:<input type="text" name="name"></label>
+  <br /><label>شماره تلفن همراه:<input type="text" name="phone_number"></label>
+  <br /><label>کد ملی:<input type="text" name="national_id"></label>
+  <br /><label>شماره پلاک:<input type="text" name="license_plate"></label>
+  <br /><label>شماره گواهینامه:<input type="text" name="certificate_number"></label>
+  <br /><input type="submit" value="جستجو">
+</form>
+<ul>
+  {% for user in users %}
+  <li>{{ user.first_name }} {{ user.last_name }}
+    <br />نام کاربری: {{ user.username }}
+    <br />کد ملی: {{ user.national_id }}
+    <br />شماره تلفن همراه: {{ user.phone_number }}
+    <br />شماره حساب: {{ user.account_number }}
+    {% if user.is_customer %}
+    <br />موجودی حساب: {{ user.customer.account_balance }}
+    {% endif %}
+    {% if user.is_driver %}
+    <br />شماره گواهینامه: {{ user.driver.certificate_number }}
+    <br />شماره پلاک وسیله نقلیه: {{ user.driver.license_plate }}
+    {% endif %}
+    <form method="post">
+      {% if user.banned %}
+      <br /><input type="submit" formaction="/systemmanagement/unban/{{ user.username }}/" value="فعال کن">
+      {% else %}
+      <br /><input type="submit" formaction="/systemmanagement/ban/{{ user.username }}/" formmethod="post" value="غیر فعال کن">
+      {% endif %}
+    </form>
+  </li>
+  {% endfor %}
+  <a 
+</ul>
+{% endblock %}
