@@ -12,8 +12,10 @@ class Order(models.Model):
                                on_delete=models.CASCADE,
                                verbose_name="راننده")
     quantity = models.PositiveIntegerField(verbose_name="مقدار سفارش")
+    driver_cost = models.PositiveIntegerField(verbose_name="دستمزد راننده", default=1000)
     location = models.TextField(verbose_name="آدرس خریدار")
-    final = models.BooleanField(verbose_name="سفارش نهایی", default=False)
+    final = models.BooleanField(verbose_name="سفارش نهایی", 
+                                default=False)
     driver_receipt = models.BooleanField(verbose_name="تحویل راننده",
                                          default=False)
     buyer_receipt = models.BooleanField(verbose_name="تحویل خریدار",
