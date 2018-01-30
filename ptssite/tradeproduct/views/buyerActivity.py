@@ -6,6 +6,8 @@ from datastore.models.driver import Driver
 import random
 
 def browseProduct(request):
+    print('in browse')
+    print(dict(request.session))
     if request.method == "POST":
         d = dict(request.POST)
         allSubmitted = ProductSubmit.objects.all()
@@ -37,8 +39,10 @@ def browseProduct(request):
 def selectProduct(request, select_id):
     sp = ProductSubmit.objects.get(pk=select_id)
     if request.method == "POST":
+        print('in select Product')
+        print(dict(request.POST))
         select_quantity = int(request.POST['rangeInput'])
-        request.session['selected_product_id']= select_id
+        request.session['selected_product']= select_id
         request.session['selected_quantity'] = select_quantity
         ### this will change --> prob : we should not delete
         new_quantity = sp.quantity - select_quantity
@@ -47,6 +51,7 @@ def selectProduct(request, select_id):
         return redirect('tradeproduct:selectDriver')
 
     else:
+
         if sp.quantity % 2 == 0:
             half = int(sp.quantity / 2)
         else:
@@ -75,10 +80,10 @@ def getMap(drivers, product, option = 1):
 def selectDriver(request):
     if (not 'selected_product' in request.session) or (not 'selected_quantity' in request.session):
         # notification
-        redirect('tradeproduct:browse')
+        return redirect('tradeproduct:browse')
 
     chosen_capacity = request.session['selected_quantity']
-    chosenP = get_object_or_404(ProductSubmit, pk=request.session['selected_product_id'])
+    chosenP = get_object_or_404(ProductSubmit, pk=request.session['selected_product'])
     province = chosenP.province
 
     drivers = Driver.objects.all()
@@ -113,16 +118,37 @@ def driver_details(request, username):
     return render(request, 'tradeproduct/driver_details.html', {'driver': driver})
 
 def confirmIt(request, username):
+    print('in confirm it')
+    print(dict(request.session))
     if (not 'selected_product' in request.session) or (not 'selected_quantity' in request.session):
         #notification
-        redirect('tradeproduct:browse')
-    driver = get_object_or_404(Driver, pk = username)
+        return redirect('tradeproduct:browse')
+
+    driver = get_object_or_404(Driver, pk=username)
+    driver.availability = False
+    driver.save()
     request.session['driver_id'] = username
-    product = get_object_or_404(ProductSubmit, pk=request.session['selected_product_id'])
-    driver_cost = compute_cost(driver, product)
-    product_cost = request.session['selected_quantity'] * product.price
-    total_cost = driver_cost + product_cost
-    return render(request, 'tradeproduct/confirm_order.html', {'driver': driver, 'product': product,
-                                                          'quantity': request.session['selected_quantity'], 'cost': product_cost,
-                                                          'driver_cost':driver_cost, 'total_cost': total_cost})
+    product = get_object_or_404(ProductSubmit, pk=request.session['selected_product'])
+
+    if request.method == 'POST':
+        if 'order_confirm' in request.POST:
+            # add some stuff to session
+            # and call berjis
+            None
+        elif 'order_cancel' in request.POST:
+            driver.availability = True
+            driver.save()
+            product.quantity += request.session['selected_quantity']
+            product.save()
+            request.session.pop('selected_product', None)
+            request.session.pop('selected_quantity', None)
+            request.session.pop('driver_id', None)
+            return redirect('tradeproduct:browse')
+    else:
+        driver_cost = compute_cost(driver, product)
+        product_cost = request.session['selected_quantity'] * product.price
+        total_cost = driver_cost + product_cost
+        return render(request, 'tradeproduct/confirm_order.html', {'driver': driver, 'product': product,
+                                                              'quantity': request.session['selected_quantity'], 'cost': product_cost,
+                                                              'driver_cost':driver_cost, 'total_cost': total_cost})
 
