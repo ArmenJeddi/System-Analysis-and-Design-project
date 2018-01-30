@@ -9,7 +9,7 @@ class ProductSubmit(models.Model):
     product = models.ForeignKey(to=product.Product,
                                 on_delete=models.CASCADE,
                                 verbose_name="نوع محصول")
-    date = models.DateTimeField(verbose_name= "تاریخ ثبت", null=False)
+    date = models.DateField(verbose_name= "تاریخ ثبت", null=False)
     quantity = models.PositiveIntegerField(verbose_name="مقدار محصول", null=False)
     price = models.PositiveIntegerField(verbose_name="قیمت", null=False)
     province = models.CharField(max_length=30, choices=provinces, verbose_name="استان", null=False, default='tehran')
