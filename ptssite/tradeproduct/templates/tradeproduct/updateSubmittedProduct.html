@@ -15,7 +15,7 @@
                     <li>{{ product.name }}
                         <span>در تاریخ</span>
                         {{ product.date }}
-                        <a href="{% url 'tradeproduct:details' product.id %}"> <button>مشاهده جزییات</button> </a>
+                        <a href="{% url 'tradeproduct:details' product.id %}" target="_blank"> <button>مشاهده جزییات</button> </a>
                         <form method="POST" action="{% url 'tradeproduct:delete' product.id %}">
                             <button  type="submit">حذف محصول</button>
                         </form>
