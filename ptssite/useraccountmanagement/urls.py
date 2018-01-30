@@ -6,6 +6,8 @@ app_name = 'useraccountmanagement'
 urlpatterns = [
     path('login/', LoginView.as_view()),
     path('registration/', RegistrationView.as_view()),
+    path('registration/driver/', DriverRegistrationView.as_view()),
+    path('registration/customer/', CustomerRegistrationView.as_view()),
     path('registrationsuccess/', RegistrationSuccessView.as_view()),
     path('passwordrecovery/', PasswordRecoveryView.as_view()),
     path('passwordrecoverysuccess/', PasswordRecoverySuccessView.as_view()),

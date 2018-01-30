@@ -1,12 +1,17 @@
 {% extends "systemmanagement/base.html" %}
 
 {% block main %}
-{{ product.product.name }}
-<br />فروشنده: {{ product.submitter.first_name }} {{ product.submitter.last_name }}
-<br />تاریخ ثبت: {{ product.date }}
-<br />موجودی: {{ product.quantity }}
-<br />قیمت: {{ product.price }}
-<br />استان: {{ product.province }}
-<br />آدرس: {{ product.location }}
-<form />
+<p><a href="/systemmanagement/browseproducts/">جستجوی محصولات</a></p>
+<p>
+  {{ product.product.name }}
+  <br />فروشنده: {{ product.submitter.first_name }} {{ product.submitter.last_name }}
+  <br />تاریخ ثبت: {{ product.date }}
+  <br />موجودی: {{ product.quantity }}
+  <br />قیمت: {{ product.price }}
+  <br />استان: {{ product.province }}
+  <br />آدرس: {{ product.location }}
+  <form action="/systemmanagement/detailproduct/{{ product.pk }}/" method="post">
+    <input type="submit" value="حذف محصول">
+  </form>
+</p>
 {% endblock %}

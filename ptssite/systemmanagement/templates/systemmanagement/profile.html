@@ -1,9 +1,15 @@
 {% extends "systemmanagement/base.html" %}
 
 {% block main %}
-<ul>
-  <li><a href="/systemmanagement/browseusers/">جستجوی کاربران</a></li>
-  <li><a href="/systemmanagement/browseproducts/">جستجوی محصولات</a></li>
-  <li><a href="/systemmanagement/logout/">خروج</a></li>
-</ul>
+<p>
+  <ul>
+    <li><a href="/systemmanagement/browseusers/">جستجوی کاربران</a></li>
+    <li><a href="/systemmanagement/browseproducts/">جستجوی محصولات</a></li>
+    <li><a href="/reporting/listbuyers/">لیست خریداران</a></li>
+    <li><a href="/reporting/listfarmers/">لیست فروشندگان</a></li>
+    <li><a href="/reporting/listdrivers/">لیست رانندگان</a></li>
+    <li><a href="/reporting/listorders/">لیست سفارشات</a></li>
+    <li><a href="/systemmanagement/logout/">خروج</a></li>
+  </ul>
+</p>
 {% endblock %}

@@ -1,10 +1,23 @@
 {% extends "navbar_signedin.html" %}
 
 {% block main %}
-  <a href="/useraccountmanagement/updateprofile/{{ view.request.user.username }}/">اطلاعات حساب</a>
-  <a href="">افزایش اعتبار</a>
-  <a href="">گزارش مالی</a>
-  <a href="">گزارش سفارشات</a>
-  <a href="">گزارش و به روزرسانی محصولات</a>
-  <a href="">ثبت محصول</a>
+<p>
+  <ul>
+    <li>
+      <a href="/useraccountmanagement/updateprofile/{{ view.request.user.username }}/">اطلاعات حساب</a>
+    </li>
+    <li>
+      <a href="/finance/depositmoney/">افزایش اعتبار</a>
+    </li>
+    <li>
+      <a href="/reporting/listpurchases/">گزارش سفارشات</a>
+    </li>
+    <li>
+      <a href="/reporting/listproducts/">گزارش و به روزرسانی محصولات</a>
+    </li>
+    <li>
+      <a href="/tradeproduct/submitProduct/">ثبت محصول</a>
+    </li>
+  </ul>
+</p>
 {% endblock %}

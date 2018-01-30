@@ -1,0 +1,11 @@
+{% extends "navbar.html" %}
+
+{% block main %}
+<form action="/useraccountmanagement/registration/customer/" method="post">
+  {{ form.as_p }}
+  <section>
+    قوانین و مقررات
+  </section>
+  <input type="submit" value="ثبت نام">
+</form>
+{% endblock %}

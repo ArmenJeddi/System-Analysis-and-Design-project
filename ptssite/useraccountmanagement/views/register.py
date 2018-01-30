@@ -58,8 +58,8 @@ class DriverForm(UserForm):
         for province in self.cleaned_data['regions']:
             self.instance.add_province(province)
 
-
 class DriverRegistrationView(CreateView):
+    template_name = 'useraccountmanagement/register_driver.html'
     form_class = DriverForm
     success_url = '/useraccountmanagement/registrationsuccess/'
 
@@ -72,31 +72,12 @@ class CustomerForm(UserForm):
         model = Customer
 
 class CustomerRegistrationView(CreateView):
+    template_name = 'useraccountmanagement/register_customer.html'
     form_class = CustomerForm
     success_url = '/useraccountmanagement/registrationsuccess/'
     
 class RegistrationView(TemplateView):
-
     template_name = 'useraccountmanagement/registration.html'
-
-    def get_context_data(self, **kwargs):
-        context = {
-            'driver_form': DriverForm(),
-            'customer_form': CustomerForm()
-            }
-        return context
-
-    def post(self, request, *args, **kwargs):
-        try:
-            role = request.POST['role']
-            if role == 'driver':
-                return DriverRegistrationView.as_view()(request, *args, **kwargs)
-            elif role == 'customer':
-                return CustomerRegistrationView.as_view()(request, *args, **kwargs)
-            else:
-                raise MultiValueDictKeyError()
-        except MultiValueDictKeyError:
-            return HttpResponseBadRequest()
 
 class RegistrationSuccessView(TemplateView):
     template_name = 'useraccountmanagement/registration_success.html'

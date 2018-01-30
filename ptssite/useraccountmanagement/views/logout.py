@@ -3,7 +3,7 @@ from authentication.auth import logout
 
 class LogoutView(RedirectView):
 
-    url = '/'
+    url = '/useraccountmanagement/login/'
 
     def get(self, request, *args, **kwargs):
         logout(request)
