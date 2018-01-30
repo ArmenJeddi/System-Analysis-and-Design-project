@@ -2,9 +2,9 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from datastore.models import Driver, ProductSubmit, Order
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from authentication.decorators import customer_required
+from authentication.decorators import privileged_required
 
-@customer_required
+@privileged_required
 def listdrivers(request):
     if request.method == 'GET':
         
