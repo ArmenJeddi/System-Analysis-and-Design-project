@@ -10,31 +10,31 @@
         <ul>
             <li>
                 <span>نام فروشنده: </span>
-                {{ submittedProduct.submitter }}
+                {{ submittedProduct.0.submitter }}
             </li>
             <li>
                 <span>نوع محصول: </span>
-                {{ submittedProduct.product }}
+                {{ submittedProduct.0.product }}
             </li>
             <li>
                 <span>تاریخ ثبت: </span>
-                {{ submittedProduct.date }}
+                {{ submittedProduct.1.2 }} / {{ submittedProduct.1.1 }} / {{ submittedProduct.1.0 }}
             </li>
             <li>
                 <span>مقدار باقی مانده از محصول: </span>
-                {{ submittedProduct.quantity }}
+                {{ submittedProduct.0.quantity }}
             </li>
             <li>
                 <span>قیمت: </span>
-                {{ submittedProduct.price }}
+                {{ submittedProduct.0.price }}
             </li>
             <li>
                 <span>استان: </span>
-                {{ submittedProduct.getProvince }}
+                {{ submittedProduct.0.getProvince }}
             </li>
             <li>
                 <span>آدرس: </span>
-                {{ submittedProduct.location|linebreaksbr }}
+                {{ submittedProduct.0.location|linebreaksbr }}
             </li>
 
 

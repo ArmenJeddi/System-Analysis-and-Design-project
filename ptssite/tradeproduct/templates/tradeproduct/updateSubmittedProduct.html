@@ -12,14 +12,14 @@
             <ol>
             {% for product in submittedList %}
                 <div>
-                    <li>{{ product.name }}
+                    <li>{{ product.0.product }}
                         <span>در تاریخ</span>
-                        {{ product.date }}
-                        <a href="{% url 'tradeproduct:details' product.id %}" target="_blank"> <button>مشاهده جزییات</button> </a>
-                        <form method="POST" action="{% url 'tradeproduct:delete' product.id %}">
-                            <button  type="submit">حذف محصول</button>
+                        {{ product.1.2 }} / {{ product.1.1 }} / {{ product.1.0 }}
+                        <a href="{% url 'tradeproduct:details' product.0.id %}" target="_blank"> <button>مشاهده جزییات</button> </a>
+                        <form method="POST" action="{% url 'tradeproduct:delete' product.0.id %}">
+                            <button  type="submit" onclick="alert('محصول با موفقیت حذف شد.')">حذف محصول</button>
                         </form>
-                        <a href="{% url 'tradeproduct:change' product.id %}"> <button>کاهش حجم محصول</button> </a>
+                        <a href="{% url 'tradeproduct:change' product.0.id %}"> <button>کاهش حجم محصول</button> </a>
 
                     </li>
                 </div>

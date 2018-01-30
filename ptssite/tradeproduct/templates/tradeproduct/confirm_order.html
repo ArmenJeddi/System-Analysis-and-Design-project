@@ -77,9 +77,10 @@
         </div>
     </div>
     <div>
-        <form method="post", action="">
+        <form method="POST", action="">
             {% csrf_token %}
-
+            <input type="submit" name="order_confirm" value="خرید" />
+            <input type="submit" name="order_cancel" value="انصراف" />
         </form>
     </div>
 
