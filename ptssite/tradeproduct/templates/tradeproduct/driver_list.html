@@ -30,8 +30,13 @@
                     <li>
                         <span>{{ instance.0 }}</span> &nbsp &nbsp &nbsp
                         <span>امتیاز: </span>
-                        <span>{{ instance.1 }} </span>
+                        <span>{{ instance.2 }} </span>
                         <span> از 10</span>
+                        <br>
+                        <span>قیمت: </span>
+                        <span>{{ instance.1 }}</span>
+                        <a href="{% url 'tradeproduct:driver_details' instance.0.username %}" target="_blank"><button>مشاهده مشخصات راننده</button></a>
+                        <a href="{% url 'tradeproduct:confirmation' instance.0.username %}" ><button>انتخاب راننده</button></a>
                     </li>
                 {% endfor %}
                 </ul>
@@ -45,14 +50,18 @@
                         <span>{{ instance.0 }}</span> &nbsp &nbsp &nbsp
                         <span>قیمت: </span>
                         <span>{{ instance.1 }} </span>
-                        <a href="" target="_blank"><button>مشاهده مشخصات راننده</button></a>
-                        <a href=""><button>انتخاب راننده</button></a>
+                        <br>
+                        <span>امتیاز: </span>
+                        <span>{{ instance.2 }} </span>
+                        <span> از 10</span>
+                        <a href="{% url 'tradeproduct:driver_details' instance.0.username %}" target="_blank"><button>مشاهده مشخصات راننده</button></a>
+                        <a href="{% url 'tradeproduct:confirmation' instance.0.username %}"><button>انتخاب راننده</button></a>
                     </li>
                 {% endfor %}
                 </ul>
             {% endif %}
         {% else %}
-
+            <h5>هیچ راننده ای یافت نشد.</h5>
         {% endif %}
     </div>
 {% endblock %}

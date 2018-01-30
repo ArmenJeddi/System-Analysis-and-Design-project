@@ -2,7 +2,7 @@ from django.urls import path
 from .views import farmerActivity
 from .views.farmerActivity import submitProduct, updateProducts, submit_details, delete_submittedProduct, change_details
 
-from .views.buyerActivity import browseProduct, selectProduct, selectDriver
+from .views.buyerActivity import browseProduct, selectProduct, selectDriver, driver_details, confirmIt
 
 app_name = 'tradeproduct'
 
@@ -15,5 +15,9 @@ urlpatterns = [
 
     path('browseProduct/', browseProduct, name = 'browse'),
     path('selectProduct/<int:select_id>/', selectProduct, name = 'select'),
-    path('selectDriver/<str:chosenID_cap>/', selectDriver, name = 'selectDriver'),
+    path('selectDriver/', selectDriver, name = 'selectDriver'),
+    path('driver_details/<str:username>/', driver_details, name = 'driver_details'),
+    path('confirmIt/<str:username>/', confirmIt, name = 'confirmation'),
+
+
 ]

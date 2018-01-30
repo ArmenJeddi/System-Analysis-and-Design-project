@@ -8,10 +8,7 @@ import random
 def browseProduct(request):
     if request.method == "POST":
         d = dict(request.POST)
-        print(request.POST)
-        print(d)
         allSubmitted = ProductSubmit.objects.all()
-        print('number : {}'.format(len(allSubmitted)))
         searchResult = []
 
         if 'province' in d.keys():
@@ -41,17 +38,13 @@ def selectProduct(request, select_id):
     sp = ProductSubmit.objects.get(pk=select_id)
     if request.method == "POST":
         select_quantity = int(request.POST['rangeInput'])
-        print(select_quantity)
-
+        request.session['selected_product_id']= select_id
+        request.session['selected_quantity'] = select_quantity
         ### this will change --> prob : we should not delete
         new_quantity = sp.quantity - select_quantity
-        if new_quantity == 0:
-            sp.delete()
-        else:
-            sp.quantity = new_quantity
-            sp.save()
-        id_cap = str(select_id) + '_' + str(select_quantity)
-        return redirect('tradeproduct:selectDriver', chosenID_cap = id_cap)
+        sp.quantity -= select_quantity
+        sp.save()
+        return redirect('tradeproduct:selectDriver')
 
     else:
         if sp.quantity % 2 == 0:
@@ -66,28 +59,26 @@ def compute_cost(driver, product):
 
 def getMap(drivers, product, option = 1):
     mapping = []
-    if option < 3:
-        for driver in drivers:
-            cost_drive = compute_cost(driver, product)
-            mapping.append((driver, cost_drive))
+    for driver in drivers:
+        cost_drive = compute_cost(driver, product)
+        mapping.append((driver, cost_drive, driver.rate))
 
-        if option == 1:
-            mapping.sort(key=lambda tup: tup[1])
-        else:
-            mapping.sort(key=lambda tup: tup[1], reverse=True)
-
-    else:
-        mapping = []
-        for driver in drivers:
-            mapping.append((driver, driver.rate))
+    if option == 1:
+        mapping.sort(key=lambda tup: tup[1])
+    elif option == 2:
         mapping.sort(key=lambda tup: tup[1], reverse=True)
+    else:
+        mapping.sort(key=lambda tup: tup[2], reverse=True)
 
     return mapping
 
-def selectDriver(request, chosenID_cap):
-    chosen_prodict_id = int(chosenID_cap[:chosenID_cap.index('_')])
-    chosen_capacity = int(chosenID_cap[chosenID_cap.index('_') + 1:])
-    chosenP = ProductSubmit.objects.get(pk=chosen_prodict_id)
+def selectDriver(request):
+    if (not 'selected_product' in request.session) or (not 'selected_quantity' in request.session):
+        # notification
+        redirect('tradeproduct:browse')
+
+    chosen_capacity = request.session['selected_quantity']
+    chosenP = get_object_or_404(ProductSubmit, pk=request.session['selected_product_id'])
     province = chosenP.province
 
     drivers = Driver.objects.all()
@@ -99,6 +90,9 @@ def selectDriver(request, chosenID_cap):
                     available_drivers.append(driver)
 
     if request.method == 'POST':
+        print('HI')
+        print(request.POST)
+
         option = int(request.POST['rule_select'])
         mapped_driver = getMap(available_drivers, chosenP, option=option)
         print(option)
@@ -113,3 +107,22 @@ def selectDriver(request, chosenID_cap):
     else:
         mapped_driver = getMap(available_drivers, chosenP, option = 1)
         return render(request, 'tradeproduct/driver_list.html', {'driverMap': mapped_driver, 'option':1, 'select_value' : 'قیمت صعودی'})
+
+def driver_details(request, username):
+    driver = get_object_or_404(Driver, pk=username)
+    return render(request, 'tradeproduct/driver_details.html', {'driver': driver})
+
+def confirmIt(request, username):
+    if (not 'selected_product' in request.session) or (not 'selected_quantity' in request.session):
+        #notification
+        redirect('tradeproduct:browse')
+    driver = get_object_or_404(Driver, pk = username)
+    request.session['driver_id'] = username
+    product = get_object_or_404(ProductSubmit, pk=request.session['selected_product_id'])
+    driver_cost = compute_cost(driver, product)
+    product_cost = request.session['selected_quantity'] * product.price
+    total_cost = driver_cost + product_cost
+    return render(request, 'tradeproduct/confirm_order.html', {'driver': driver, 'product': product,
+                                                          'quantity': request.session['selected_quantity'], 'cost': product_cost,
+                                                          'driver_cost':driver_cost, 'total_cost': total_cost})
+
