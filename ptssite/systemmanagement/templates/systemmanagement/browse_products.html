@@ -46,7 +46,7 @@
 <ul>
   {% for product in products %}
   <li>
-    {{ product.product.name }}
+    <a href="/systemmanagement/detailproduct/{{ product.pk }}/">{{ product.product.name }}</a>
     <br />فروشنده: {{ product.submitter.first_name }} {{ product.submitter.last_name }}
     <br />تاریخ ثبت: {{ product.date }}
     <br />موجودی: {{ product.quantity }}
