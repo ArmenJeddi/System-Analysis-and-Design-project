@@ -11,7 +11,7 @@ def listpurchases(request):
         purchase_list = Order.objects.filter(buyer=request.user.username)
         page = request.GET.get('page')
 
-        paginator = Paginator(purchase_list, 15)
+        paginator = Paginator(purchase_list, 2)
         try:
             purchases = paginator.get_page(page)
         except PageNotAnInteger:
