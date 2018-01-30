@@ -2,55 +2,55 @@ from django.shortcuts import render, redirect, get_object_or_404
 from ..forms.tradeForm import SubmitForm
 from datastore.models.product import Product
 from datastore.models.prodsub import ProductSubmit
-from django.utils import timezone
+import datetime
+from authentication.decorators import customer_required
+from convertdate import persian
 
+@customer_required
 def submitProduct(request):
     if request.method == 'POST':
         form = SubmitForm(request.POST)
         if form.is_valid():
-            subprod = form.save(commit=False)
-            # subprod.submitter = ??
-            subprod.date = timezone.now()
-            # subprod.save()
-            return redirect('/reporting/listproducts/')
+            subprod = form.instance
+            subprod.submitter = request.user.unprivilegeduser.customer
+            today = datetime.date.today()
+            # print(today)
+            # print('{}\{}\{}'.format(today.year, today.month, today.day))
+            subprod.date = today
+            subprod.save()
+            return redirect('tradeproduct:update')
 
     else:
-        # if user is logged in and is a customer do following
-        # if "user_name" in request.session:
-        #     role = request.session['role']
-        #
         form = SubmitForm()
 
     return render(request, 'tradeproduct/submitProduct.html', {'form':form})
 
+@customer_required
 def updateProducts(request):
+    submittedList = ProductSubmit.objects.filter(submitter = request.user.unprivilegeduser.customer)
+    list_with_dates = []
+    for sp in submittedList:
+        print(sp.date)
+        list_with_dates.append((sp, persian.from_gregorian(sp.date.year, sp.date.month, sp.date.day)))
+    return render(request, 'tradeproduct/updateSubmittedProduct.html', {'submittedList': list_with_dates})
 
-    if request.method == 'POST':
-        # reload the page
-        # submittedList = ProductSubmit.objects.filter(submitter= ?)
-        None
-    else:
-        # submittedList = ProductSubmit.objects.filter(submitter = ?)
-        submittedList = ProductSubmit.objects.all()
-
-    return render(request, 'tradeproduct/updateSubmittedProduct.html', {'submittedList': submittedList})
-
+@customer_required
 def submit_details(request, prodsub_id):
     subprod = get_object_or_404(ProductSubmit, pk=prodsub_id)
-    return render(request, 'tradeproduct/submittedProduct_details.html', {'submittedProduct': subprod})
+    prod_tarikh = subprod.date
+    tarikh = persian.from_gregorian(prod_tarikh.year, prod_tarikh.month, prod_tarikh.day)
+    return render(request, 'tradeproduct/submittedProduct_details.html', {'submittedProduct': (subprod, tarikh)})
 
+@customer_required
 def delete_submittedProduct(request, delete_id):
     if request.method == "POST":
         ps = ProductSubmit.objects.get(pk=delete_id)
         ps.delete()
         # send a message that it was successfully deleted
-        # submittedList = ProductSubmit.objects.filter(submitter = ?)
-        submittedList = ProductSubmit.objects.all()
-        return redirect('/tradeproduct/updateSubmittedProduct/')
-    else:
-        None
-        # error
 
+    return redirect('/tradeproduct/updateSubmittedProduct/')
+
+@customer_required
 def change_details(request, change_id):
     if request.method == "POST":
         form = SubmitForm(request.POST)
@@ -61,14 +61,13 @@ def change_details(request, change_id):
             subprod.quantity = form.data['quantity']
             subprod.location = form.data['location']
             subprod.price = form.data['price']
-            subprod.date = timezone.now()
+            today = datetime.date.today()
+            subprod.date = today
             subprod.save()
 
-        submittedList = ProductSubmit.objects.all()
-        return redirect('/tradeproduct/updateSubmittedProduct/', {'submittedList': submittedList})
+        return redirect('/tradeproduct/updateSubmittedProduct/')
 
     else:
-        # if user is logged in and is a customer do following
         subprod = get_object_or_404(ProductSubmit, pk=change_id)
         form = SubmitForm(instance=subprod)
         form.fields['product'].widget.attrs['disabled'] = 'disabled'

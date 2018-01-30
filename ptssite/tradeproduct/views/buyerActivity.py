@@ -151,4 +151,3 @@ def confirmIt(request, username):
         return render(request, 'tradeproduct/confirm_order.html', {'driver': driver, 'product': product,
                                                               'quantity': request.session['selected_quantity'], 'cost': product_cost,
                                                               'driver_cost':driver_cost, 'total_cost': total_cost})
-
