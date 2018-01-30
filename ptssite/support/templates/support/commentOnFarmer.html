@@ -1,0 +1,25 @@
+{% extends "navbar_signedin.html" %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href=""> <!-- needs to add the link address for style sheet -->
+    <title>Comment On Farmer</title>
+{% endblock %}
+
+{% block main %}
+    <h2>نظر درباره ی فروشنده</h2>
+    <div>
+        <h5>مشخصات سفارش</h5>
+        <div>
+            <span>نوع محصول: </span>
+            <span>{{ order.product.product }}</span>
+
+            <span></span>
+        </div>
+    </div>
+    <div>
+        <form method="POST" action="">
+            <button type="submit">جستجو</button>
+
+        </form>
+    </div>
+{% endblock %}

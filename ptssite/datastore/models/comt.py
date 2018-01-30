@@ -11,3 +11,5 @@ class Comment(models.Model):
                                      related_name="to_comment_set",
                                      verbose_name="نظر گیرنده")
     content = models.TextField(verbose_name="نظر")
+
+    date = models.DateField(verbose_name= "تاریخ ثبت", null=False)
