@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block main %}
-    <h2>نظر درباره ی فروشنده</h2>
+    <h2>نظر درباره ی راننده</h2>
     {% if length == 0 %}
     <div>
         <h5>مشخصات سفارش</h5>
@@ -15,14 +15,12 @@
                 <li><span>نوع محصول: </span>
                 <span>{{ order.product.product }}</span></li>
 
-                <li><span>نام فروشنده: </span>
+                <li><span>نام راننده: </span>
                 <span>{{ order.product.submitter }}</span></li>
-
-                <li><span>حجم سفارش:</span>
-                <span>{{ order.product.quantity }}</span></li>
-
-                <li><span>قیمت واحد محصول: </span>
-                <span>{{ order.product.price }}</span></li>
+                <li>
+                    <span>نوع ماشین: </span>
+                    <span>{{ order.driver.vehicle_model }}</span>
+                </li>
 
                 <li><span>قیمت مجموع محصول: </span>
                 <span id="product_whole_price"></span></li>
