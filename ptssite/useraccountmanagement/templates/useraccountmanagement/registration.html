@@ -1,28 +1,14 @@
 {% extends "navbar.html" %}
 
-{% block head %}
-  <link rel="stylesheet" type="text/css" href="/static/useraccountmanagement/styles/w3.css">
-{% endblock %}
-
-  {% block main %}
-  <form id="customer-form" action="/useraccountmanagement/registration/" method="post">
-    <input type="hidden" name="role" value="customer">
-    <table>
-      {{ customer_form }}
-    </table>
-    <section>
-      قوانین و مقررات
-    </section>
-    <input type="submit" value="ثبت نام">
-  </form>
-  <form id="driver-form" action="/useraccountmanagement/registration/" method="post">
-    <input type="hidden" name="role" value="driver">
-    <table>
-      {{ driver_form }}
-    </table>
-    <section>
-      قوانین و مقررات
-    </section>
-    <input type="submit" value="ثبت نام">
-  </form>
+{% block main %}
+<p>
+  <ul>
+    <li>
+      <a href="/useraccountmanagement/registration/customer/">ثبت نام به عنوان فروشنده/خریدار</a>
+    </li>
+    <li>
+      <a href="/useraccountmanagement/registration/driver/">ثبت نام به عنوان راننده</a>
+    </li>
+  </ul>
+</p>
 {% endblock %}
