@@ -12,7 +12,7 @@
 </form>
 <ul>
   {% for user in users %}
-  <li>{{ user.first_name }} {{ user.last_name }}
+  <li><a href="/systemmanagement/detailuser/{{ user.username }}/">{{ user.first_name }} {{ user.last_name }}</a>
     <br />نام کاربری: {{ user.username }}
     <br />کد ملی: {{ user.national_id }}
     <br />شماره تلفن همراه: {{ user.phone_number }}
@@ -24,15 +24,7 @@
     <br />شماره گواهینامه: {{ user.driver.certificate_number }}
     <br />شماره پلاک وسیله نقلیه: {{ user.driver.license_plate }}
     {% endif %}
-    <form method="post">
-      {% if user.banned %}
-      <br /><input type="submit" formaction="/systemmanagement/unban/{{ user.username }}/" value="فعال کن">
-      {% else %}
-      <br /><input type="submit" formaction="/systemmanagement/ban/{{ user.username }}/" formmethod="post" value="غیر فعال کن">
-      {% endif %}
-    </form>
   </li>
   {% endfor %}
-  <a 
 </ul>
 {% endblock %}

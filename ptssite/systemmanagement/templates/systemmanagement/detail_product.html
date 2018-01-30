@@ -1,0 +1,12 @@
+{% extends "systemmanagement/base.html" %}
+
+{% block main %}
+{{ product.product.name }}
+<br />فروشنده: {{ product.submitter.first_name }} {{ product.submitter.last_name }}
+<br />تاریخ ثبت: {{ product.date }}
+<br />موجودی: {{ product.quantity }}
+<br />قیمت: {{ product.price }}
+<br />استان: {{ product.province }}
+<br />آدرس: {{ product.location }}
+<form />
+{% endblock %}

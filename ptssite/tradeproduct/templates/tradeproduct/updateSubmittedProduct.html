@@ -12,7 +12,7 @@
             <ol>
             {% for product in submittedList %}
                 <div>
-                    <li>{{ product.name }}
+                    <li>{{ product.product }}
                         <span>در تاریخ</span>
                         {{ product.date }}
                         <a href="{% url 'tradeproduct:details' product.id %}" target="_blank"> <button>مشاهده جزییات</button> </a>

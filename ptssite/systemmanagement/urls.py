@@ -9,5 +9,7 @@ urlpatterns = [
     path('passwordrecovery/', PasswordRecoveryView.as_view()),
     path('passwordrecoverysuccess/', PasswordRecoverySuccessView.as_view()),
     path('logout/', LogoutView.as_view()),
-    path('browseusers/', BrowseUsersView.as_view())
+    path('browseusers/', BrowseUsersView.as_view()),
+    path('detailuser/<str:username>/', DetailUserView.as_view()),
+    path('browseproducts/', BrowseProductsView.as_view())
 ]
