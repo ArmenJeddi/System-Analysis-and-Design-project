@@ -19,7 +19,7 @@ def login_required(view=None, login_url='/useraccountmanagement/login/'):
         return decorator(view)
     return decorator
 
-def privileged_required(view=None, login_url='/useraccountmanagement/login/'):
+def privileged_required(view=None, login_url='/systemmanagement/login/'):
     decorator = _pass_test(lambda request: request.user.is_authenticated()
                            and not request.user.is_unprivileged(), login_url)
     if view:

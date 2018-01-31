@@ -66,4 +66,13 @@ class BrowseProductsView(PrivilegedRequired, ListView):
         if kwargs:
             products = products.filter(**kwargs)
 
+        for product in products:
+            date = persian.from_gregorian(product.date.year,
+                                          product.date.month,
+                                          product.date.day)
+            product.date_str = (str(date[0]) + '/' + str(date[1]) + '/'
+                                + str(date[2])).translate(num_tab[0])
+            product.quantity_str = str(product.quantity).translate(num_tab[0])
+            product.price_str = str(product.price).translate(num_tab[0])
+        
         return products

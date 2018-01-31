@@ -1,0 +1,25 @@
+{% extends "systemmanagement/base.html" %}
+
+{% block main %}
+<p><a href="/systemmanagement/profile/">صفحه اصلی</a></p>
+<form action="/systemmanagement/browsecomments/" method="get">
+  <p><label>نظر دهنده: <input type="text" name="commenter" /></label></p>
+  <p><label>ثبت شده برای: <input type="text" name="undercomment" /></label></p>
+  <p>
+    <label>از تاریخ: <input type="text" name="date_start" /></label>
+    <label>تا تاریخ: <input type="text" name="date_end" /></label>
+  </p>
+  <p><label>کلید واژه: <input type="text" name="keyword" /></label></p>
+  <p><input type="submit" value="جستجو"></p>
+</form>
+<ul>
+  {% for comment in comments %}
+  <li>
+    نویسنده: {{ comment.commenter.first_name }} {{ comment.commenter.last_name }}
+    <br />برای: {{ comment.undercomment.first_name }} {{ comment.undercomment.last_name }}
+    <br />ثبت در تاریخ: {{ comment.date_str }}
+    <br /><a href="/systemmanagement/detailcomment/{{ comment.pk }}/">جزئیات</a>
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}

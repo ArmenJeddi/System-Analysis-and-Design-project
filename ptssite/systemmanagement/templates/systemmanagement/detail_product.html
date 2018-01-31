@@ -5,13 +5,14 @@
 <p>
   {{ product.product.name }}
   <br />فروشنده: {{ product.submitter.first_name }} {{ product.submitter.last_name }}
-  <br />تاریخ ثبت: {{ product.date }}
-  <br />موجودی: {{ product.quantity }}
-  <br />قیمت: {{ product.price }}
-  <br />استان: {{ product.province }}
+  <br />تاریخ ثبت: {{ product.date_str }}
+  <br />موجودی: {{ product.quantity_str }} کیلوگرم
+  <br />قیمت: {{ product.price_str }} تومان
+  <br />استان: {{ product.getProvince }}
   <br />آدرس: {{ product.location }}
   <form action="/systemmanagement/detailproduct/{{ product.pk }}/" method="post">
-    <input type="submit" value="حذف محصول">
+    {{ form.as_p }}
+    <input type="submit" value="ثبت تغییرات">
   </form>
 </p>
 {% endblock %}

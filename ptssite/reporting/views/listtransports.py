@@ -3,6 +3,13 @@ from django.http import HttpResponse
 from datastore.models import order, ProductSubmit, Order
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from authentication.decorators import driver_required
+from django import forms
+from django.core.exceptions import ValidationError
+
+template = 'reporting/listpurchases.html'
+
+class ReceptionForm(forms.Form):
+    order = forms.IntegerField()
 
 @driver_required
 def listtransports(request):
@@ -19,4 +26,18 @@ def listtransports(request):
         except EmptyPage:
             orders = paginator.get_page(paginator.num_pages)
 
-        return render(request, 'reporting/listtransports.html', { 'orders': orders })
+        response = render(request, 'reporting/listtransports.html', { 'orders': orders })
+        
+    elif request.method == 'POST':
+        
+        form = ReceptionForm(request.POST)
+        if form.is_valid():
+            order = Order.objects.get(pk = form.cleaned_data['order'])
+            order.driver_receipt = True
+            order.save()
+            response = HttpResponse(status=303)
+            response['Location'] = '/reporting/listtransports/' 
+        else:
+            response = render(request, template, context=dict(form=form))
+    
+    return response

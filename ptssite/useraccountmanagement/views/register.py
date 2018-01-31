@@ -66,6 +66,18 @@ class DriverRegistrationView(CreateView):
     def form_valid(self, form):
         form.register_regions()
         return super().form_valid(form)
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_anonymous():
+            return super().get(request, *args, **kwargs)
+        else:
+            return HttpResponseBadRequest()
+
+    def post(self, request, *args, **kwargs):
+        if request.user.is_anonymous():
+            return super().post(request, *args, **kwargs)
+        else:
+            return HttpResponseBadRequest()
         
 class CustomerForm(UserForm):
     class Meta(UserForm.Meta):
@@ -75,9 +87,27 @@ class CustomerRegistrationView(CreateView):
     template_name = 'useraccountmanagement/register_customer.html'
     form_class = CustomerForm
     success_url = '/useraccountmanagement/registrationsuccess/'
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_anonymous():
+            return super().get(request, *args, **kwargs)
+        else:
+            return HttpResponseBadRequest()
+
+    def post(self, request, *args, **kwargs):
+        if request.user.is_anonymous():
+            return super().post(request, *args, **kwargs)
+        else:
+            return HttpResponseBadRequest()
     
 class RegistrationView(TemplateView):
     template_name = 'useraccountmanagement/registration.html'
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_anonymous():
+            return super().get(request, *args, **kwargs)
+        else:
+            return HttpResponseBadRequest()
 
 class RegistrationSuccessView(TemplateView):
     template_name = 'useraccountmanagement/registration_success.html'

@@ -13,7 +13,7 @@ class LoginRequired:
 
 class PrivilegedRequired:
 
-    login_url = '/useraccountmanagement/login/'
+    login_url = '/systemmanagement/login/'
 
     def dispatch(self, request, *args, **kwargs):
         dec = privileged_required(login_url=self.get_login_url())

@@ -1,0 +1,15 @@
+{% extends "systemmanagement/base.html" %}
+
+{% block main %}
+<p><a href="/systemmanagement/browsecomments/">جستجوی نظرات</a></p>
+<p>نویسنده: {{ comment.commenter.first_name }} {{ comment.commenter.last_name }}
+  <br />برای: {{ comment.undercomment.first_name }} {{ comment.undercomment.last_name }}
+  <br />ثبت در تاریخ: {{ comment.date_str }}
+  <blockquote>
+    {{ comment.content }}
+  </blockquote>
+</p>
+<form action="/systemmanagement/detailcomment/{{ comment.pk }}/" method="post">
+  <input type="submit" value="حذف نظر">
+</form>
+{% endblock %}

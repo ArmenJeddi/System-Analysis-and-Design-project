@@ -1,4 +1,4 @@
-{% extends "navbar_signedin.html" %}
+{% extends "systemmanagement/base.html" %}
 
 {% block head %}
   <link rel="stylesheet" type="text/css" href="/static/styles/listing.css">
@@ -29,8 +29,7 @@
             <td>{{ driver.first_name }}</td>
             <td>{{ driver.last_name }}</td>
             <td>{{ driver.certificate_number }}</td>
-            <td>{{ driver.license_plate }}</td>
-            <!-- to change the last column to a link reporting delivery state -->            
+            <td>{{ driver.license_plate }}</td>           
           </tr>
         {% endfor %}
       </tbody>

@@ -30,6 +30,7 @@
       </div>
       <form id="address-form" action="" method="post">
         <input type="details-text" name="customer_address" placeholder="خواهشا آدرس خود را وارد کنید">
+        <input type="hidden" name="order_id" value="{{ orderID }}">
         <input type="submit" name="pay" value="ثبت و پرداخت">
         <input type="submit" name="cancel" value="انصراف از خرید">
       </form>
