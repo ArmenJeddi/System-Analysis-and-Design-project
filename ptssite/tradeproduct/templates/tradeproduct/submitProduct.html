@@ -7,13 +7,13 @@
 {% block main %}
     <h2>ثبت محصول جدید در سامانه</h2>
     <div>
-        <form method="POST" action="{% url 'tradeproduct:submit' %}">
+        <form method="POST" action="{% url 'tradeproduct:submit' %}" onsubmit="alert('محصول شما با موفقیت ثبت شد.')">
             {% csrf_token %}
             <label>محصول</label>
             {{ form.product }}<br>
 
             <label for="quantity">حجم محصول</label>
-            <input type="number" name="quantity" min="1" step="1">
+            <input type="number" name="quantity" min="1" step="1" required>
             <label>کیلوگرم</label> <br>
 
             <label>قیمت</label>
@@ -27,8 +27,7 @@
             <label>آدرس</label>
             {{ form.location }}
 
-
-            <button type="submit">ارسال</button>
+            <button type="submit" >ارسال</button>
         </form>
     </div>
 {% endblock %}

@@ -73,4 +73,5 @@ def change_details(request, change_id):
         form = SubmitForm(instance=subprod)
         form.fields['product'].widget.attrs['disabled'] = 'disabled'
         form.fields['province'].widget.attrs['disabled'] = 'disabled'
-        return render(request, 'tradeproduct/change_details.html', {'form': form, 'subp_id': change_id, 'activated': subprod.active})
+        return render(request, 'tradeproduct/change_details.html', {'form': form, 'subp_id': change_id,
+                                                                    'activated': subprod.active, 'meghdar': subprod.quantity})
