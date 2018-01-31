@@ -6,6 +6,7 @@
 
 {% block main %}
     <h2>اسناد یافت شده</h2>
+    {% if %}
     <div>
         <form method="POST" action="">
             {% csrf_token %}
@@ -16,6 +17,12 @@
         </form>
     </div>
 
+    {% else %}
+        <script>
+            setTimeout(function() { alert('این محصول در حال حاضر غیر فعال است.'); }, 5);
+            window.location.replace("http://stackoverflow.com");
+        </script>
+    {% endif %}
 
     <script>
         function updateTextInput(val) {

@@ -44,7 +44,7 @@ def submit_details(request, prodsub_id):
 @customer_required
 def delete_submittedProduct(request, delete_id):
     if request.method == "POST":
-        ps = ProductSubmit.objects.get(pk=delete_id)
+        ps = get_object_or_404(ProductSubmit, pk=delete_id)
         ps.delete()
         # send a message that it was successfully deleted
 

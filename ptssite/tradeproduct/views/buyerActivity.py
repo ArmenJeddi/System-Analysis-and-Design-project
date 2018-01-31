@@ -7,8 +7,6 @@ import random
 from authentication.decorators import customer_required
 
 def browseProduct(request):
-    print('in browse')
-    print(dict(request.session))
     if request.method == "POST":
         d = dict(request.POST)
         allSubmitted = ProductSubmit.objects.all()
@@ -16,13 +14,13 @@ def browseProduct(request):
 
         if 'province' in d.keys():
             for prod in allSubmitted:
-                if prod.product.__str__() == d['product'][0]:
+                if prod.product.__str__() == d['product'][0] and prod.active:
                     if prod.price < int(d['to'][0]) and prod.price > int(d['from'][0]):
                         if prod.province in d['province']:
                             searchResult.append(prod)
         else:
             for prod in allSubmitted:
-                if prod.product.__str__() == d['product'][0]:
+                if prod.product.__str__() == d['product'][0] and prod.active:
                     if prod.price < int(d['to'][0]) and prod.price > int(d['from'][0]):
                         searchResult.append(prod)
 
@@ -59,7 +57,7 @@ def selectProduct(request, select_id):
         else:
             half = int((sp.quantity+1) / 2)
 
-        return render(request, 'tradeproduct/selectProduct.html', {'selectedProduct': sp, 'halfvalue': half })
+        return render(request, 'tradeproduct/selectProduct.html', {'selectedProduct': sp, 'halfvalue': half, 'activiate': sp.active })
 
 def compute_cost(driver, product):
     return random.randint(50,300)
