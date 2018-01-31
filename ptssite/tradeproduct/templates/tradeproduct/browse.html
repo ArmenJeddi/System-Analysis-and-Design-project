@@ -13,8 +13,9 @@
             <label>محصول</label>
             {{ form.product }}<br><br>
             <label>قیمت(به تومان): از</label>
-            {{ form.from }}
+            <input type="number" name="from" min="0" step="1" onchange="minChecker()">
             <label>تا</label>
+            <input type="number" name="from" min="0" step="1" onchange="MaxChecker()">
             {{ form.to }}
             <br><br><br>
             <label> استان ها</label>

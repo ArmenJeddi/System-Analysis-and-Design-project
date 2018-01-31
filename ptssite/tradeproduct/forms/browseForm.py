@@ -12,9 +12,6 @@ class BrowseForm(forms.Form):
             choices = productList
         )
 
-        self.fields['from'] = forms.IntegerField()
-        self.fields['to'] = forms.IntegerField()
-
         self.fields['province'] = forms.MultipleChoiceField(
             required = True,
             widget=forms.CheckboxSelectMultiple,

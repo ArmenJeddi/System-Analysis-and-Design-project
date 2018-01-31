@@ -13,6 +13,7 @@ def submitProduct(request):
         form = SubmitForm(request.POST)
         if form.is_valid():
             subprod = form.instance
+            subprod.quantity = request.POST['quantity']
             subprod.submitter = request.user.unprivilegeduser.customer
             today = datetime.date.today()
             subprod.date = today
