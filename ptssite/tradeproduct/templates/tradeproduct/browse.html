@@ -13,10 +13,9 @@
             <label>محصول</label>
             {{ form.product }}<br><br>
             <label>قیمت(به تومان): از</label>
-            <input type="number" name="from" min="0" step="1" onchange="minChecker()">
+            <input type="number" name="from" id = "lowerbound" min="0" step="1" onchange="funcChecker()">
             <label>تا</label>
-            <input type="number" name="from" min="0" step="1" onchange="MaxChecker()">
-            {{ form.to }}
+            <input type="number" name="to" id = "upperbound" min="0" step="1" onchange="funcChecker()">
             <br><br><br>
             <label> استان ها</label>
             {{ form.province }}
@@ -33,6 +32,22 @@
                 alert('لطفا محصولی را انتخاب کنید.')
             </script>
         {% endif %}
+    </div>
+
+    <div>
+
+        <script>
+            function funcChecker(){
+                var x = document.getElementById('lowerbound').value;
+                var y = document.getElementById('upperbound').value;
+
+                if (Number(x) > Number(y)){
+                    alert('ورودی ها نادرست هستند')
+                    document.getElementById('upperbound').value = x
+                }
+            }
+        </script>
+
     </div>
 
 {% endblock %}

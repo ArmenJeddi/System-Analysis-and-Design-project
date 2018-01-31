@@ -9,20 +9,42 @@ from authentication.decorators import customer_required
 def browseProduct(request):
     if request.method == "POST":
         d = dict(request.POST)
+
+        from_ = request.POST['from']
+        to_ = request.POST['to']
+
+        lower_bound = 0
+        if len(from_) > 0:
+            lower_bound = int(from_)
+
+        upper_bound = -1
+        if len(to_) > 0:
+            upper_bound = int(to_)
+
         allSubmitted = ProductSubmit.objects.all()
+        filtered = []
+
+        for prod in allSubmitted:
+            if prod.price >= lower_bound:
+                if upper_bound > -1:
+                    if prod.price <= upper_bound:
+                        filtered.append(prod)
+                else:
+                    filtered.append(prod)
+
         searchResult = []
 
+        print(d)
+
         if 'province' in d.keys():
-            for prod in allSubmitted:
+            for prod in filtered:
                 if prod.product.__str__() == d['product'][0] and prod.active:
-                    if prod.price < int(d['to'][0]) and prod.price > int(d['from'][0]):
-                        if prod.province in d['province']:
-                            searchResult.append(prod)
-        else:
-            for prod in allSubmitted:
-                if prod.product.__str__() == d['product'][0] and prod.active:
-                    if prod.price < int(d['to'][0]) and prod.price > int(d['from'][0]):
+                    if prod.province in d['province']:
                         searchResult.append(prod)
+        else:
+            for prod in filtered:
+                if prod.product.__str__() == d['product'][0] and prod.active:
+                    searchResult.append(prod)
 
         return render(request, 'tradeproduct/searchResult.html', {'searchResult': searchResult})
 
