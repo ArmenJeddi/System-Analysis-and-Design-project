@@ -4,6 +4,7 @@ from datastore.models import Driver, ProductSubmit, Order
 from django import forms
 from django.core.exceptions import ValidationError
 from authentication.decorators import customer_required
+from django.utils import timezone
 
 template = 'finance/payorder.html'
 
@@ -14,10 +15,7 @@ class PayForm(forms.Form):
 @customer_required
 def payorder(request):
     if request.method == 'GET':
-        buyer = request.GET['buyer']
-        product = request.GET['product']
-        driver = request.GET['driver']
-        order = Order.objects.get(buyer = buyer, product = product, driver = driver)
+        order = Order.objects.get(pk = request.GET['orderID'])
         submittedProduct = order.product
         assignedDriver = order.driver
         product_final_price = submittedProduct.quantity * submittedProduct.price
@@ -26,13 +24,16 @@ def payorder(request):
                                                             submittedProduct=submittedProduct,
                                                             assignedDriver=assignedDriver,
                                                             product_final_price=product_final_price,
-                                                            driver_name=driver_name))
+                                                            driver_name=driver_name,
+                                                            orderID=orderID))
     elif request.method == 'POST':
         form = PayForm(request.POST)
         if form.is_valid():
             if 'pay' in request.POST:
-                order = Order.objects.get(pk=request.user.session['username'])
+                order = Order.objects.get(pk=form.cleanes_data['orderID'])
                 order.location = form.cleanes_data['address']
+                order.date = timezone.now()
+                order.final = TRUE
                 order.save()
                 response = HttpResponse(status=303)
                 response['Location'] = '/reporting/listpurchases/'
