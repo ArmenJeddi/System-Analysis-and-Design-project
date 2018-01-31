@@ -2,7 +2,7 @@ from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
 from django.forms import Form, CharField
 from datastore.models import User
-from django.http import HttpResponseNotFound
+from django.http import HttpResponseBadRequest
 import string
 import random
 from external import smsgw
@@ -13,23 +13,21 @@ class PasswordRecoveryForm(Form):
 password_alphabet = string.ascii_letters + string.digits
 
 class PasswordRecoveryView(FormView):
-
     form_class = PasswordRecoveryForm
     success_url = '/useraccountmanagement/passwordrecoverysuccess/'
     template_name = 'useraccountmanagement/password_recovery.html'
 
+    def get(self, request, *args, **kwargs):
+        if request.user.is_anonymous():
+            return super().get(request, *args, **kwargs)
+        else:
+            HttpResponseBadRequest
+            
     def post(self, request, *args, **kwargs):
         if request.user.is_anonymous():
             return super().post(request, *args, **kwargs)
         else:
-            return HttpResponseNotFound()
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        if self.request.user.is_authenticated():
-            del context['form']
-            context['logged_in'] = True
-        return context
+            return HttpResponseBadRequest()
 
     def form_valid(self, form):
         try:
