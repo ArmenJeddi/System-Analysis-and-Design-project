@@ -6,3 +6,5 @@ from .bwsusers import BrowseUsersView
 from .detuser import DetailUserView
 from .bwsprod import BrowseProductsView
 from .detprod import DetailProductView
+from .bwscomt import BrowseCommentsView
+from .detcomt import DetailCommentView
