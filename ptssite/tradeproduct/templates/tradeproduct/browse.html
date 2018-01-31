@@ -1,4 +1,8 @@
-{% extends "navbar.html" %}
+{% if visa %}
+    {% extends "navbar_signedin.html" %}
+{% else %}
+    {% extends "navbar.html" %}
+{% endif %}
 
 {% block head %}
     <link rel="stylesheet" type="text/css" href=""> <!-- needs to add the link address for style sheet -->

@@ -32,7 +32,11 @@ def browseProduct(request):
             productList.append((prod.pk , prod.name))
         form = BrowseForm(productList)
 
-        return render(request, 'tradeproduct/browse.html', {'form':form})
+        visa = False
+        if request.user.is_authenticated():
+            visa = True
+
+        return render(request, 'tradeproduct/browse.html', {'form':form, 'visa': visa})
 
 # must be logged in customer
 @customer_required
@@ -51,7 +55,9 @@ def selectProduct(request, select_id):
         return redirect('tradeproduct:selectDriver')
 
     else:
-
+        if ('selected_product' in request.session) or ('selected_quantity' in request.session):
+            # notification
+            return redirect('tradeproduct:browse')
         if sp.quantity % 2 == 0:
             half = int(sp.quantity / 2)
         else:
@@ -115,6 +121,9 @@ def selectDriver(request):
 
 @customer_required
 def driver_details(request, username):
+    if (not 'selected_product' in request.session) or (not 'selected_quantity' in request.session):
+        #notification
+        return redirect('tradeproduct:browse')
     driver = get_object_or_404(Driver, pk=username)
     return render(request, 'tradeproduct/driver_details.html', {'driver': driver})
 
