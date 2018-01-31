@@ -6,6 +6,7 @@
 
 {% block main %}
     <h2>جزییات محصول</h2>
+    {% if activated %}
     <div>
         <ul>
             <li>
@@ -41,5 +42,12 @@
         </ul>
 
     </div>
+
+    {% else %}
+        <script>
+            setTimeout(function() { alert('این محصول در حال حاضر غیر فعال است.'); }, 5);
+            window.location.replace("http://stackoverflow.com");
+        </script>
+    {% endif %}
 
 {% endblock %}

@@ -11,6 +11,7 @@
         {% if submittedList %}
             <ol>
             {% for product in submittedList %}
+                {% if product.0.active %}
                 <div>
                     <li>{{ product.0.product }}
                         <span>در تاریخ</span>
@@ -23,6 +24,7 @@
 
                     </li>
                 </div>
+                {% endif %}
             {% endfor %}
             </ol>
         {% else %}

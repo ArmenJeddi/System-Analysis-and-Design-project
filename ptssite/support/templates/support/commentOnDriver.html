@@ -2,7 +2,7 @@
 
 {% block head %}
     <link rel="stylesheet" type="text/css" href=""> <!-- needs to add the link address for style sheet -->
-    <title>Comment On Farmer</title>
+    <title>Comment On Driver</title>
 {% endblock %}
 
 {% block main %}
@@ -35,9 +35,13 @@
         </div>
 
         <div>
-            <h6>نظر خود را درباره ی این فروشنده بر اساس این سفارش در کادر زیر وارد نمایید.</h6>
+            <h6>نظر خود را درباره ی این راننده بر اساس این سفارش در کادر زیر وارد نمایید.</h6>
             <form method="POST" action="">
                 <textarea rows="5" cols="100" name="comment" placeholder = "نظر خود را در اینجا وارد کنید"></textarea>
+
+                <label for="rate">از 1 تا 10 به این راننده چه امتیازی می دهید؟</label>
+                <input type="number" name="rate" min="1" max="10" step="1">
+
                 <button type="submit">ارسال</button>
             </form>
         </div>
@@ -50,7 +54,7 @@
     </script>
     {% else %}
         <script>
-            setTimeout(function() { alert('شما قبلا بر اساس این سفارش، به این فروشنده نظر داده اید.'); }, 5);
+            setTimeout(function() { alert('شما قبلا بر اساس این سفارش، به این راننده نظر داده اید.'); }, 5);
             window.location.replace("http://stackoverflow.com");
         </script>
     {% endif %}
