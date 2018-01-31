@@ -1,12 +1,8 @@
-{% if visa %}
-    {% extends "navbar_signedin.html" %}
-{% else %}
-    {% extends "navbar.html" %}
-{% endif %}
+{% extends my_template %}
 
 {% block head %}
     <link rel="stylesheet" type="text/css" href=""> <!-- needs to add the link address for style sheet -->
-    <title></title
+    <title>Browse Products</title>
 {% endblock %}
 
 {% block main %}
@@ -29,4 +25,13 @@
 
         </form>
     </div>
+
+    <div>
+        {% if browse_notify %}
+            <script>
+                alert('لطفا محصولی را انتخاب کنید.')
+            </script>
+        {% endif %}
+    </div>
+
 {% endblock %}

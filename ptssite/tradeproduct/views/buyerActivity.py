@@ -32,11 +32,16 @@ def browseProduct(request):
             productList.append((prod.pk , prod.name))
         form = BrowseForm(productList)
 
-        visa = False
-        if request.user.is_authenticated():
-            visa = True
+        browse_notify = False
+        if 'browse_notif' in request.session:
+            browse_notify = True
+            request.session.pop('browse_notif', None)
 
-        return render(request, 'tradeproduct/browse.html', {'form':form, 'visa': visa})
+        my_template = "navbar.html"
+        if request.user.is_authenticated():
+            my_template ="navbar_signedin.html"
+
+        return render(request, 'tradeproduct/browse.html', {'form':form, 'my_template': my_template, 'browse_notify': browse_notify})
 
 # must be logged in customer
 @customer_required
@@ -48,8 +53,6 @@ def selectProduct(request, select_id):
         select_quantity = int(request.POST['rangeInput'])
         request.session['selected_product']= select_id
         request.session['selected_quantity'] = select_quantity
-        ### this will change --> prob : we should not delete
-        new_quantity = sp.quantity - select_quantity
         sp.quantity -= select_quantity
         sp.save()
         return redirect('tradeproduct:selectDriver')
@@ -86,7 +89,7 @@ def getMap(drivers, product, option = 1):
 @customer_required
 def selectDriver(request):
     if (not 'selected_product' in request.session) or (not 'selected_quantity' in request.session):
-        # notification
+        request.session['browse_notif'] = 1
         return redirect('tradeproduct:browse')
 
     chosen_capacity = request.session['selected_quantity']
@@ -108,7 +111,7 @@ def selectDriver(request):
             chosenP.save()
             request.session.pop('selected_product', None)
             request.session.pop('selected_quantity', None)
-            return redirect('tradeproduct:browse', '')
+            return redirect('tradeproduct:browse')
 
         option = int(request.POST['rule_select'])
         mapped_driver = getMap(available_drivers, chosenP, option=option)
@@ -126,7 +129,7 @@ def selectDriver(request):
         driver_notif = False
         if 'print_driver_notification' in request.session:
             driver_notif = True
-        request.session.pop('print_driver_notification', None)
+            request.session.pop('print_driver_notification', None)
         mapped_driver = getMap(available_drivers, chosenP, option = 1)
         return render(request, 'tradeproduct/driver_list.html', {'driverMap': mapped_driver, 'option':1,
                                                                  'select_value' : 'قیمت صعودی', 'driver_notif': driver_notif})
@@ -135,7 +138,7 @@ def selectDriver(request):
 @customer_required
 def driver_details(request, username):
     if (not 'selected_product' in request.session) or (not 'selected_quantity' in request.session):
-        #notification
+        request.session['browse_notif'] = 1
         return redirect('tradeproduct:browse')
     driver = get_object_or_404(Driver, pk=username)
     return render(request, 'tradeproduct/driver_details.html', {'driver': driver})
