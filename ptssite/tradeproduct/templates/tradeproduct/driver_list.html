@@ -64,4 +64,16 @@
             <h5>هیچ راننده ای یافت نشد.</h5>
         {% endif %}
     </div>
+
+    <div>
+        <form method="post" action="">
+            {% csrf_token %}
+            <input type="submit" name="reject_and_browse_again" value="بازگشت و انتخاب محصول جدید" />
+        </form>
+    </div>
+    {% if driver_notif %}
+        <script>
+            alert('شما در حال حاضر یک محصول انتخاب شده دارید. لطفا ابتدا این سفارش را به اتمام برسانید.')
+        </script>
+    {% endif %}
 {% endblock %}
