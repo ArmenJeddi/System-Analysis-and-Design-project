@@ -11,5 +11,6 @@ urlpatterns = [
     path('logout/', LogoutView.as_view()),
     path('browseusers/', BrowseUsersView.as_view()),
     path('detailuser/<str:username>/', DetailUserView.as_view()),
-    path('browseproducts/', BrowseProductsView.as_view())
+    path('browseproducts/', BrowseProductsView.as_view()),
+    path('detailproduct/<str:pk>/', DetailProductView.as_view())
 ]

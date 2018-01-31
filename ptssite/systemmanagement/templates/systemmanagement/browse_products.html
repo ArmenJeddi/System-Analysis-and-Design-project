@@ -3,55 +3,68 @@
 {% block main %}
 <a href="/systemmanagement/profile/">صفحه اصلی</a>
 <form action="/systemmanagement/browseproducts/" method="get">
-  <label>نوع محصول: <input type="text" name="product"></label>
-  <br /><label>فروشنده: <input type="text" name="submitter"></label>
-  <br />
-  <label>استان:
-    <select name="province">
-      <option value="east_azerbaijan">آذربایجان شرقی</option>
-      <option value="west_azerbaijan">آذربایجان غربی</option>
-      <option value="ardabil">اردبیل</option>
-      <option value="isfahan">اصفهان</option>
-      <option value="alborz">البرز</option>
-      <option value="ilam">ایلام</option>
-      <option value="bushehr">بوشهر</option>
-      <option value="tehran">تهران</option>
-      <option value="chaharmahal_and_bakhtiari">چهارمحال و بختیاری</option>
-      <option value="south_khorasan">خراسان جنوبی</option>
-      <option value="razavi_khorasan">خراسان رضوی</option>
-      <option value="north_khorasan">خراسان شمالی</option>
-      <option value="khuzestan">خوزستان</option>
-      <option value="zanjan">زنجان</option>
-      <option value="semnan">سمنان</option>
-      <option value="sistan_and_baluchestan">سیستان و بلوچستان</option>
-      <option value="fars">فارس</option>
-      <option value="qazvin">قزوین</option>
-      <option value="qom">قم</option>
-      <option value="kurdistan">کردستان</option>
-      <option value="kerman">کرمان</option>
-      <option value="kermanshah">کرمانشاه</option>
-      <option value="kohgiluyeh_and_boyer_ahmad">کهگیلویه و بویراحمد</option>
-      <option value="golestan">گلستان</option>
-      <option value="gilan">گیلان</option>
-      <option value="lorestan">لرستان</option>
-      <option value="mazandaran">مازندران</option>
-      <option value="markazi">مرکزی</option>
-      <option value="hormozgan">هرمزگان</option>
-      <option value="hamadan">همدان</option>
-      <option value="yazd">یزد</option>
-    </select>
-  </label>
-  <input type="submit" value="جستجو">
+  <p><label>نوع محصول: <input type="text" name="product"></label></p>
+  <p><label>فروشنده: <input type="text" name="submitter"></label></p>
+  <p>
+    <label>استان:
+      <select name="province">
+	<option value="east_azerbaijan">آذربایجان شرقی</option>
+	<option value="west_azerbaijan">آذربایجان غربی</option>
+	<option value="ardabil">اردبیل</option>
+	<option value="isfahan">اصفهان</option>
+	<option value="alborz">البرز</option>
+	<option value="ilam">ایلام</option>
+	<option value="bushehr">بوشهر</option>
+	<option value="tehran">تهران</option>
+	<option value="chaharmahal_and_bakhtiari">چهارمحال و بختیاری</option>
+	<option value="south_khorasan">خراسان جنوبی</option>
+	<option value="razavi_khorasan">خراسان رضوی</option>
+	<option value="north_khorasan">خراسان شمالی</option>
+	<option value="khuzestan">خوزستان</option>
+	<option value="zanjan">زنجان</option>
+	<option value="semnan">سمنان</option>
+	<option value="sistan_and_baluchestan">سیستان و بلوچستان</option>
+	<option value="fars">فارس</option>
+	<option value="qazvin">قزوین</option>
+	<option value="qom">قم</option>
+	<option value="kurdistan">کردستان</option>
+	<option value="kerman">کرمان</option>
+	<option value="kermanshah">کرمانشاه</option>
+	<option value="kohgiluyeh_and_boyer_ahmad">کهگیلویه و بویراحمد</option>
+	<option value="golestan">گلستان</option>
+	<option value="gilan">گیلان</option>
+	<option value="lorestan">لرستان</option>
+	<option value="mazandaran">مازندران</option>
+	<option value="markazi">مرکزی</option>
+	<option value="hormozgan">هرمزگان</option>
+	<option value="hamadan">همدان</option>
+	<option value="yazd">یزد</option>
+      </select>
+    </label>
+  </p>
+  <p>
+    <label>حداقل قیمت: <input type="number" name="price_min" /></label>
+    <label>حداکثر قیمت: <input type="number" name="price_max" /></label>
+  </p>
+  <p>
+    <label>از تاریخ: <input type="text" name="start_date" /></label>
+    <label>تا تاریخ: <input type="text" name="end_date" /></label>
+  </p>
+  <p>
+    <label>حداقل موجودی: <input type="number" name="quantity_min" /></label>
+    <label>حداکثر موجودی: <input type="number" name="quantity_max" /></label>
+  </p>
+  <p><input type="submit" value="جستجو"></p>
 </form>
 <ul>
   {% for product in products %}
   <li>
     <a href="/systemmanagement/detailproduct/{{ product.pk }}/">{{ product.product.name }}</a>
     <br />فروشنده: {{ product.submitter.first_name }} {{ product.submitter.last_name }}
-    <br />تاریخ ثبت: {{ product.date }}
-    <br />موجودی: {{ product.quantity }}
-    <br />قیمت: {{ product.price }}
-    <br />استان: {{ product.province }}
+    <br />تاریخ ثبت: {{ product.date_str }}
+    <br />موجودی: {{ product.quantity_str }} کیلوگرم
+    <br />قیمت: {{ product.price_str }} تومان
+    <br />استان: {{ product.getProvince }}
     <br />آدرس: {{ product.location }}
   </li>
   {% endfor %}
