@@ -1,14 +1,16 @@
 {% extends "navbar_signedin.html" %}
 
 {% block head %}
-  <link rel="stylesheet" type="text/css" href="/static/styles/listing.css">
+  <link rel="stylesheet" type="text/css" href="/static/reporting/styles/listing.css">
+  <script src="/static/scripts/jquery.min.js"></script>
+  <script src="/static/scripts/bootstrap.min.js"></script>
 {% endblock %}
 
 {% block main %}
     <h2> فهرست محصولات خریداری شده شما </h2>
     <input type="text" id="myInput" onkeyup="myFunction()" placeholder="جستجوی محصول ...">
     
-    <table id="myTable">
+    <table id="myTable" class="center">
       <thead>
         <tr class="header">
           <th> ردیف </th>
@@ -25,8 +27,29 @@
             <td>{{ order.product.product.name }}</td>
             <td>{{ order.quantity }}</td>
             <td>{{ order.product.price }}</td>
-            <td>{{ order.final }}</td>
-            <!-- to change the last column to a link reporting delivery state -->            
+            <td class="dropdown">
+                <div class="center">
+                {% if order.buyer_receipt %}
+                    <button class="dropbtn"> تحویل گرفته شد </button>
+                    <form class="dropdown-content" action="/support/commentOnDriver" method="post">
+                      <input type="hidden" name="order" value="{{ order.pk }}">                      
+                      <input type="submit" name="comment_on_driver" value="نظر شما راجع به راننده">
+                      <input type="submit" name="comment_on_driver" value="نظر شما راجع به راننده">
+                    </form>
+
+                    <form class="dropdown-content" action="/support/commentOnFarmer" method="post">
+                      <input type="hidden" name="order" value="{{ order.pk }}">                      
+                      <input type="submit" name="comment_on_farmer" value="نظر شما راجع به فروشنده">
+                    </form>
+                {% else %}
+                    <button class="dropbtn">در راه</button>
+                    <form class="dropdown-content" action="" method="post">
+                      <input type="hidden" name="order" value="{{ order.pk }}">                      
+                      <input type="submit" name="confirm_reception" value="تحویل گرفته شد">
+                    </form>
+                {% endif %}
+                </div>
+            </td>      
           </tr>
         {% endfor %}
       </tbody>
