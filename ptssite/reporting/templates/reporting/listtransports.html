@@ -27,8 +27,23 @@
             <td>{{ order.quantity }}</td>
             <td>{{ order.product.price }}</td>
             <td>{{ order.driver_cost }}</td>
-            <td>{{ order.final }}</td>
-            <!-- to change the last column to a link reporting delivery state -->            
+            <td class="dropdown">
+                <div class="center">
+                {% if order.driver_receipt %}
+                    {% if order.buyer_receipt %}
+                        <p class="dropbtn"> تحویل به مشتری </p>
+                    {% else %}
+                        <p class="dropbtn"> تحویل از خریدار </p>                        
+                    {% endif %}
+                {% else %}
+                    <button class="dropbtn"> دریافت سفارش </button>
+                    <form class="dropdown-content" action="" method="post">
+                      <input type="hidden" name="order" value="{{ order.pk }}">                      
+                      <input type="submit" name="driver_reception" value="تحویل از خریدار">
+                    </form>
+                {% endif %}
+                </div>
+            </td>             
           </tr>
         {% endfor %}
       </tbody>
