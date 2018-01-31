@@ -39,6 +39,7 @@ provinces = [('east_azerbaijan', 'آذربایجان شرقی'),
 certificate_validator = [validators.RegexValidator(regex=r'\A[a-zA-Z0-9۰۱۲۳۴۵۶۷۸۹]{17}\Z',
                                                    message='شماره گواهینامه باید شبیه IR111111111111111 باشد',
                                                    code='invalid_certificate_number')]
+alpha = 0.3
 
 def validate_vehicle(license_plate):
     if get_vehicle(license_plate) is None:
@@ -59,8 +60,8 @@ class Driver(user.UnprivilegedUser):
                                           verbose_name="شماره گواهینامه",
                                           validators=certificate_validator)
     rate = models.PositiveSmallIntegerField(verbose_name="امتیاز",
-                                            default=0)
-    availability = models.BooleanField(default=False,
+                                            default=5)
+    availability = models.BooleanField(default=True,
                                        verbose_name="آمادگی برای انتقال")
     vehicle_model = models.CharField(max_length=50,
                              verbose_name="نوع وسیله نقلیه")

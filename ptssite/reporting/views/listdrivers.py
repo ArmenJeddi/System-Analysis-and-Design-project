@@ -4,7 +4,7 @@ from datastore.models import Driver, ProductSubmit, Order
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from authentication.decorators import privileged_required
 
-@privileged_required
+@privileged_required(login_url="/systemmanagement/login/")
 def listdrivers(request):
     if request.method == 'GET':
         

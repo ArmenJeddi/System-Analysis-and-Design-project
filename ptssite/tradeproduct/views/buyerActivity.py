@@ -4,6 +4,7 @@ from datastore.models.product import Product
 from datastore.models.prodsub import ProductSubmit
 from datastore.models.driver import Driver
 import random
+from authentication.decorators import customer_required
 
 def browseProduct(request):
     print('in browse')
@@ -36,6 +37,7 @@ def browseProduct(request):
         return render(request, 'tradeproduct/browse.html', {'form':form})
 
 # must be logged in customer
+@customer_required
 def selectProduct(request, select_id):
     sp = ProductSubmit.objects.get(pk=select_id)
     if request.method == "POST":
@@ -76,7 +78,7 @@ def getMap(drivers, product, option = 1):
         mapping.sort(key=lambda tup: tup[2], reverse=True)
 
     return mapping
-
+@customer_required
 def selectDriver(request):
     if (not 'selected_product' in request.session) or (not 'selected_quantity' in request.session):
         # notification
@@ -113,10 +115,12 @@ def selectDriver(request):
         mapped_driver = getMap(available_drivers, chosenP, option = 1)
         return render(request, 'tradeproduct/driver_list.html', {'driverMap': mapped_driver, 'option':1, 'select_value' : 'قیمت صعودی'})
 
+@customer_required
 def driver_details(request, username):
     driver = get_object_or_404(Driver, pk=username)
     return render(request, 'tradeproduct/driver_details.html', {'driver': driver})
 
+@customer_required
 def confirmIt(request, username):
     print('in confirm it')
     print(dict(request.session))

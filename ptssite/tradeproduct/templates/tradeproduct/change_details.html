@@ -6,6 +6,7 @@
 
 {% block main %}
     <h2>به روز رسانی محصول ثبت شده</h2>
+    {% if activated %}
     <div>
         <form method="POST" action="">
             {% csrf_token %}
@@ -14,4 +15,11 @@
             <button type="submit" onclick="alert('محصول با موفقیت به روز رسانی شد.')">به روز رسانی</button>
         </form>
     </div>
+
+    {% else %}
+        <script>
+            setTimeout(function() { alert('این محصول در حال حاضر غیر فعال است.'); }, 5);
+            window.location.replace("http://stackoverflow.com");
+        </script>
+    {% endif %}
 {% endblock %}

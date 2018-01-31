@@ -1,0 +1,62 @@
+{% extends "navbar_signedin.html" %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href=""> <!-- needs to add the link address for style sheet -->
+    <title>Comment On Driver</title>
+{% endblock %}
+
+{% block main %}
+    <h2>نظر درباره ی راننده</h2>
+    {% if length == 0 %}
+    <div>
+        <h5>مشخصات سفارش</h5>
+        <div>
+            <ul>
+                <li><span>نوع محصول: </span>
+                <span>{{ order.product.product }}</span></li>
+
+                <li><span>نام راننده: </span>
+                <span>{{ order.product.submitter }}</span></li>
+                <li>
+                    <span>نوع ماشین: </span>
+                    <span>{{ order.driver.vehicle_model }}</span>
+                </li>
+
+                <li><span>قیمت مجموع محصول: </span>
+                <span id="product_whole_price"></span></li>
+
+                <li><span>هزینه انتقال: </span>
+                <span>{{ order.driver_cost }}</span></li>
+
+                <li><span>هزینه کلی سفارش: </span>
+                <span id ="total_cost"></span></li>
+
+            </ul>
+        </div>
+
+        <div>
+            <h6>نظر خود را درباره ی این راننده بر اساس این سفارش در کادر زیر وارد نمایید.</h6>
+            <form method="POST" action="">
+                <textarea rows="5" cols="100" name="comment" placeholder = "نظر خود را در اینجا وارد کنید"></textarea>
+
+                <label for="rate">از 1 تا 10 به این راننده چه امتیازی می دهید؟</label>
+                <input type="number" name="rate" min="1" max="10" step="1">
+
+                <button type="submit">ارسال</button>
+            </form>
+        </div>
+
+    </div>
+
+    <script>
+        document.getElementById('product_whole_price').innerHTML = {{ order.quantity }} * {{ order.product.price }}
+        document.getElementById('total_cost').innerHTML = {{ order.quantity }} * {{ order.product.price }} + {{ order.driver_cost }}
+    </script>
+    {% else %}
+        <script>
+            setTimeout(function() { alert('شما قبلا بر اساس این سفارش، به این راننده نظر داده اید.'); }, 5);
+            window.location.replace("http://stackoverflow.com");
+        </script>
+    {% endif %}
+
+{% endblock %}
