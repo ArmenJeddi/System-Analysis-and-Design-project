@@ -23,7 +23,3 @@ class Order(models.Model):
                                          default=False)
     buyer_receipt = models.BooleanField(verbose_name="تحویل خریدار",
                                         default=False)
-    driver_rating = models.PositiveSmallIntegerField(verbose_name=\
-                                                     "امتیاز راننده")
-    seller_rating = models.PositiveSmallIntegerField(verbose_name=\
-                                                     "امتیاز فروشنده")

@@ -5,6 +5,7 @@ from datastore.models.prodsub import ProductSubmit
 from datastore.models.driver import Driver
 from datastore.models.order import Order
 
+import datetime
 import random
 from authentication.decorators import customer_required
 from convertdate import persian
@@ -174,8 +175,7 @@ def driver_details(request, username):
 
 @customer_required
 def confirmIt(request, username):
-    print('in confirm it')
-    print(dict(request.session))
+
     if (not 'selected_product' in request.session) or (not 'selected_quantity' in request.session):
         request.session['browse_notif'] = 1
         return redirect('tradeproduct:browse')
@@ -192,14 +192,20 @@ def confirmIt(request, username):
     product_cost = request.session['selected_quantity'] * product.price
     total_cost = driver_cost + product_cost
 
+    buyer = request.user.unprivilegeduser.customer
     if request.method == 'POST':
         if 'order_confirm' in request.POST:
-            buyer = request.user.unprivilegeduser.customer
+            print('total_cost: ', total_cost)
+            print('balalce: ', buyer.account_balance)
+            if total_cost > buyer.account_balance:
+                request.session['diff_amount'] = total_cost - buyer.account_balance
+                return redirect('finance:deposit')
+
             new_order = Order(buyer = buyer, product = product, driver = driver, quantity = request.session['selected_quantity'],
-                              driver_cost = driver_cost, location = request.POST['buyer_address'], date =  )
+                              driver_cost = driver_cost, location = request.POST['buyer_address'], date = datetime.date.today() )
+            new_order.save()
 
 
-            No
         elif 'order_cancel' in request.POST:
             driver.availability = True
             driver.save()

@@ -2,6 +2,7 @@
 
 {% block head %}
     <link rel="stylesheet" type="text/css" href=""> <!-- needs to add the link address for style sheet -->
+    <title>Confirm</title>
 {% endblock %}
 
 {% block main %}
@@ -73,15 +74,31 @@
         </div>
         <div>
             <span>هزینه کل: </span>
-            <span>{{ total_cost }}</span>
+            <span id = 'totalC'>{{ total_cost }}</span>
         </div>
     </div>
     <div>
         <form method="POST" action="">
             {% csrf_token %}
-            <input type="submit" name="order_confirm" value="خرید" />
+            <label for="buyer_address">آدرس خود را در اینجا وارد کنید.</label>
+            <textarea id = 'adress_B' rows="5" cols="100" name="buyer_address" placeholder = "آدرس خود را در اینجا وارد کنید."></textarea>
+            <input type="submit" name="order_confirm" value="خرید" onClick="return empty()" />
             <input type="submit" name="order_cancel" value="انصراف" />
         </form>
     </div>
+
+    <script>
+
+        function empty() {
+            var x;
+            x = document.getElementById("adress_B").value;
+            if (x == "") {
+                alert("لطفا آدرس خود را وارد کنید.");
+                return false;
+            };
+        }
+
+    </script>
+
 
 {% endblock %}

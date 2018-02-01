@@ -20,7 +20,7 @@ def payorder(request):
         assignedDriver = order.driver
         product_final_price = submittedProduct.quantity * submittedProduct.price
         driver_name = assignedDriver.first_name + " " + assignedDriver.last_name
-        response = render(request, template, context=dict(form=PayForm(), 
+        response = render(request, template, context=dict(form=PayForm(),
                                                             submittedProduct=submittedProduct,
                                                             assignedDriver=assignedDriver,
                                                             product_final_price=product_final_price,
