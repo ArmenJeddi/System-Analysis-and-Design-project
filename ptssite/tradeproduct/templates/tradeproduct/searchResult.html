@@ -1,39 +1,44 @@
 {% extends mytemplate %}
 
 {% block head %}
-    <link rel="stylesheet" type="text/css" href=""> <!-- needs to add the link address for style sheet -->
+    <link rel="stylesheet" type="text/css" href="/static/reporting/styles/listing.css"> <!-- needs to add the link address for style sheet -->
 {% endblock %}
 
 {% block main %}
     <h2>محصولات یافت شده</h2>
     <div>
         {% if searchResult %}
-            <ol>
+
+            <table id="myTable">
+              <thead>
+                <tr class="header">
+                  <th> ردیف </th>
+                  <th> محصول </th>
+                  <th> تاریخ ثبت </th>
+                  <th> نام فروشنده </th>
+                  <th> قیمت(به تومان) </th>
+                  <th> مقدار(به کیلوگرم) </th>
+                  <th> آدرس </th>
+                  <th> انتخاب </th>
+                </tr>
+              </thead>
+              <tbody>
                 {% for product in searchResult %}
-                    <div>
-                        <li><p>{{ product.product }}</p>
-                        <p> <span>در تاریخ:</span>
-                        {{ product.date }} </p>
-                        <p><span>توسط:</span>
-                        {{ product.submitter }} </p>
-                        <p>
-                            <span>قیمت:</span>
-                            {{ product.price }}
-                        </p>
-                        <p>
-                            <span>مقدار:</span>
-                            {{ product.quantity }}
-                        </p>
-                        <p>
-                            <span>آدرس:</span>
-                            {{ product.getProvince }}<br>
-                            {{ product.location }}
-                        </p>
-                        <a href="{% url 'tradeproduct:select' product.id %}"><button>انتخاب</button></a>
-                    </li>
-                    </div>
+                  <tr>
+
+                    <td>{{ product.0 }} </td>
+                    <td>{{ product.1.product }}</td>
+                    <td>{{ product.2.2 }} / {{ product.2.1 }} / {{ product.2.0 }}</td>
+                    <td>{{ product.1.submitter }}</td>
+                    <td>{{ product.1.price }}</td>
+                    <td>{{ product.1.quantity }}</td>
+                    <td>{{ product.1.location }}</td>
+                    <td><a href="{% url 'tradeproduct:select' product.1.id %}"><button>انتخاب</button></a></td>
+                  </tr>
                 {% endfor %}
-            </ol>
+              </tbody>
+            </table>
+
         {% else %}
             <h5>محصولی یافت نشد.</h5>
         {% endif %}

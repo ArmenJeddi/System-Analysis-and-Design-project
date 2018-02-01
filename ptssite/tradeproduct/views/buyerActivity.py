@@ -38,8 +38,6 @@ def browseProduct(request):
 
         searchResult = []
 
-        print(d)
-
         if 'province' in d.keys():
             for prod in filtered:
                 if prod.product.__str__() == d['product'][0] and prod.active:
@@ -50,10 +48,19 @@ def browseProduct(request):
                 if prod.product.__str__() == d['product'][0] and prod.active:
                     searchResult.append(prod)
 
+        final_result  = []
+        i = 1
+        for found in searchResult:
+            prod_tarikh = found.date
+            tarikh = persian.from_gregorian(prod_tarikh.year, prod_tarikh.month, prod_tarikh.day)
+            final_result.append((i ,found, tarikh))
+            i += 1
+
         my_template = "navbar.html"
         if request.user.is_authenticated():
             my_template = "navbar_signedin.html"
-        return render(request, 'tradeproduct/searchResult.html', {'searchResult': searchResult, 'mytemplate': my_template})
+
+        return render(request, 'tradeproduct/searchResult.html', {'searchResult': final_result, 'mytemplate': my_template})
 
     else:
         productList = []
@@ -133,6 +140,12 @@ def selectDriver(request):
                 if province in driver.province_list_keys():
                     available_drivers.append(driver)
 
+    if len(available_drivers) == 0:
+        chosenP.quantity += request.session['selected_quantity']
+        request.session.pop('selected_product', None)
+        request.session.pop('selected_quantity', None)
+        chosenP.save()
+
     if request.method == 'POST':
 
         if 'reject_and_browse_again' in request.POST:
@@ -201,6 +214,9 @@ def confirmIt(request, username):
                 return redirect('finance:deposit')
 
             buyer.account_balance -= total_cost
+            buyer.save()
+            product.save()
+
             new_order = Order(buyer = buyer, product = product, driver = driver, quantity = request.session['selected_quantity'],
                               driver_cost = driver_cost, location = request.POST['buyer_address'], date = datetime.date.today() )
             new_order.save()
