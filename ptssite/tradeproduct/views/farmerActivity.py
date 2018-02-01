@@ -13,6 +13,7 @@ def submitProduct(request):
         form = SubmitForm(request.POST)
         if form.is_valid():
             subprod = form.instance
+            subprod.quantity = request.POST['quantity']
             subprod.submitter = request.user.unprivilegeduser.customer
             today = datetime.date.today()
             subprod.date = today
@@ -44,7 +45,7 @@ def submit_details(request, prodsub_id):
 @customer_required
 def delete_submittedProduct(request, delete_id):
     if request.method == "POST":
-        ps = ProductSubmit.objects.get(pk=delete_id)
+        ps = get_object_or_404(ProductSubmit, pk=delete_id)
         ps.delete()
         # send a message that it was successfully deleted
 
@@ -72,4 +73,5 @@ def change_details(request, change_id):
         form = SubmitForm(instance=subprod)
         form.fields['product'].widget.attrs['disabled'] = 'disabled'
         form.fields['province'].widget.attrs['disabled'] = 'disabled'
-        return render(request, 'tradeproduct/change_details.html', {'form': form, 'subp_id': change_id, 'activated': subprod.active})
+        return render(request, 'tradeproduct/change_details.html', {'form': form, 'subp_id': change_id,
+                                                                    'activated': subprod.active, 'meghdar': subprod.quantity})

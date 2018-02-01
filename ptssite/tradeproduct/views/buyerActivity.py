@@ -7,24 +7,44 @@ import random
 from authentication.decorators import customer_required
 
 def browseProduct(request):
-    print('in browse')
-    print(dict(request.session))
     if request.method == "POST":
         d = dict(request.POST)
+
+        from_ = request.POST['from']
+        to_ = request.POST['to']
+
+        lower_bound = 0
+        if len(from_) > 0:
+            lower_bound = int(from_)
+
+        upper_bound = -1
+        if len(to_) > 0:
+            upper_bound = int(to_)
+
         allSubmitted = ProductSubmit.objects.all()
+        filtered = []
+
+        for prod in allSubmitted:
+            if prod.price >= lower_bound:
+                if upper_bound > -1:
+                    if prod.price <= upper_bound:
+                        filtered.append(prod)
+                else:
+                    filtered.append(prod)
+
         searchResult = []
 
+        print(d)
+
         if 'province' in d.keys():
-            for prod in allSubmitted:
-                if prod.product.__str__() == d['product'][0]:
-                    if prod.price < int(d['to'][0]) and prod.price > int(d['from'][0]):
-                        if prod.province in d['province']:
-                            searchResult.append(prod)
-        else:
-            for prod in allSubmitted:
-                if prod.product.__str__() == d['product'][0]:
-                    if prod.price < int(d['to'][0]) and prod.price > int(d['from'][0]):
+            for prod in filtered:
+                if prod.product.__str__() == d['product'][0] and prod.active:
+                    if prod.province in d['province']:
                         searchResult.append(prod)
+        else:
+            for prod in filtered:
+                if prod.product.__str__() == d['product'][0] and prod.active:
+                    searchResult.append(prod)
 
         return render(request, 'tradeproduct/searchResult.html', {'searchResult': searchResult})
 
@@ -34,7 +54,16 @@ def browseProduct(request):
             productList.append((prod.pk , prod.name))
         form = BrowseForm(productList)
 
-        return render(request, 'tradeproduct/browse.html', {'form':form})
+        browse_notify = False
+        if 'browse_notif' in request.session:
+            browse_notify = True
+            request.session.pop('browse_notif', None)
+
+        my_template = "navbar.html"
+        if request.user.is_authenticated():
+            my_template ="navbar_signedin.html"
+
+        return render(request, 'tradeproduct/browse.html', {'form':form, 'my_template': my_template, 'browse_notify': browse_notify})
 
 # must be logged in customer
 @customer_required
@@ -46,20 +75,20 @@ def selectProduct(request, select_id):
         select_quantity = int(request.POST['rangeInput'])
         request.session['selected_product']= select_id
         request.session['selected_quantity'] = select_quantity
-        ### this will change --> prob : we should not delete
-        new_quantity = sp.quantity - select_quantity
         sp.quantity -= select_quantity
         sp.save()
         return redirect('tradeproduct:selectDriver')
 
     else:
-
+        if ('selected_product' in request.session) or ('selected_quantity' in request.session):
+            request.session['print_driver_notification'] = 1
+            return redirect('tradeproduct:selectDriver')
         if sp.quantity % 2 == 0:
             half = int(sp.quantity / 2)
         else:
             half = int((sp.quantity+1) / 2)
 
-        return render(request, 'tradeproduct/selectProduct.html', {'selectedProduct': sp, 'halfvalue': half })
+        return render(request, 'tradeproduct/selectProduct.html', {'selectedProduct': sp, 'halfvalue': half, 'activiate': sp.active })
 
 def compute_cost(driver, product):
     return random.randint(50,300)
@@ -78,10 +107,11 @@ def getMap(drivers, product, option = 1):
         mapping.sort(key=lambda tup: tup[2], reverse=True)
 
     return mapping
+
 @customer_required
 def selectDriver(request):
     if (not 'selected_product' in request.session) or (not 'selected_quantity' in request.session):
-        # notification
+        request.session['browse_notif'] = 1
         return redirect('tradeproduct:browse')
 
     chosen_capacity = request.session['selected_quantity']
@@ -97,8 +127,13 @@ def selectDriver(request):
                     available_drivers.append(driver)
 
     if request.method == 'POST':
-        print('HI')
-        print(request.POST)
+
+        if 'reject_and_browse_again' in request.POST:
+            chosenP.quantity += request.session['selected_quantity']
+            chosenP.save()
+            request.session.pop('selected_product', None)
+            request.session.pop('selected_quantity', None)
+            return redirect('tradeproduct:browse')
 
         option = int(request.POST['rule_select'])
         mapped_driver = getMap(available_drivers, chosenP, option=option)
@@ -110,22 +145,33 @@ def selectDriver(request):
         else:
             select_value = 'امتیاز'
         print(select_value)
-        return render(request, 'tradeproduct/driver_list.html', {'driverMap': mapped_driver, 'option': option, 'select_value': select_value})
+        return render(request, 'tradeproduct/driver_list.html', {'driverMap': mapped_driver, 'option': option,
+                                                                 'select_value': select_value})
     else:
+        driver_notif = False
+        if 'print_driver_notification' in request.session:
+            driver_notif = True
+            request.session.pop('print_driver_notification', None)
         mapped_driver = getMap(available_drivers, chosenP, option = 1)
-        return render(request, 'tradeproduct/driver_list.html', {'driverMap': mapped_driver, 'option':1, 'select_value' : 'قیمت صعودی'})
+        return render(request, 'tradeproduct/driver_list.html', {'driverMap': mapped_driver, 'option':1,
+                                                                 'select_value' : 'قیمت صعودی', 'driver_notif': driver_notif})
+
 
 @customer_required
 def driver_details(request, username):
+    if (not 'selected_product' in request.session) or (not 'selected_quantity' in request.session):
+        request.session['browse_notif'] = 1
+        return redirect('tradeproduct:browse')
     driver = get_object_or_404(Driver, pk=username)
     return render(request, 'tradeproduct/driver_details.html', {'driver': driver})
+
 
 @customer_required
 def confirmIt(request, username):
     print('in confirm it')
     print(dict(request.session))
     if (not 'selected_product' in request.session) or (not 'selected_quantity' in request.session):
-        #notification
+        request.session['browse_notif'] = 1
         return redirect('tradeproduct:browse')
 
     driver = get_object_or_404(Driver, pk=username)
