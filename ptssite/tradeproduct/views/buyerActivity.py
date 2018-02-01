@@ -172,13 +172,14 @@ def driver_details(request, username):
     driver = get_object_or_404(Driver, pk=username)
     return render(request, 'tradeproduct/driver_details.html', {'driver': driver})
 
-
 @customer_required
 def confirmIt(request, username):
 
     if (not 'selected_product' in request.session) or (not 'selected_quantity' in request.session):
         request.session['browse_notif'] = 1
         return redirect('tradeproduct:browse')
+    print('in confirm it')
+    print(dict(request.session))
 
     driver = get_object_or_404(Driver, pk=username)
     driver.availability = False
@@ -195,16 +196,19 @@ def confirmIt(request, username):
     buyer = request.user.unprivilegeduser.customer
     if request.method == 'POST':
         if 'order_confirm' in request.POST:
-            print('total_cost: ', total_cost)
-            print('balalce: ', buyer.account_balance)
             if total_cost > buyer.account_balance:
                 request.session['diff_amount'] = total_cost - buyer.account_balance
                 return redirect('finance:deposit')
 
+            buyer.account_balance -= total_cost
             new_order = Order(buyer = buyer, product = product, driver = driver, quantity = request.session['selected_quantity'],
                               driver_cost = driver_cost, location = request.POST['buyer_address'], date = datetime.date.today() )
             new_order.save()
-
+            request.session.pop('selected_product', None)
+            request.session.pop('selected_quantity', None)
+            request.session.pop('driver_id', None)
+            print(dict(request.session))
+            return redirect('reporting:listpurchases')
 
         elif 'order_cancel' in request.POST:
             driver.availability = True
@@ -218,4 +222,5 @@ def confirmIt(request, username):
     else:
         return render(request, 'tradeproduct/confirm_order.html', {'driver': driver, 'product': (product, tarikh),
                                                               'quantity': request.session['selected_quantity'], 'cost': product_cost,
-                                                              'driver_cost':driver_cost, 'total_cost': total_cost})
+                                                              'driver_cost':driver_cost, 'total_cost': total_cost,
+                                                                   'balance': buyer.account_balance})

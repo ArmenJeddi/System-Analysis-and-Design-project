@@ -6,5 +6,4 @@ app_name = 'finance'
 
 urlpatterns = [
     path('depositmoney/', views.depositmoney, name = 'deposit'),
-    path('payorder/', views.payorder , name = 'payorder' )
 ]
