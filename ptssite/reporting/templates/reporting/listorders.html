@@ -1,7 +1,7 @@
 {% extends "systemmanagement/base.html" %}
 
 {% block head %}
-  <link rel="stylesheet" type="text/css" href="/static/styles/listing.css">
+  <link rel="stylesheet" type="text/css" href="/static/reporting/styles/listing.css">
 {% endblock %}
 
 {% block main %}
@@ -24,14 +24,14 @@
       <tbody>
         {% for order in orders %}
           <tr>
-            <td>{{ forloop.counter }} </td>
-            <td>{{ order.pk }}</td>
-            <td>{{ order.product.product.name }}</td>
-            <td>{{ order.product.price }}</td>
-            <td>{{ order.buyer.username }}</td>
-            <td>{{ order.product.submitter.username }}</td>
-            <td>{{ order.driver.username }}</td>
-            <td>{{ order.date }}</td>
+            <td>{{ order.0 }} </td>
+            <td>{{ order.1.pk }}</td>
+            <td>{{ order.1.product.product.name }}</td>
+            <td>{{ order.1.product.price }}</td>
+            <td>{{ order.1.buyer.username }}</td>
+            <td>{{ order.1.product.submitter.username }}</td>
+            <td>{{ order.1.driver.username }}</td>
+            <td>{{ order.1.date }}</td>
           </tr>
         {% endfor %}
       </tbody>

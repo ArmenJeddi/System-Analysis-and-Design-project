@@ -19,7 +19,7 @@ def submitProduct(request):
             subprod.date = today
             subprod.active = True
             subprod.save()
-            return redirect('tradeproduct:update')
+            return redirect('reporting:prod_list')
 
     else:
         form = SubmitForm()
@@ -32,7 +32,7 @@ def updateProducts(request):
     list_with_dates = []
     for sp in submittedList:
         list_with_dates.append((sp, persian.from_gregorian(sp.date.year, sp.date.month, sp.date.day)))
-    print(list_with_dates)
+    # print(list_with_dates)
     return render(request, 'tradeproduct/updateSubmittedProduct.html', {'submittedList': list_with_dates})
 
 @customer_required
@@ -49,7 +49,7 @@ def delete_submittedProduct(request, delete_id):
         ps.delete()
         # send a message that it was successfully deleted
 
-    return redirect('/tradeproduct/updateSubmittedProduct/')
+    return redirect('reporting:prod_list')
 
 @customer_required
 def change_details(request, change_id):
@@ -66,7 +66,7 @@ def change_details(request, change_id):
             subprod.date = today
             subprod.save()
 
-        return redirect('/tradeproduct/updateSubmittedProduct/')
+        return redirect('reporting:prod_list')
 
     else:
         subprod = get_object_or_404(ProductSubmit, pk=change_id)

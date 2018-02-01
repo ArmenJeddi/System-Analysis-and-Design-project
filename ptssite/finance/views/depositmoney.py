@@ -17,8 +17,12 @@ class DepositForm(forms.Form):
 @customer_required
 def depositmoney(request):
     if request.method == 'GET':
+        diff_amount = 0
+        if 'diff_amount' in request.session:
+            diff_amount = request.session['diff_amount']
+            request.session.pop('diff_amount', None)
         current_amount = Customer.objects.get(pk=request.session['username']).account_balance
-        response = render(request, template, context=dict(form=DepositForm(), current_amount=current_amount))
+        response = render(request, template, context=dict(form=DepositForm(), current_amount=current_amount, diff_amount = diff_amount))
     elif request.method == 'POST':
         form = DepositForm(request.POST)
         if form.is_valid():

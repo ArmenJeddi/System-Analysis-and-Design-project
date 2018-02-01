@@ -3,8 +3,12 @@ from ..forms.browseForm import BrowseForm
 from datastore.models.product import Product
 from datastore.models.prodsub import ProductSubmit
 from datastore.models.driver import Driver
+from datastore.models.order import Order
+
+import datetime
 import random
 from authentication.decorators import customer_required
+from convertdate import persian
 
 def browseProduct(request):
     if request.method == "POST":
@@ -34,8 +38,6 @@ def browseProduct(request):
 
         searchResult = []
 
-        print(d)
-
         if 'province' in d.keys():
             for prod in filtered:
                 if prod.product.__str__() == d['product'][0] and prod.active:
@@ -46,7 +48,19 @@ def browseProduct(request):
                 if prod.product.__str__() == d['product'][0] and prod.active:
                     searchResult.append(prod)
 
-        return render(request, 'tradeproduct/searchResult.html', {'searchResult': searchResult})
+        final_result  = []
+        i = 1
+        for found in searchResult:
+            prod_tarikh = found.date
+            tarikh = persian.from_gregorian(prod_tarikh.year, prod_tarikh.month, prod_tarikh.day)
+            final_result.append((i ,found, tarikh))
+            i += 1
+
+        my_template = "navbar.html"
+        if request.user.is_authenticated():
+            my_template = "navbar_signedin.html"
+
+        return render(request, 'tradeproduct/searchResult.html', {'searchResult': final_result, 'mytemplate': my_template})
 
     else:
         productList = []
@@ -126,6 +140,12 @@ def selectDriver(request):
                 if province in driver.province_list_keys():
                     available_drivers.append(driver)
 
+    if len(available_drivers) == 0:
+        chosenP.quantity += request.session['selected_quantity']
+        request.session.pop('selected_product', None)
+        request.session.pop('selected_quantity', None)
+        chosenP.save()
+
     if request.method == 'POST':
 
         if 'reject_and_browse_again' in request.POST:
@@ -165,14 +185,14 @@ def driver_details(request, username):
     driver = get_object_or_404(Driver, pk=username)
     return render(request, 'tradeproduct/driver_details.html', {'driver': driver})
 
-
 @customer_required
 def confirmIt(request, username):
-    print('in confirm it')
-    print(dict(request.session))
+
     if (not 'selected_product' in request.session) or (not 'selected_quantity' in request.session):
         request.session['browse_notif'] = 1
         return redirect('tradeproduct:browse')
+    print('in confirm it')
+    print(dict(request.session))
 
     driver = get_object_or_404(Driver, pk=username)
     driver.availability = False
@@ -180,11 +200,32 @@ def confirmIt(request, username):
     request.session['driver_id'] = username
     product = get_object_or_404(ProductSubmit, pk=request.session['selected_product'])
 
+    prod_tarikh = product.date
+    tarikh = persian.from_gregorian(prod_tarikh.year, prod_tarikh.month, prod_tarikh.day)
+    driver_cost = compute_cost(driver, product)
+    product_cost = request.session['selected_quantity'] * product.price
+    total_cost = driver_cost + product_cost
+
+    buyer = request.user.unprivilegeduser.customer
     if request.method == 'POST':
         if 'order_confirm' in request.POST:
-            # add some stuff to session
-            # and call berjis
-            None
+            if total_cost > buyer.account_balance:
+                request.session['diff_amount'] = total_cost - buyer.account_balance
+                return redirect('finance:deposit')
+
+            buyer.account_balance -= total_cost
+            buyer.save()
+            product.save()
+
+            new_order = Order(buyer = buyer, product = product, driver = driver, quantity = request.session['selected_quantity'],
+                              driver_cost = driver_cost, location = request.POST['buyer_address'], date = datetime.date.today() )
+            new_order.save()
+            request.session.pop('selected_product', None)
+            request.session.pop('selected_quantity', None)
+            request.session.pop('driver_id', None)
+            print(dict(request.session))
+            return redirect('reporting:listpurchases')
+
         elif 'order_cancel' in request.POST:
             driver.availability = True
             driver.save()
@@ -195,9 +236,14 @@ def confirmIt(request, username):
             request.session.pop('driver_id', None)
             return redirect('tradeproduct:browse')
     else:
-        driver_cost = compute_cost(driver, product)
-        product_cost = request.session['selected_quantity'] * product.price
-        total_cost = driver_cost + product_cost
-        return render(request, 'tradeproduct/confirm_order.html', {'driver': driver, 'product': product,
+        return render(request, 'tradeproduct/confirm_order.html', {'driver': driver, 'product': (product, tarikh),
                                                               'quantity': request.session['selected_quantity'], 'cost': product_cost,
-                                                              'driver_cost':driver_cost, 'total_cost': total_cost})
+                                                              'driver_cost':driver_cost, 'total_cost': total_cost,
+                                                                   'balance': buyer.account_balance})
+
+@customer_required
+def order_detail_buyer(request, order_id):
+    order = get_object_or_404(Order, pk=order_id)
+    prod_tarikh = order.date
+    tarikh = persian.from_gregorian(prod_tarikh.year, prod_tarikh.month, prod_tarikh.day)
+    return render(request, 'tradeproduct/order_detail_buyer.html', {'order': order, 'tarikh': tarikh})

@@ -2,6 +2,7 @@
 
 {% block head %}
     <link rel="stylesheet" type="text/css" href=""> <!-- needs to add the link address for style sheet -->
+    <title>Confirm</title>
 {% endblock %}
 
 {% block main %}
@@ -13,15 +14,15 @@
             <ul>
                 <li>
                     <span>نام فروشنده: </span>
-                    {{ product.submitter }}
+                    {{ product.0.submitter }}
                 </li>
                 <li>
                     <span>نوع محصول: </span>
-                    {{ product.product }}
+                    {{ product.0.product }}
                 </li>
                 <li>
                     <span>تاریخ ثبت محصول: </span>
-                    {{ product.date }}
+                    {{ product.1.2 }} / {{ product.1.1 }} / {{ product.1.0 }}
                 </li>
                 <li>
                     <span>مقدار سفارش داده شده: </span>
@@ -29,7 +30,7 @@
                 </li>
                 <li>
                     <span>قیمت واحد: </span>
-                    {{ product.price }}
+                    {{ product.0.price }}
                 </li>
                 <li>
                     <span>قیمت مجموع:</span>
@@ -37,11 +38,11 @@
                 </li>
                 <li>
                     <span>استان: </span>
-                    {{ product.getProvince }}
+                    {{ product.0.getProvince }}
                 </li>
                 <li>
                     <span>آدرس: </span>
-                    {{ product.location|linebreaksbr }}
+                    {{ product.0.location|linebreaksbr }}
                 </li>
             </ul>
         </div>
@@ -73,15 +74,34 @@
         </div>
         <div>
             <span>هزینه کل: </span>
-            <span>{{ total_cost }}</span>
+            <span id = 'totalC'>{{ total_cost }}</span> <br>
+            <span>موجودی شما: </span>
+            <span>{{ balance }}</span>
+
         </div>
     </div>
     <div>
-        <form method="POST", action="">
+        <form method="POST" action="">
             {% csrf_token %}
-            <input type="submit" name="order_confirm" value="خرید" />
+            <label for="buyer_address">آدرس خود را در اینجا وارد کنید.</label>
+            <textarea id = 'adress_B' rows="5" cols="100" name="buyer_address" placeholder = "آدرس خود را در اینجا وارد کنید."></textarea>
+            <input type="submit" name="order_confirm" value="خرید" onClick="return empty()" />
             <input type="submit" name="order_cancel" value="انصراف" />
         </form>
     </div>
+
+    <script>
+
+        function empty() {
+            var x;
+            x = document.getElementById("adress_B").value;
+            if (x == "") {
+                alert("لطفا آدرس خود را وارد کنید.");
+                return false;
+            };
+        }
+
+    </script>
+
 
 {% endblock %}

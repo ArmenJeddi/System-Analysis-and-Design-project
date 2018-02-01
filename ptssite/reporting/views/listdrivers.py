@@ -8,7 +8,11 @@ from authentication.decorators import privileged_required
 def listdrivers(request):
     if request.method == 'GET':
         
-        driver_list = Driver.objects.all()
+        temp_list = Driver.objects.all()
+        driver_list = [[0 for x in range(2)] for y in range(len(temp_list))]
+        for i in range(0, len(temp_list)):
+            driver_list[i][0] = i + 1
+            driver_list[i][1] = temp_list[i]
         page = request.GET.get('page')
 
         paginator = Paginator(driver_list, 2)

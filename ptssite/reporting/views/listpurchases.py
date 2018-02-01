@@ -6,6 +6,8 @@ from authentication.decorators import customer_required
 from django import forms
 from django.core.exceptions import ValidationError
 
+from convertdate import persian
+
 template = 'reporting/listpurchases.html'
 
 class ReceptionForm(forms.Form):
@@ -16,7 +18,18 @@ class ReceptionForm(forms.Form):
 def listpurchases(request):
     if request.method == 'GET':
         
-        purchase_list = Order.objects.filter(buyer=request.user.username)
+        temp_list = Order.objects.filter(buyer=request.user.username)
+        purchase_list = [[0 for x in range(3)] for y in range(len(temp_list))]
+        for i in range(0, len(temp_list)):
+            purchase_list[i][0] = i + 1
+            purchase_list[i][1] = temp_list[i]
+            tarikh = persian.from_gregorian(temp_list[i].date.year, temp_list[i].date.month, temp_list[i].date.day)
+            purchase_list[i][2] = tarikh
+
+        print(len(temp_list))
+        print(purchase_list[0][1].driver_receipt)
+        print(purchase_list[0][1].buyer_receipt)
+
         page = request.GET.get('page')
 
         paginator = Paginator(purchase_list, 2)
