@@ -1,11 +1,152 @@
 {% extends "navbar.html" %}
 
+{% block head %}
+<link rel="stylesheet" type="text/css" href="/static/useraccountmanagement/styles/register.css">
+{% endblock %}
 {% block main %}
 <form action="/useraccountmanagement/registration/driver/" method="post">
-  {{ form.as_p }}
+  <table>
+    <tr><th><label for="id_first_name">نام:</label></th><td><input type="text" name="first_name" maxlength="20" required id="id_first_name" /></td></tr>
+    <tr><th><label for="id_last_name">نام خانوادگی:</label></th><td><input type="text" name="last_name" maxlength="20" required id="id_last_name" /></td></tr>
+    <tr><th><label for="id_username">نام کاربری:</label></th><td><input type="text" name="username" maxlength="200" required id="id_username" /></td></tr>
+    <tr><th><label for="id_password">گذرواژه:</label></th><td><input type="password" name="password" maxlength="200" required id="id_password" /></td></tr>
+    <tr><th><label for="id_password2">تکرار گذرواژه:</label></th><td><input type="password" name="password2" maxlength="200" required id="id_password2" /></td></tr>
+    <tr><th><label for="id_national_id">کد ملی:</label></th><td><input type="text" name="national_id" maxlength="10" required id="id_national_id" /></td></tr>
+    <tr><th><label for="id_phone_number">شماره تلفن همراه:</label></th><td><input type="text" name="phone_number" maxlength="11" required id="id_phone_number" /></td></tr>
+    <tr><th><label for="id_account_number">شماره کارت:</label></th><td><input type="text" name="account_number" maxlength="16" required id="id_account_number" /></td></tr>
+    <tr><th><label for="id_license_plate">شماره پلاک:</label></th><td><input type="text" name="license_plate" maxlength="8" required id="id_license_plate" /></td></tr>
+    <tr><th><label for="id_certificate_number">شماره گواهینامه:</label></th><td><input type="text" name="certificate_number" maxlength="17" required id="id_certificate_number" /></td></tr>
+  </table>
+  <p><label>از چه مناطقی درخواست جا به جایی می پذیرید؟</label> <ul id="id_regions">
+      <li><label for="id_regions_0"><input type="checkbox" name="regions" value="east_azerbaijan" id="id_regions_0" />
+	  آذربایجان شرقی</label>
+
+      </li>
+      <li><label for="id_regions_1"><input type="checkbox" name="regions" value="west_azerbaijan" id="id_regions_1" />
+	  آذربایجان غربی</label>
+
+      </li>
+      <li><label for="id_regions_2"><input type="checkbox" name="regions" value="ardabil" id="id_regions_2" />
+	  اردبیل</label>
+
+      </li>
+      <li><label for="id_regions_3"><input type="checkbox" name="regions" value="isfahan" id="id_regions_3" />
+	  اصفهان</label>
+
+      </li>
+      <li><label for="id_regions_4"><input type="checkbox" name="regions" value="alborz" id="id_regions_4" />
+	  البرز</label>
+
+      </li>
+      <li><label for="id_regions_5"><input type="checkbox" name="regions" value="ilam" id="id_regions_5" />
+	  ایلام</label>
+
+      </li>
+      <li><label for="id_regions_6"><input type="checkbox" name="regions" value="bushehr" id="id_regions_6" />
+	  بوشهر</label>
+
+      </li>
+      <li><label for="id_regions_7"><input type="checkbox" name="regions" value="tehran" id="id_regions_7" />
+	  تهران</label>
+
+      </li>
+      <li><label for="id_regions_8"><input type="checkbox" name="regions" value="chaharmahal_and_bakhtiari" id="id_regions_8" />
+	  چهارمحال و بختیاری</label>
+
+      </li>
+      <li><label for="id_regions_9"><input type="checkbox" name="regions" value="south_khorasan" id="id_regions_9" />
+	  خراسان جنوبی</label>
+
+      </li>
+      <li><label for="id_regions_10"><input type="checkbox" name="regions" value="razavi_khorasan" id="id_regions_10" />
+	  خراسان رضوی</label>
+
+      </li>
+      <li><label for="id_regions_11"><input type="checkbox" name="regions" value="north_khorasan" id="id_regions_11" />
+	  خراسان شمالی</label>
+
+      </li>
+      <li><label for="id_regions_12"><input type="checkbox" name="regions" value="khuzestan" id="id_regions_12" />
+	  خوزستان</label>
+
+      </li>
+      <li><label for="id_regions_13"><input type="checkbox" name="regions" value="zanjan" id="id_regions_13" />
+	  زنجان</label>
+
+      </li>
+      <li><label for="id_regions_14"><input type="checkbox" name="regions" value="semnan" id="id_regions_14" />
+	  سمنان</label>
+
+      </li>
+      <li><label for="id_regions_15"><input type="checkbox" name="regions" value="sistan_and_baluchestan" id="id_regions_15" />
+	  سیستان و بلوچستان</label>
+
+      </li>
+      <li><label for="id_regions_16"><input type="checkbox" name="regions" value="fars" id="id_regions_16" />
+	  فارس</label>
+
+      </li>
+      <li><label for="id_regions_17"><input type="checkbox" name="regions" value="qazvin" id="id_regions_17" />
+	  قزوین</label>
+
+      </li>
+      <li><label for="id_regions_18"><input type="checkbox" name="regions" value="qom" id="id_regions_18" />
+	  قم</label>
+
+      </li>
+      <li><label for="id_regions_19"><input type="checkbox" name="regions" value="kurdistan" id="id_regions_19" />
+	  کردستان</label>
+
+      </li>
+      <li><label for="id_regions_20"><input type="checkbox" name="regions" value="kerman" id="id_regions_20" />
+	  کرمان</label>
+
+      </li>
+      <li><label for="id_regions_21"><input type="checkbox" name="regions" value="kermanshah" id="id_regions_21" />
+	  کرمانشاه</label>
+
+      </li>
+      <li><label for="id_regions_22"><input type="checkbox" name="regions" value="kohgiluyeh_and_boyer_ahmad" id="id_regions_22" />
+	  کهگیلویه و بویراحمد</label>
+
+      </li>
+      <li><label for="id_regions_23"><input type="checkbox" name="regions" value="golestan" id="id_regions_23" />
+	  گلستان</label>
+
+      </li>
+      <li><label for="id_regions_24"><input type="checkbox" name="regions" value="gilan" id="id_regions_24" />
+	  گیلان</label>
+
+      </li>
+      <li><label for="id_regions_25"><input type="checkbox" name="regions" value="lorestan" id="id_regions_25" />
+	  لرستان</label>
+
+      </li>
+      <li><label for="id_regions_26"><input type="checkbox" name="regions" value="mazandaran" id="id_regions_26" />
+	  مازندران</label>
+
+      </li>
+      <li><label for="id_regions_27"><input type="checkbox" name="regions" value="markazi" id="id_regions_27" />
+	  مرکزی</label>
+
+      </li>
+      <li><label for="id_regions_28"><input type="checkbox" name="regions" value="hormozgan" id="id_regions_28" />
+	  هرمزگان</label>
+
+      </li>
+      <li><label for="id_regions_29"><input type="checkbox" name="regions" value="hamadan" id="id_regions_29" />
+	  همدان</label>
+
+      </li>
+      <li><label for="id_regions_30"><input type="checkbox" name="regions" value="yazd" id="id_regions_30" />
+	  یزد</label>
+
+      </li>
+  </ul></p>
   <section>
     قوانین و مقررات
   </section>
+  <p><label for="id_license_agreement">شرایط و ضوابط مذکور را قبول دارم:</label> <input type="checkbox" name="license_agreement" required id="id_license_agreement" /></p>
   <input type="submit" value="ثبت نام">
 </form>
 {% endblock %}

@@ -1,0 +1,24 @@
+main p {
+    width: 200px;
+}
+main a {
+    background-color: darkseagreen;
+    padding: 20px;
+    display: block;
+    border: 2px solid black;
+    text-decoration: none;
+}
+main a:hover {
+    background-color: lightgreen;
+}
+main form {
+    margin: 3% 37%;
+}
+input[type=submit] {
+    border-style: none;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+input[type=submit]:hover {
+    background-color: Azure;
+}

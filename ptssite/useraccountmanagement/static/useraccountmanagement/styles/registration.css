@@ -1,0 +1,16 @@
+main ul {
+    display: block;
+    margin: 10% 38%;
+}
+main li {
+    list-style-type: none;
+    height: 50px;
+    margin: 10% 0;
+}
+main li a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    background-color: darkseagreen;
+    padding: 10px;
+}

@@ -36,13 +36,12 @@ class UserForm(ModelForm):
             self.cleaned_data['password'] = self.instance.password
             
 class DriverForm(UserForm):
-    field_order = UserForm.field_order + ['license_plate', 'certificate_number',
-                                          'regions', 'availability']
+    field_order = UserForm.field_order + ['license_plate',
+                                          'certificate_number', 'regions']
     class Meta(UserForm.Meta):
         model = Driver
         fields = UserForm.Meta.fields + ['license_plate',
-                                         'certificate_number',
-                                         'availability']
+                                         'certificate_number']
     regions = MultipleChoiceField(label='از چه مناطقی درخواست جا به جایی می پذیرید؟',
                                   choices=driver.provinces,
                                   widget=CheckboxSelectMultiple)
@@ -61,7 +60,7 @@ class DriverForm(UserForm):
 class CustomerForm(UserForm):
     class Meta(UserForm.Meta):
         model = Customer
-        
+
 class UpdateProfileView(UnprivilegedRequired, UpdateView):
     template_name = 'useraccountmanagement/settings.html'
     success_url = '/useraccountmanagement/updateprofilesuccess/'
