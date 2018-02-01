@@ -15,8 +15,7 @@
         <tr class="header">
           <th> ردیف </th>
           <th> محصول </th>
-          <th> وزن </th>
-          <th> قیمت </th>
+          <th> جزییات سفارش </th>
           <th> وضعیت </th>
         </tr>
       </thead>
@@ -24,9 +23,8 @@
         {% for order in purchases %}
           <tr>
             <td>{{ order.0 }}</td>
-            <td>{{ order.1.product.product.name }}</td>
-            <td>{{ order.1.quantity }}</td>
-            <td>{{ order.1.product.price }}</td>
+            <td>{{ order.1.product.product }}</td>
+            <td><a href="{% url 'order_detaul' order.1.id %}"></a></td>
             <td class="dropdown">
                 <div class="center">
                 {% if order.1.buyer_receipt %}
