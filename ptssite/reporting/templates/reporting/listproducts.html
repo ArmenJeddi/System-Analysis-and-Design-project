@@ -7,6 +7,7 @@
 {% block main %}
     <h2> فهرست محصولات ثبت شده شما </h2>
     <input type="text" id="myInput" onkeyup="myFunction()" placeholder="جستجوی محصول ...">
+    <a href="{% url 'tradeproduct:submit' %}"><button>بازگشت به صفحه ی ثبت محصول</button> </a>
 
     <table id="myTable">
       <thead>

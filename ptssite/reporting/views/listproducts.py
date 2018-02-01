@@ -18,10 +18,10 @@ def listproducts(request):
 
         paginator = Paginator(list_with_dates, 2)
         try:
-            products = paginator.get_page(page)
+            list_with_dates = paginator.get_page(page)
         except PageNotAnInteger:
-            products = paginator.get_page(1)
+            list_with_dates = paginator.get_page(1)
         except EmptyPage:
-            products = paginator.get_page(paginator.num_pages)
+            list_with_dates = paginator.get_page(paginator.num_pages)
 
         return render(request, 'reporting/listproducts.html', { 'products': list_with_dates })

@@ -10,9 +10,6 @@ def commentOnFarmer(request, order_id):
 
     rel_order = get_object_or_404(Order, pk = order_id)
 
-    check if order is received ??
-    print its dates
-
     if request.method == 'POST':
         None
     else:
@@ -23,10 +20,7 @@ def commentOnFarmer(request, order_id):
 
 @customer_required
 def commentOnDriver(request, order_id):
-
     rel_order = get_object_or_404(Order, pk = order_id)
-    check if order is received ??
-    print its dates
     if request.method == 'POST':
         None
     else:
