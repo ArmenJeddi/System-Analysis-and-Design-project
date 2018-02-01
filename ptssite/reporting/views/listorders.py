@@ -8,7 +8,11 @@ from authentication.decorators import privileged_required
 def listorders(request):
     if request.method == 'GET':
         
-        order_list = Order.objects.all()
+        temp_list = Order.objects.all()
+        order_list = [[0 for x in range(2)] for y in range(len(temp_list))]
+        for i in range(0, len(temp_list)):
+            order_list[i][0] = i + 1
+            order_list[i][1] = temp_list[i]
         page = request.GET.get('page')
 
         paginator = Paginator(order_list, 2)

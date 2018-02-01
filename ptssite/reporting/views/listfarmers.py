@@ -20,8 +20,11 @@ def listfarmers(request):
             set_seen[product.submitter] = 1
             lst_result.append(product)
      
-        product_list = lst_result
-        
+        temp_list = lst_result
+        product_list = [[0 for x in range(2)] for y in range(len(temp_list))]
+        for i in range(0, len(temp_list)):
+            product_list[i][0] = i + 1
+            product_list[i][1] = temp_list[i]
         page = request.GET.get('page')
 
         paginator = Paginator(product_list, 2)

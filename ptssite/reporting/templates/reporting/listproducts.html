@@ -1,7 +1,7 @@
 {% extends "navbar_signedin.html" %}
 
 {% block head %}
-  <link rel="stylesheet" type="text/css" href="/static/styles/listing.css">
+  <link rel="stylesheet" type="text/css" href="/static/reporting/styles/listing.css">
 {% endblock %}
 
 {% block main %}
@@ -23,12 +23,13 @@
       <tbody>
         {% for product in products %}
           <tr>
-            <td>{{ forloop.counter }} </td>
-            <td>{{ product.0.product }}</td>
-            <td>{{ product.1.2 }} / {{ product.1.1 }} / {{ product.1.0 }}</td>
-            <td><a href="{% url 'tradeproduct:details' product.0.id %}" target="_blank"> <button>مشاهده جزییات</button> </a></td>
-            <td><a href="{% url 'tradeproduct:change' product.0.id %}"> <button>به روز رسانی</button> </a></td>
-            <td><form method="POST" action="{% url 'tradeproduct:delete' product.0.id %}">
+
+            <td>{{ product.0 }} </td>
+            <td>{{ product.1.product }}</td>
+            <td>{{ product.2.2 }} / {{ product.2.1 }} / {{ product.2.0 }}</td>
+            <td><a href="{% url 'tradeproduct:details' product.1.id %}" target="_blank"> <button>مشاهده جزییات</button> </a></td>
+            <td><a href="{% url 'tradeproduct:change' product.1.id %}"> <button>به روز رسانی</button> </a></td>
+            <td><form method="POST" action="{% url 'tradeproduct:delete' product.1.id %}">
                 <button  type="submit" onclick="alert('محصول با موفقیت حذف شد.')">حذف محصول</button>
                 </form>
             </td>

@@ -1,7 +1,7 @@
 {% extends "systemmanagement/base.html" %}
 
 {% block head %}
-  <link rel="stylesheet" type="text/css" href="/static/styles/listing.css">
+  <link rel="stylesheet" type="text/css" href="/static/reporting/styles/listing.css">
 {% endblock %}
 
 {% block main %}
@@ -21,11 +21,11 @@
       <tbody>
         {% for order in orders %}
           <tr>
-            <td>{{ forloop.counter }} </td>
-            <td>{{ order.buyer.username }}</td>
-            <td>{{ order.buyer.national_id }}</td>
-            <td>{{ order.buyer.first_name }}</td>
-            <td>{{ order.buyer.last_name }}</td>
+            <td>{{ order.0 }} </td>
+            <td>{{ order.1.buyer.username }}</td>
+            <td>{{ order.1.buyer.national_id }}</td>
+            <td>{{ order.1.buyer.first_name }}</td>
+            <td>{{ order.1.buyer.last_name }}</td>
           </tr>
         {% endfor %}
       </tbody>

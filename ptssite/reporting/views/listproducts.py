@@ -8,15 +8,16 @@ from convertdate import persian
 @customer_required
 def listproducts(request):
     if request.method == 'GET':
-
-        submittedList = ProductSubmit.objects.filter(submitter=request.user.unprivilegeduser.customer)
-        list_with_dates = []
-        for sp in submittedList:
-            list_with_dates.append((sp, persian.from_gregorian(sp.date.year, sp.date.month, sp.date.day)))
+        temp_list = ProductSubmit.objects.filter(submitter=request.user.username)
+        product_list = [[0 for x in range(3)] for y in range(len(temp_list))]
+        for i in range(0, len(temp_list)):
+            product_list[i][0] = i + 1
+            product_list[i][1] = temp_list[i]
+            product_list[i][2] = persian.from_gregorian(temp_list[i].date.year, temp_list[i].date.month, temp_list[i].date.day)
 
         page = request.GET.get('page')
 
-        paginator = Paginator(list_with_dates, 2)
+        paginator = Paginator(product_list, 2)
         try:
             list_with_dates = paginator.get_page(page)
         except PageNotAnInteger:
@@ -24,4 +25,4 @@ def listproducts(request):
         except EmptyPage:
             list_with_dates = paginator.get_page(paginator.num_pages)
 
-        return render(request, 'reporting/listproducts.html', { 'products': list_with_dates })
+        return render(request, 'reporting/listproducts.html', { 'products': product_list })

@@ -1,7 +1,7 @@
 {% extends "systemmanagement/base.html" %}
 
 {% block head %}
-  <link rel="stylesheet" type="text/css" href="/static/styles/listing.css">
+  <link rel="stylesheet" type="text/css" href="/static/reporting/styles/listing.css">
 {% endblock %}
 
 {% block main %}
@@ -23,13 +23,13 @@
       <tbody>
         {% for driver in drivers %}
           <tr>
-            <td>{{ forloop.counter }} </td>
-            <td>{{ driver.username }}</td>
-            <td>{{ driver.national_id }}</td>
-            <td>{{ driver.first_name }}</td>
-            <td>{{ driver.last_name }}</td>
-            <td>{{ driver.certificate_number }}</td>
-            <td>{{ driver.license_plate }}</td>           
+            <td>{{ driver.0 }} </td>
+            <td>{{ driver.1.username }}</td>
+            <td>{{ driver.1.national_id }}</td>
+            <td>{{ driver.1.first_name }}</td>
+            <td>{{ driver.1.last_name }}</td>
+            <td>{{ driver.1.certificate_number }}</td>
+            <td>{{ driver.1.license_plate }}</td>           
           </tr>
         {% endfor %}
       </tbody>

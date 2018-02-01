@@ -1,7 +1,7 @@
 {% extends "navbar_signedin.html" %}
 
 {% block head %}
-  <link rel="stylesheet" type="text/css" href="/static/styles/listing.css">
+  <link rel="stylesheet" type="text/css" href="/static/reporting/styles/listing.css">
 {% endblock %}
 
 {% block main %}
@@ -22,15 +22,15 @@
       <tbody>
         {% for order in orders %}
           <tr>
-            <td>{{ forloop.counter }} </td>
-            <td>{{ order.product.product.name }}</td>
-            <td>{{ order.quantity }}</td>
-            <td>{{ order.product.price }}</td>
-            <td>{{ order.driver_cost }}</td>
+            <td>{{ order.0 }} </td>
+            <td>{{ order.1.product.product.name }}</td>
+            <td>{{ order.1.quantity }}</td>
+            <td>{{ order.1.product.price }}</td>
+            <td>{{ order.1.driver_cost }}</td>
             <td class="dropdown">
                 <div class="center">
-                {% if order.driver_receipt %}
-                    {% if order.buyer_receipt %}
+                {% if order.1.driver_receipt %}
+                    {% if order.1.buyer_receipt %}
                         <p class="dropbtn"> تحویل به مشتری </p>
                     {% else %}
                         <p class="dropbtn"> تحویل از خریدار </p>                        
@@ -38,7 +38,7 @@
                 {% else %}
                     <button class="dropbtn"> دریافت سفارش </button>
                     <form class="dropdown-content" action="" method="post">
-                      <input type="hidden" name="order" value="{{ order.pk }}">                      
+                      <input type="hidden" name="order" value="{{ order.1.pk }}">                      
                       <input type="submit" name="driver_reception" value="تحویل از خریدار">
                     </form>
                 {% endif %}
