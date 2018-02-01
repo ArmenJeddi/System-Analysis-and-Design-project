@@ -240,3 +240,10 @@ def confirmIt(request, username):
                                                               'quantity': request.session['selected_quantity'], 'cost': product_cost,
                                                               'driver_cost':driver_cost, 'total_cost': total_cost,
                                                                    'balance': buyer.account_balance})
+
+@customer_required
+def order_detail_buyer(request, order_id):
+    order = get_object_or_404(Order, pk=order_id)
+    prod_tarikh = order.date
+    tarikh = persian.from_gregorian(prod_tarikh.year, prod_tarikh.month, prod_tarikh.day)
+    return render(request, 'tradeproduct/order_detail_buyer.html', {'order': order, 'tarikh': tarikh})

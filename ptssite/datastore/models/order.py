@@ -17,8 +17,7 @@ class Order(models.Model):
     location = models.TextField(verbose_name="آدرس خریدار")
     date = models.DateField(verbose_name= "تاریخ ثبت", null=False, default=datetime.date(2018,1,20))
     date_received = models.DateField(verbose_name= "تاریخ دریافت", null=False, default=datetime.date(2018,1,20))
-    final = models.BooleanField(verbose_name="سفارش نهایی", 
-                                default=False)
+
     driver_receipt = models.BooleanField(verbose_name="تحویل راننده",
                                          default=False)
     buyer_receipt = models.BooleanField(verbose_name="تحویل خریدار",

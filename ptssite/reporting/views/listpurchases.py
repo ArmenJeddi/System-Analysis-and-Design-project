@@ -23,7 +23,7 @@ def listpurchases(request):
         for i in range(0, len(temp_list)):
             purchase_list[i][0] = i + 1
             purchase_list[i][1] = temp_list[i]
-            tarikh = persian.from_gregorian(temp_list[i].year, temp_list[i].month, temp_list[i].day)
+            tarikh = persian.from_gregorian(temp_list[i].date.year, temp_list[i].date.month, temp_list[i].date.day)
             purchase_list[i][2] = tarikh
         page = request.GET.get('page')
 

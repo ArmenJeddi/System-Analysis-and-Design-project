@@ -24,34 +24,31 @@
           <tr>
             <td>{{ order.0 }}</td>
             <td>{{ order.1.product.product }}</td>
-            <td><a href="{% url 'order_detaul' order.1.id %}"></a></td>
-            <td class="dropdown">
-                <div class="center">
-                {% if order.1.buyer_receipt %}
-                    <button class="dropbtn"> تحویل گرفته شد </button>
-                    <form class="dropdown-content" action="/support/commentOnDriver" method="post">
-                      <input type="hidden" name="order" value="{{ order.1.pk }}">                      
-                      <input type="submit" name="comment_on_driver" value="نظر شما راجع به راننده">
-                      <input type="submit" name="comment_on_driver" value="نظر شما راجع به راننده">
-                    </form>
-
-                    <form class="dropdown-content" action="/support/commentOnFarmer" method="post">
-                      <input type="hidden" name="order" value="{{ order.1.pk }}">                      
-                      <input type="submit" name="comment_on_farmer" value="نظر شما راجع به فروشنده">
-                    </form>
+            <td><a href="{% url 'tradeproduct:order_detail_buyer' order.1.id %}" target="_blank"><button>مشاهده جزییات</button></a></td>
+            {% if order.driver_receipt %}
+                {% if order.buyer_receipt %}
+                    <td>محصول به شما تحویل داده شده است.</td>
                 {% else %}
-                    {% if order.1.driver_receipt %}
-                        <button class="dropbtn">در راه</button>
-                        <form class="dropdown-content" action="" method="post">
-                          <input type="hidden" name="order" value="{{ order.1.pk }}">                      
-                          <input type="submit" name="confirm_reception" value="تحویل گرفته شد">
-                        </form>
-                    {% else %}
-                        <p class="dropbtn"> ثبت سفارش </p>
-                    {% endif %}
+                    <td>راننده محصول را دریافت کرده است.</td>
                 {% endif %}
-                </div>
-            </td>      
+            {% else %}
+                <td>راننده در مسیر دریافت محصول است.</td>
+            {% endif %}
+
+          {% if order.buyer_receipt %}
+
+          {% else %}
+
+          {% endif %}
+
+            <td>
+                <form method = 'POST' action="">
+                    {% csrf_token %}
+                    <input type="submit" value="محصول دریافت شد.">
+                </form>
+
+            </td>
+
           </tr>
         {% endfor %}
       </tbody>
