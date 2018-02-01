@@ -9,7 +9,7 @@ urlpatterns = [
     path('listdrivers/', views.listdrivers),
     path('listfarmers/', views.listfarmers),
     path('listorders/', views.listorders),
-    path('listproducts/', views.listproducts),
+    path('listproducts/', views.listproducts, name = 'prod_list'),
     path('listpurchases/', views.listpurchases),
     path('listtransports/', views.listtransports)
 ]

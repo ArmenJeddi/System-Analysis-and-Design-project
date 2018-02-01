@@ -13,17 +13,24 @@
         <tr class="header">
           <th> ردیف </th>      
           <th> محصول </th>      
-          <th> وزن </th>
-          <th> قیمت </th>
+          <th> تاریخ ثبت </th>
+          <th> مشاهده جزییات </th>
+          <th> به روز رسانی </th>
+          <th> حذف </th>
         </tr>
       </thead>
       <tbody>
         {% for product in products %}
           <tr>
             <td>{{ forloop.counter }} </td>
-            <td>{{ product.product.name }}</td>
-            <td>{{ product.quantity }}</td>
-            <td>{{ product.price }}</td>
+            <td>{{ product.0.product }}</td>
+            <td>{{ product.1.2 }} / {{ product.1.1 }} / {{ product.1.0 }}</td>
+            <td><a href="{% url 'tradeproduct:details' product.0.id %}" target="_blank"> <button>مشاهده جزییات</button> </a></td>
+            <td><a href="{% url 'tradeproduct:change' product.0.id %}"> <button>به روز رسانی</button> </a></td>
+            <td><form method="POST" action="{% url 'tradeproduct:delete' product.0.id %}">
+                <button  type="submit" onclick="alert('محصول با موفقیت حذف شد.')">حذف محصول</button>
+                </form>
+            </td>
           </tr>
         {% endfor %}
       </tbody>

@@ -3,15 +3,20 @@ from django.http import HttpResponse
 from datastore.models import Driver, ProductSubmit, Order
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from authentication.decorators import customer_required
+from convertdate import persian
 
 @customer_required
 def listproducts(request):
     if request.method == 'GET':
-        
-        product_list = ProductSubmit.objects.filter(submitter=request.user.username)
+
+        submittedList = ProductSubmit.objects.filter(submitter=request.user.unprivilegeduser.customer)
+        list_with_dates = []
+        for sp in submittedList:
+            list_with_dates.append((sp, persian.from_gregorian(sp.date.year, sp.date.month, sp.date.day)))
+
         page = request.GET.get('page')
 
-        paginator = Paginator(product_list, 2)
+        paginator = Paginator(list_with_dates, 2)
         try:
             products = paginator.get_page(page)
         except PageNotAnInteger:
@@ -19,4 +24,4 @@ def listproducts(request):
         except EmptyPage:
             products = paginator.get_page(paginator.num_pages)
 
-        return render(request, 'reporting/listproducts.html', { 'products': products })
+        return render(request, 'reporting/listproducts.html', { 'products': list_with_dates })
