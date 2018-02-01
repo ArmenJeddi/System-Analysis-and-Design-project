@@ -54,7 +54,7 @@
         {% endfor %}
       </tbody>
     </table>
-
+    <br>
     {% if purchases.has_other_pages %}
       <ul class="pagination">
         {% if purchases.has_previous %}
@@ -64,7 +64,7 @@
         {% endif %}
         {% for i in purchases.paginator.page_range %}
           {% if purchases.number == i %}
-            <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+            <li id="active"><span>{{ i }} <span class="sr-only"></span></span></li>
           {% else %}
             <li><a href="?page={{ i }}">{{ i }}</a></li>
           {% endif %}
