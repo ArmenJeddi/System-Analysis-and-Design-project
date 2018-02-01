@@ -42,11 +42,15 @@
                       <input type="submit" name="comment_on_farmer" value="نظر شما راجع به فروشنده">
                     </form>
                 {% else %}
-                    <button class="dropbtn">در راه</button>
-                    <form class="dropdown-content" action="" method="post">
-                      <input type="hidden" name="order" value="{{ order.1.pk }}">                      
-                      <input type="submit" name="confirm_reception" value="تحویل گرفته شد">
-                    </form>
+                    {% if order.1.driver_receipt %}
+                        <button class="dropbtn">در راه</button>
+                        <form class="dropdown-content" action="" method="post">
+                          <input type="hidden" name="order" value="{{ order.1.pk }}">                      
+                          <input type="submit" name="confirm_reception" value="تحویل گرفته شد">
+                        </form>
+                    {% else %}
+                        <p class="dropbtn"> ثبت سفارش </p>
+                    {% endif %}
                 {% endif %}
                 </div>
             </td>      
