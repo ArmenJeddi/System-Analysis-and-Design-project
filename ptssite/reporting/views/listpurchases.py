@@ -25,6 +25,11 @@ def listpurchases(request):
             purchase_list[i][1] = temp_list[i]
             tarikh = persian.from_gregorian(temp_list[i].date.year, temp_list[i].date.month, temp_list[i].date.day)
             purchase_list[i][2] = tarikh
+
+        print(len(temp_list))
+        print(purchase_list[0][1].driver_receipt)
+        print(purchase_list[0][1].buyer_receipt)
+
         page = request.GET.get('page')
 
         paginator = Paginator(purchase_list, 2)

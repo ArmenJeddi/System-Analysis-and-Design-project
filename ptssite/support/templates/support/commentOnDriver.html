@@ -37,25 +37,41 @@
         <div>
             <h6>نظر خود را درباره ی این راننده بر اساس این سفارش در کادر زیر وارد نمایید.</h6>
             <form method="POST" action="">
-                <textarea rows="5" cols="100" name="comment" placeholder = "نظر خود را در اینجا وارد کنید"></textarea>
+                <textarea id = 'comment1' rows="5" cols="100" name="comment" placeholder = "نظر خود را در اینجا وارد کنید"></textarea>
 
                 <label for="rate">از 1 تا 10 به این راننده چه امتیازی می دهید؟</label>
-                <input type="number" name="rate" min="1" max="10" step="1">
+                <input id = 'rate1' type="number" name="rate" min="1" max="10" step="1">
 
-                <button type="submit">ارسال</button>
+                <button type="submit" onClick="return empty()">ارسال</button>
             </form>
         </div>
 
     </div>
 
     <script>
-        document.getElementById('product_whole_price').innerHTML = {{ order.quantity }} * {{ order.product.price }}
-        document.getElementById('total_cost').innerHTML = {{ order.quantity }} * {{ order.product.price }} + {{ order.driver_cost }}
+        document.getElementById('product_whole_price').innerHTML = {{ order.quantity }} * {{ order.product.price }};
+        document.getElementById('total_cost').innerHTML = {{ order.quantity }} * {{ order.product.price }} + {{ order.driver_cost }};
+
+        function empty() {
+            var x;
+            var y;
+            x = document.getElementById("comment1").value;
+            y = document.getElementById("rate1").value;
+            if (x == "") {
+                alert("لطفا نظر خود را وارد کنید.");
+                return false;
+            };
+
+            if (y == "") {
+                alert("لطفا امتیاز وارد کنید.");
+                return false;
+            };
+        }
     </script>
     {% else %}
         <script>
             setTimeout(function() { alert('شما قبلا بر اساس این سفارش، به این راننده نظر داده اید.'); }, 5);
-            window.location.replace("http://stackoverflow.com");
+            window.location.replace("http://127.0.0.1:8000/reporting/listpurchases/");
         </script>
     {% endif %}
 

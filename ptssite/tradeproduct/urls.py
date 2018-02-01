@@ -1,5 +1,4 @@
 from django.urls import path
-from .views import farmerActivity
 from .views.farmerActivity import submitProduct, updateProducts, submit_details, delete_submittedProduct, change_details
 
 from .views.buyerActivity import browseProduct, selectProduct, selectDriver, driver_details, confirmIt, order_detail_buyer
