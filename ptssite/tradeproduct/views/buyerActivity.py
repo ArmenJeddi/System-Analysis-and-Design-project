@@ -218,11 +218,12 @@ def confirmIt(request, username):
             product.save()
 
             new_order = Order(buyer = buyer, product = product, driver = driver, quantity = request.session['selected_quantity'],
-                              driver_cost = driver_cost, location = request.POST['buyer_address'], date = datetime.date.today() )
+                              driver_cost = driver_cost, location = request.POST['buyer_address'], date = datetime.date.today())
             new_order.save()
             request.session.pop('selected_product', None)
             request.session.pop('selected_quantity', None)
             request.session.pop('driver_id', None)
+            print('salam')
             print(dict(request.session))
             return redirect('reporting:listpurchases')
 

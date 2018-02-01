@@ -16,7 +16,7 @@ class Order(models.Model):
     driver_cost = models.PositiveIntegerField(verbose_name="دستمزد راننده", default=1000)
     location = models.TextField(verbose_name="آدرس خریدار")
     date = models.DateField(verbose_name= "تاریخ ثبت", null=False, default=datetime.date(2018,1,20))
-    date_received = models.DateField(verbose_name= "تاریخ دریافت", null=False, default=datetime.date(2018,1,20))
+    date_received = models.DateField(verbose_name= "تاریخ دریافت", null=True)
 
     driver_receipt = models.BooleanField(verbose_name="تحویل راننده",
                                          default=False)
