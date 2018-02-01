@@ -1,7 +1,7 @@
 {% extends "navbar_signedin.html" %}
 
 {% block head %}
-  <link rel="stylesheet" type="text/css" href="/static/styles/listing.css">
+  <link rel="stylesheet" type="text/css" href="/static/reporting/styles/listing.css">
 {% endblock %}
 
 {% block main %}
@@ -20,10 +20,10 @@
       <tbody>
         {% for product in products %}
           <tr>
-            <td>{{ forloop.counter }} </td>
-            <td>{{ product.product.name }}</td>
-            <td>{{ product.quantity }}</td>
-            <td>{{ product.price }}</td>
+            <td>{{ product.0 }} </td>
+            <td>{{ product.1.product.name }}</td>
+            <td>{{ product.1.quantity }}</td>
+            <td>{{ product.1.price }}</td>
           </tr>
         {% endfor %}
       </tbody>

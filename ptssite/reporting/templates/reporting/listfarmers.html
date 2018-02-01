@@ -1,7 +1,7 @@
 {% extends "systemmanagement/base.html" %}
 
 {% block head %}
-  <link rel="stylesheet" type="text/css" href="/static/styles/listing.css">
+  <link rel="stylesheet" type="text/css" href="/static/reporting/styles/listing.css">
 {% endblock %}
 
 {% block main %}
@@ -21,11 +21,11 @@
       <tbody>
         {% for product in products %}
           <tr>
-            <td>{{ forloop.counter }} </td>
-            <td>{{ product.submitter.username }}</td>
-            <td>{{ product.submitter.national_id }}</td>
-            <td>{{ product.submitter.first_name }}</td>
-            <td>{{ product.submitter.last_name }}</td>
+            <td>{{ product.0 }} </td>
+            <td>{{ product.1.submitter.username }}</td>
+            <td>{{ product.1.submitter.national_id }}</td>
+            <td>{{ product.1.submitter.first_name }}</td>
+            <td>{{ product.1.submitter.last_name }}</td>
           </tr>
         {% endfor %}
       </tbody>

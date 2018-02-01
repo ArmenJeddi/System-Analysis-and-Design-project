@@ -20,7 +20,11 @@ def listbuyers(request):
             set_seen[order.buyer] = 1
             lst_result.append(order)
      
-        order_list = lst_result
+        temp_list = lst_result
+        order_list = [[0 for x in range(2)] for y in range(len(temp_list))]
+        for i in range(0, len(temp_list)):
+            order_list[i][0] = i + 1
+            order_list[i][1] = temp_list[i]
         
         page = request.GET.get('page')
 

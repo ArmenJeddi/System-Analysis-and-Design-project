@@ -16,7 +16,11 @@ class ReceptionForm(forms.Form):
 def listpurchases(request):
     if request.method == 'GET':
         
-        purchase_list = Order.objects.filter(buyer=request.user.username)
+        temp_list = Order.objects.filter(buyer=request.user.username)
+        purchase_list = [[0 for x in range(2)] for y in range(len(temp_list))]
+        for i in range(0, len(temp_list)):
+            purchase_list[i][0] = i + 1
+            purchase_list[i][1] = temp_list[i]
         page = request.GET.get('page')
 
         paginator = Paginator(purchase_list, 2)

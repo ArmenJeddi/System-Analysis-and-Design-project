@@ -15,7 +15,11 @@ class ReceptionForm(forms.Form):
 def listtransports(request):
     if request.method == 'GET':
         
-        order_list = Order.objects.filter(driver=request.user.username)
+        temp_list = Order.objects.filter(driver=request.user.username)
+        order_list = [[0 for x in range(2)] for y in range(len(temp_list))]
+        for i in range(0, len(temp_list)):
+            order_list[i][0] = i + 1
+            order_list[i][1] = temp_list[i]
         page = request.GET.get('page')
 
         paginator = Paginator(order_list, 2)
