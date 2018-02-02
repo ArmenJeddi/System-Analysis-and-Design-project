@@ -180,7 +180,11 @@ def driver_details(request, username):
         request.session['browse_notif'] = 1
         return redirect('tradeproduct:browse')
     driver = get_object_or_404(Driver, pk=username)
+    all_com = Comment.objects.all()
     comments = Comment.objects.filter(undercomment = driver)
+    print('driver: ', driver)
+    print('all: ', all_com)
+    print('mine: ', comments)
     return render(request, 'tradeproduct/driver_details.html', {'driver': driver, 'comments': comments})
 
 @customer_required
