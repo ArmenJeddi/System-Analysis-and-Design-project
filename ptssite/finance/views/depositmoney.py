@@ -8,25 +8,24 @@ from authentication.decorators import customer_required
 template = 'finance/depositmoney.html'
 
 class DepositForm(forms.Form):
-    balance = forms.IntegerField(min_value= 1000,
+    balance = forms.IntegerField(
                                 error_messages={
                                     'required': 'لطفا مبلغی را مشخص کنید',
-                                    'min_value': 'مبلغ وارده باید حداقل 1000 تومان باشد'
                                 })
     
 @customer_required
 def depositmoney(request):
+    customer = request.user.unprivilegeduser.customer
     if request.method == 'GET':
         diff_amount = 0
         if 'diff_amount' in request.session:
-            diff_amount = request.session['diff_amount']
-            request.session.pop('diff_amount', None)
-        current_amount = Customer.objects.get(pk=request.session['username']).account_balance
+            diff_amount = request.session.pop('diff_amount')
+
+        current_amount = customer.account_balance
         response = render(request, template, context=dict(form=DepositForm(), current_amount=current_amount, diff_amount = diff_amount))
     elif request.method == 'POST':
         form = DepositForm(request.POST)
         if form.is_valid():
-            customer = Customer.objects.get(pk=request.session['username'])
             customer.account_balance += form.cleaned_data['balance']
             customer.save()
             response = HttpResponse(status=303)

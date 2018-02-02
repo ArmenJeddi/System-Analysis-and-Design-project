@@ -12,7 +12,7 @@
     {% endif %}
     <br><br><br><br>
     <form id="deposit-form" action="/finance/depositmoney/" method="post">
-        <p type="text">  موجودی فعلی به تومان: {{ current_amount }} </p>
+        <p style="background-color:#f0ad4e; padding: 10px ">  موجودی فعلی به تومان: {{ current_amount }} </p>
 
           {% if diff_amount > 0 %}
             <label> <input type="number" name="balance" value="{{ diff_amount }}"> تومان </label>
