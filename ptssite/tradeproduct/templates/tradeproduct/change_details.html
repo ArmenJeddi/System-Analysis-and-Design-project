@@ -1,25 +1,26 @@
 {% extends "navbar_signedin.html" %}
 
 {% block head %}
-    <link rel="stylesheet" type="text/css" href=""> <!-- needs to add the link address for style sheet -->
+    <link rel="stylesheet" type="text/css" href="/static/reporting/styles/forms.css"> <!-- needs to add the link address for style sheet -->
+    <title>update submit details</title>
 {% endblock %}
 
 {% block main %}
     <h2>به روز رسانی محصول ثبت شده</h2>
     {% if activated %}
-    <div>
+    <div class="form_holder">
         <form method="POST" action="" onsubmit="alert('محصول شما با موفقیت به روز رسانی شد.')">
             {% csrf_token %}
             <label>محصول</label>
             {{ form.product }}<br>
 
             <label for="quantity">حجم محصول</label>
-            <input type="number" name="quantity" min="1" step="1", value="{{ meghdar }}" required>
-            <label>کیلوگرم</label> <br>
+            <input type="number" name="quantity" min="1" step="1", value="{{ meghdar }}" required>&nbsp; &nbsp;
+            <span>کیلوگرم</span>
 
             <label>قیمت</label>
-            {{ form.price }}
-            <label>تومان</label> <br>
+            {{ form.price }}&nbsp; &nbsp;
+            <span>تومان</span>
 
             <label> استان</label>
             {{ form.province }}
@@ -27,8 +28,9 @@
 
             <label>آدرس</label>
             {{ form.location }}
+            <br>
 
-            <button type="submit">به روز رسانی</button>
+            <input type="submit" value="به روز رسانی" >
         </form>
     </div>
 

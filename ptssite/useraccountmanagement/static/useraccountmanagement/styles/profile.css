@@ -1,15 +1,21 @@
+a:hover {
+    cursor: pointer;
+}
 main p {
-    width: 200px;
+    margin: 15% 10%;
+    line-height: 60px;
 }
 main a {
     background-color: darkseagreen;
     padding: 20px;
-    display: block;
+    margin: 10px;
     border: 2px solid black;
     text-decoration: none;
+    color: white;
 }
 main a:hover {
     background-color: lightgreen;
+    color: grey;
 }
 main form {
     margin: 3% 37%;

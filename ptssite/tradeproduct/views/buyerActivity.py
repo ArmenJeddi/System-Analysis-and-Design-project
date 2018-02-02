@@ -223,7 +223,7 @@ def confirmIt(request, username):
             new_order.save()
             request.session.pop('selected_product', None)
             request.session.pop('selected_quantity', None)
-            # request.session.pop('driver_id', None)
+            request.session.pop('driver_id', None)
             # print('salam')
             # print(dict(request.session))
             return redirect('reporting:listpurchases')

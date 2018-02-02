@@ -1,33 +1,45 @@
 {% extends "navbar_signedin.html" %}
 
 {% block head %}
-    <link rel="stylesheet" type="text/css" href=""> <!-- needs to add the link address for style sheet -->
+    <link rel="stylesheet" type="text/css" href="/static/reporting/styles/forms.css"> <!-- needs to add the link address for style sheet -->
+    <title>Submit</title>
 {% endblock %}
 
 {% block main %}
     <h2>ثبت محصول جدید در سامانه</h2>
-    <div>
+    <div class="form_holder">
         <form method="POST" action="{% url 'tradeproduct:submit' %}" onsubmit="alert('محصول شما با موفقیت ثبت شد.')">
             {% csrf_token %}
             <label>محصول</label>
-            {{ form.product }}<br>
+            <span class="content_holder">
+            {{ form.product }}
+            </span>
 
             <label for="quantity">حجم محصول</label>
+            <span class="content_holder">
             <input type="number" name="quantity" min="1" step="1" required>
-            <label>کیلوگرم</label> <br>
+            </span>
+            &nbsp; &nbsp;
+            <span>کیلوگرم</span>
 
             <label>قیمت</label>
+            <span class="content_holder">
             {{ form.price }}
-            <label>تومان</label> <br>
+            </span> &nbsp; &nbsp;
+            <span>تومان</span>
+
 
             <label> استان</label>
+            <span class="content_holder">
             {{ form.province }}
-            <br>
+            </span>
 
             <label>آدرس</label>
+
             {{ form.location }}
 
-            <button type="submit" >ارسال</button>
+            <br>
+            <input type="submit" value="ارسال" >
         </form>
     </div>
 {% endblock %}

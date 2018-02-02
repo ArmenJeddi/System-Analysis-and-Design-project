@@ -11,8 +11,7 @@ class ProfileView(UnprivilegedRequired, TemplateView):
             return 'useraccountmanagement/profile_driver.html'
 
     def post(self, request, *args, **kwargs):
-        if request.user.unprivilegeduser.is_driver():
-            avail = True if request.POST.get('available') == 'true' else False
-            request.user.unprivilegeduser.driver.availability = avail
+        if request.user.unprivilegeduser.is_driver() and not request.user.unprivilegeduser.driver.reserved:
+            request.user.unprivilegeduser.driver.availability = not request.user.unprivilegeduser.driver.availability
             request.user.unprivilegeduser.driver.save()
             return HttpResponseRedirect('/useraccountmanagement/profile/')

@@ -48,7 +48,7 @@ def listpurchases(request):
         sel_order.save()
         sel_order.driver.reserved = False
         sel_order.driver.save()
-        request.session.pop('driver_id', None)
+        # request.session.pop('driver_id', None)
 
 
     return render(request, 'reporting/listpurchases.html', {'purchases': purchases})
