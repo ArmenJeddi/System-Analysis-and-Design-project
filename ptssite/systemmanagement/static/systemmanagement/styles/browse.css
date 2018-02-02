@@ -1,0 +1,33 @@
+label {
+    display: inline-block;
+    margin: 10px;
+}
+input {
+    border-style: none;
+    background-color: LightGrey;
+    padding: 10px 15px;
+}
+input:focus {
+    background-color:Azure;
+}
+input[type=submit] {
+    cursor: pointer;
+}
+input[type=submit]:hover {
+    background-color: Azure;
+}
+table {
+    margin: 50px auto;
+}
+table tr:first-child {
+    background-color: lightgrey;
+}
+td, th {
+    padding: 10px 50px;
+}
+td {
+    background-color: azure;
+}
+.longer {
+    width: 500px;
+}

@@ -1,0 +1,27 @@
+form {
+    padding: 10% 35%;
+}
+
+input {
+    border-style: none;
+    background-color: LightGrey;
+    padding: 10px 15px;
+}
+#passrec {
+    padding: 0px 10%;
+}
+input:focus {
+    background-color:Azure;
+}
+input[type=submit] {
+    margin-right: 35%;
+    cursor: pointer;
+}
+input[type=submit]:hover {
+    background-color: Azure;
+}
+.errorlist li {
+    background-color: red;
+    padding: 5px;
+    display: inline-block;
+}

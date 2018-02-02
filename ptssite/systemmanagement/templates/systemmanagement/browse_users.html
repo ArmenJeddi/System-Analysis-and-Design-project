@@ -1,30 +1,41 @@
-{% extends "systemmanagement/base.html" %}
+{% extends "systemmanagement/signedin_base.html" %}
+
+{% block nav %}
+{{ block.super }}
+<a class="nav-link" href="/systemmanagement/profile/">صفحه اصلی</a>
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="/static/systemmanagement/styles/browse.css">
+{% endblock %}
 
 {% block main %}
-<a href="/systemmanagement/profile/">صفحه اصلی</a>
 <form action="/systemmanagement/browseusers/" method="get">
-  <label>نام:<input type="text" name="name"></label>
-  <br /><label>شماره تلفن همراه:<input type="text" name="phone_number"></label>
-  <br /><label>کد ملی:<input type="text" name="national_id"></label>
-  <br /><label>شماره پلاک:<input type="text" name="license_plate"></label>
-  <br /><label>شماره گواهینامه:<input type="text" name="certificate_number"></label>
+  <label>نام: <input type="text" name="name"></label>
+  <label>شماره تلفن همراه: <input type="text" name="phone_number"></label>
+  <label>کد ملی: <input type="text" name="national_id"></label>
+  <label>شماره پلاک: <input type="text" name="license_plate"></label>
+  <label>شماره گواهینامه: <input type="text" name="certificate_number"></label>
   <br /><input type="submit" value="جستجو">
 </form>
-<ul>
+<table>
+  <tr>
+    <th>نام</th>
+    <th>کد ملی</th>
+    <th>شماره تلفن همراه</th>
+    <th>شماره گواهینامه</th>
+    <th>شماره پلاک وسیله نقلیه</th>
+  </tr>
   {% for user in users %}
-  <li><a href="/systemmanagement/detailuser/{{ user.username }}/">{{ user.first_name }} {{ user.last_name }}</a>
-    <br />نام کاربری: {{ user.username }}
-    <br />کد ملی: {{ user.national_id }}
-    <br />شماره تلفن همراه: {{ user.phone_number }}
-    <br />شماره حساب: {{ user.account_number }}
-    {% if user.is_customer %}
-    <br />موجودی حساب: {{ user.customer.account_balance }}
-    {% endif %}
+  <tr>
+    <td><a href="/systemmanagement/detailuser/{{ user.username }}/">{{ user.first_name }} {{ user.last_name }}</a></td>
+    <td>{{ user.national_id }}</td>
+    <td>{{ user.phone_number }}</td>
     {% if user.is_driver %}
-    <br />شماره گواهینامه: {{ user.driver.certificate_number }}
-    <br />شماره پلاک وسیله نقلیه: {{ user.driver.license_plate }}
+    <td>{{ user.driver.certificate_number }}</td>
+    <td>{{ user.driver.license_plate }}</td>
     {% endif %}
-  </li>
+  </tr>
   {% endfor %}
-</ul>
+</table>
 {% endblock %}

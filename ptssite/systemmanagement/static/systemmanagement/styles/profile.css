@@ -1,0 +1,29 @@
+main p {
+    margin: 15% 10%;
+    line-height: 30px;
+}
+main a {
+    background-color: darkseagreen;
+    padding: 20px;
+    margin: 10px;
+    border: 2px solid black;
+    text-decoration: none;
+    color: white;
+    display: inline-block;
+    height: 30px;
+}
+main a:hover {
+    background-color: lightgreen;
+    color: grey;
+}
+main form {
+    margin: 3% 37%;
+}
+input[type=submit] {
+    border-style: none;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+input[type=submit]:hover {
+    background-color: Azure;
+}
