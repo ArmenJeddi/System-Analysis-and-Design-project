@@ -95,7 +95,7 @@
     <div id="form_container">
         <form method="POST" action="">
             {% csrf_token %}
-            <label for="buyer_address">آدرس خود را در اینجا وارد کنید.</label>
+            <label for="buyer_address" style="display:block; margin-right: 20px">آدرس شما</label>
             <textarea id = 'adress_B' rows="5" cols="100" name="buyer_address" placeholder = "آدرس خود را در اینجا وارد کنید."></textarea><br>
             <input type="submit" name="order_confirm" value="خرید" onClick="return empty()" />
             <input type="submit" name="order_cancel" value="انصراف" />

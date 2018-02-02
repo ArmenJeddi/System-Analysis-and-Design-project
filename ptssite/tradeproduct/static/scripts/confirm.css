@@ -1,5 +1,5 @@
 .containIt{
-    margin: auto;
+    margin: 30px;
     width: 80%;
     border: 3px solid #73AD21;
     padding: 5px;
@@ -21,15 +21,23 @@ label {
     font-size: large;
 }
 
-input[type=text], select , input[type=number]{
+input[type=text], select{
     width: 20%;
     padding: 12px;
     display: inline-block;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
-    /*position: relative;*/
-    /*right: 100px;*/
+}
+
+textarea{
+    margin-right: 30px ;
+    width: 60%;
+    padding: 12px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
 }
 
 input[type=button], input[type=submit], input[type=reset] {
@@ -59,7 +67,7 @@ ul{
 }
 
 #form_container{
-    margin: auto;
+    margin: 30px;
     width: 80%;
     border: 3px solid #73AD21;
     padding: 5px;

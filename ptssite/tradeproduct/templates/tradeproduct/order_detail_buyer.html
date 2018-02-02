@@ -1,75 +1,76 @@
 {% extends "navbar_signedin.html" %}
 
 {% block head %}
-  <link rel="stylesheet" type="text/css" href="/static/reporting/styles/listing.css">
+  <link rel="stylesheet" type="text/css" href="/static/scripts/confirm.css">
+    <title>order detail</title>
 {% endblock %}
 
 {% block main %}
-    <h2>اطلاعات سفارش</h2>
+    <h3>اطلاعات سفارش</h3>
 
     <div>
-        <div>
-            <h5>اطلاعات محصول</h5>
+        <div class="containIt">
+            <h3>اطلاعات محصول</h3>
             <ul>
                 <li>
-                    <span>نام فروشنده: </span>
+                    <label>نام فروشنده: </label>
                     {{ order.product.submitter }}
                 </li>
                 <li>
-                    <span>نوع محصول: </span>
-                    {{ order.product }}
+                    <label>نوع محصول: </label>
+                    {{ order.product.product }}
                 </li>
                 <li>
-                    <span>تاریخ ثبت محصول: </span>
+                    <label>تاریخ ثبت محصول: </label>
                     {{ tarikh.2 }} / {{ tarikh.1 }} / {{ tarikh.0 }}
                 </li>
                 <li>
-                    <span>مقدار سفارش داده شده: </span>
+                    <label>مقدار سفارش داده شده: </label>
                     {{ order.quantity }}
                 </li>
 
                 <li>
-                    <span>قیمت محصول:</span>
+                    <label>قیمت محصول:</label>
                     <span id = 'product_whole_price' ></span>
                 </li>
                 <li>
-                    <span>استان: </span>
+                    <label>استان: </label>
                     {{ order.product.getProvince }}
                 </li>
             </ul>
         </div>
 
-        <div>
-            <h5>اطلاعات راننده</h5>
+        <div class="containIt">
+            <h3>اطلاعات راننده</h3>
             <ul>
                 <li>
-                    <span>نام راننده: </span>
+                    <label>نام راننده: </label>
                     <span>{{ order.driver }}</span>
                 </li>
 
                 <li>
-                    <span>نوع ماشین: </span>
+                    <label>نوع ماشین: </label>
                     <span>{{ order.driver.vehicle_model }}</span> {#  #}
                 </li>
 
                 <li>
-                    <span>شماره پلاک:</span>
+                    <label>شماره پلاک:</label>
                     <span>{{ order.driver.license_plate }}</span>
                 </li>
                 <li>
-                    <span>شماره تلفن:</span>
+                    <label>شماره تلفن:</label>
                     <span>{{ order.driver.phone_number }}</span>
                 </li>
 
                 <li>
-                    <span>هزینه انتقال: </span>
+                    <label>هزینه انتقال: </label>
                     <span>{{ order.driver_cost }}</span>
                 </li>
 
             </ul>
         </div>
-        <div>
-            <span>هزینه کل: </span>
+        <div class="containIt">
+            <label>هزینه کل: </label>
             <span id = 'total_cost'></span> <br>
 
         </div>
