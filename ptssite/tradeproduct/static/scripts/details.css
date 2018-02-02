@@ -1,0 +1,30 @@
+ul {
+    list-style-type: none;
+    background: #DDDDDD;
+    padding: 5px;
+    width: 98%;
+}
+
+ul li {
+    /*display: inline;*/
+    background: rgb(214, 245, 245);
+    font-weight: 400;
+    color: #000000;
+    padding: 3px 8px;
+    margin: 5px;
+}
+
+.span_holder {
+    font-weight : bold;
+}
+
+.span_content{
+    padding-left : 10px ;
+    padding-right: 30px;
+
+}
+
+.address_bar{
+    padding-left : 10px ;
+    padding-right: 50px;
+}
