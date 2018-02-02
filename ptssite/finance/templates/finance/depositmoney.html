@@ -10,21 +10,22 @@
             alert('موجودی حساب شما کافی نیست. لطفا ابتدا موجودی خود را افزایش دهید.')
         </script>
     {% endif %}
-  <form id="deposit-form" action="/finance/depositmoney/" method="post">
-    <p type="text">  موجودی فعلی به تومان: {{ current_amount }} </p>
+    <br><br><br><br>
+    <form id="deposit-form" action="/finance/depositmoney/" method="post">
+        <p type="text">  موجودی فعلی به تومان: {{ current_amount }} </p>
 
-      {% if diff_amount > 0 %}
-        <label> <input type="number" name="balance" value="{{ diff_amount }}"> تومان </label>
-      {% else %}
-        <label> <input type="number" name="balance" placeholder="مبلغ"> تومان </label>
-      {% endif %}
+          {% if diff_amount > 0 %}
+            <label> <input type="number" name="balance" value="{{ diff_amount }}"> تومان </label>
+          {% else %}
+            <label> <input type="number" name="balance" placeholder="مبلغ"> تومان </label>
+          {% endif %}
 
 
-    <div>
-        <label> <input type="radio" name="bank_gateway" id="tejarat-bank" required> <img src="/static/finance/images/tejarat.png"> </label>
-        <label> <input type="radio" name="bank_gateway" id="melli-bank"> <img src="/static/finance/images/melli.png"> </label>
-        <label> <input type="radio" name="bank_gateway" id="parsian-bank"> <img src="/static/finance/images/parsian.png"> </label>
-    </div>
-    <input type="submit" value="پرداخت">
-  </form>
+        <div>
+            <label> <input type="radio" name="bank_gateway" id="tejarat-bank" required> <img src="/static/finance/images/tejarat.png"> </label>
+            <label> <input type="radio" name="bank_gateway" id="melli-bank"> <img src="/static/finance/images/melli.png"> </label>
+            <label> <input type="radio" name="bank_gateway" id="parsian-bank"> <img src="/static/finance/images/parsian.png"> </label>
+        </div>
+        <input type="submit" value="پرداخت">
+    </form>
 {% endblock %}

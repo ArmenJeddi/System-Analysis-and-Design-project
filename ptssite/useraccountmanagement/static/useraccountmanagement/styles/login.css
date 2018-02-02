@@ -1,9 +1,18 @@
+#header {
+    display: flex;
+    justify-content: center;    
+}
 #login-form {
+    margin: auto;
+    width: 30%;
+    border: 3px solid #73AD21;
+    padding: 5px;
+    background: #eee;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 500px;
+    height: 300px;
 }
 #login-form > * {
     margin: 10px;
