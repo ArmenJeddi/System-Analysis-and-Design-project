@@ -41,6 +41,8 @@ def listtransports(request):
         if form.is_valid():
             order = Order.objects.get(pk = form.cleaned_data['order'])
             order.driver_receipt = True
+            order.product.submitter.account_balance += order.quantity * order.product.price
+            order.product.submitter.save()
             order.save()
             response = HttpResponse(status=303)
             response['Location'] = '/reporting/listtransports/' 

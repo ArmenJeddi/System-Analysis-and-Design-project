@@ -98,15 +98,11 @@ def selectProduct(request, select_id):
         if ('selected_product' in request.session) or ('selected_quantity' in request.session):
             request.session['print_driver_notification'] = 1
             return redirect('tradeproduct:selectDriver')
-        if sp.quantity % 2 == 0:
-            half = int(sp.quantity / 2)
-        else:
-            half = int((sp.quantity+1) / 2)
 
-        return render(request, 'tradeproduct/selectProduct.html', {'selectedProduct': sp, 'halfvalue': half, 'activiate': sp.active })
+        return render(request, 'tradeproduct/selectProduct.html', {'selectedProduct': sp, 'activiate': sp.active })
 
 def compute_cost(driver, product):
-    return random.randint(50,300)
+    return random.randint(100000,500000)
 
 def getMap(drivers, product, option = 1):
     mapping = []
@@ -193,8 +189,8 @@ def confirmIt(request, username):
     if (not 'selected_product' in request.session) or (not 'selected_quantity' in request.session):
         request.session['browse_notif'] = 1
         return redirect('tradeproduct:browse')
-    # print('in confirm it')
-    # print(dict(request.session))
+    print('in confirm it')
+    print(dict(request.session))
 
     driver = get_object_or_404(Driver, pk=username)
     driver.availability = False

@@ -130,3 +130,21 @@
 #myInput input[type=submit]:hover {
     background-color: Azure;
 }
+
+#back_button{
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-decoration: none;
+    margin: 30px ;
+    cursor: pointer;
+    position: relative;
+    right: 500px;
+}
+
+#back_button:hover {
+    background-color: #45a049;
+    /*font-weight : bold ;*/
+    font-size: large;
+}

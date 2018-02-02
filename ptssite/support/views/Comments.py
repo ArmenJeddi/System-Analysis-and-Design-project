@@ -14,12 +14,13 @@ def commentOnFarmer(request, order_id):
 
     if request.method == 'POST':
         comment = Comment(commenter = request.user.unprivilegeduser.customer, undercomment = rel_order.product.submitter, content = request.POST['comment'],
-                          date = datetime.datetime.today())
+                          date = datetime.datetime.today(),
+                          order_id = rel_order)
         comment.save()
         return redirect('reporting:listpurchases')
     else:
         this_user = request.user.unprivilegeduser.customer
-        this_user_comments = Comment.objects.filter(commenter = this_user, undercomment = rel_order.product.submitter)
+        this_user_comments = Comment.objects.filter(commenter = this_user, undercomment = rel_order.product.submitter, order = rel_order)
         length_u_c = len(this_user_comments)
         return render(request, 'support/commentOnFarmer.html', {'order': rel_order, 'length': length_u_c})
 
@@ -29,7 +30,8 @@ def commentOnDriver(request, order_id):
     if request.method == 'POST':
         comment = Comment(commenter=request.user.unprivilegeduser.customer, undercomment=rel_order.driver,
                           content=request.POST['comment'],
-                          date=datetime.datetime.today())
+                          date=datetime.datetime.today(),
+                          order_id = rel_order)
         comment.save()
         rate = int(request.POST['rate'])
         print('before: ',rel_order.driver.rate)
@@ -40,7 +42,7 @@ def commentOnDriver(request, order_id):
         return redirect('reporting:listpurchases')
     else:
         this_user = request.user.unprivilegeduser.customer
-        this_user_comments = Comment.objects.filter(commenter = this_user, undercomment = rel_order.driver)
+        this_user_comments = Comment.objects.filter(commenter = this_user, undercomment = rel_order.driver, order = rel_order)
         length_u_c = len(this_user_comments)
         print(length_u_c)
         return render(request, 'support/commentOnDriver.html', {'order': rel_order, 'length': length_u_c})

@@ -1,5 +1,5 @@
 from django.db import models
-from . import user, customer
+from . import user, customer, order
 
 class Comment(models.Model):
     commenter = models.ForeignKey(to=customer.Customer,
@@ -13,3 +13,7 @@ class Comment(models.Model):
     content = models.TextField(verbose_name="نظر")
 
     date = models.DateField(verbose_name= "تاریخ ثبت", null=False)
+
+    order = models.ForeignKey(to=order.Order,
+                                  on_delete=models.CASCADE,
+                                  verbose_name="سفارش")

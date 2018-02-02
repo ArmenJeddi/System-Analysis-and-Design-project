@@ -12,8 +12,8 @@
         <form method="POST" action="">
             {% csrf_token %}
             <label for = "rangeInput"> انتخاب حجم محصول (از 1 تا {{ selectedProduct.quantity }})</label>
-            <input class="slider" type="range" name="rangeInput" min="1" max="{{ selectedProduct.quantity }}" oninput="updateTextInput(this.value);">
-            <input type="text" id="textInput" value="{{ halfvalue }}" disabled  >
+            <input class="slider" type="range" value="1" name="rangeInput" min="1" max="{{ selectedProduct.quantity }}" oninput="updateTextInput(this.value);">
+            <input type="text" id="textInput" value="1" disabled  >
             <br><br><br>
             <input id="select_button" type="submit" value="انتخاب و انتقال به صفحه ی انتخاب راننده">
         </form>
