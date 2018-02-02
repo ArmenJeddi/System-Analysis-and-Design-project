@@ -45,6 +45,8 @@ def listpurchases(request):
         sel_order.buyer_receipt = True
         sel_order.date_received = datetime.date.today()
         sel_order.save()
+        sel_order.driver.reserved = False
+        sel_order.driver.save()
         request.session.pop('driver_id', None)
 
 

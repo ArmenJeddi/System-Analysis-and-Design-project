@@ -63,6 +63,10 @@ class Driver(user.UnprivilegedUser):
                                             default=5)
     availability = models.BooleanField(default=True,
                                        verbose_name="آمادگی برای انتقال")
+
+    reserved = models.BooleanField(default=False,
+                                   verbose_name='برای انتقال رزرو شده است')
+
     vehicle_model = models.CharField(max_length=50,
                              verbose_name="نوع وسیله نقلیه")
     license_plate = models.CharField(max_length=8,

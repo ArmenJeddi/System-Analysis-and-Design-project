@@ -135,7 +135,7 @@ def selectDriver(request):
     drivers = Driver.objects.all()
     available_drivers = []
     for driver in drivers:
-        if driver.availability:
+        if driver.availability and not driver.reserved:
             if driver.vehicle_capacity >= chosen_capacity:
                 if province in driver.province_list_keys():
                     available_drivers.append(driver)
@@ -191,11 +191,12 @@ def confirmIt(request, username):
     if (not 'selected_product' in request.session) or (not 'selected_quantity' in request.session):
         request.session['browse_notif'] = 1
         return redirect('tradeproduct:browse')
-    print('in confirm it')
-    print(dict(request.session))
+    # print('in confirm it')
+    # print(dict(request.session))
 
     driver = get_object_or_404(Driver, pk=username)
     driver.availability = False
+    driver.reserved = True
     driver.save()
     request.session['driver_id'] = username
     product = get_object_or_404(ProductSubmit, pk=request.session['selected_product'])
@@ -222,13 +223,14 @@ def confirmIt(request, username):
             new_order.save()
             request.session.pop('selected_product', None)
             request.session.pop('selected_quantity', None)
-            request.session.pop('driver_id', None)
-            print('salam')
-            print(dict(request.session))
+            # request.session.pop('driver_id', None)
+            # print('salam')
+            # print(dict(request.session))
             return redirect('reporting:listpurchases')
 
         elif 'order_cancel' in request.POST:
             driver.availability = True
+            driver.reserved = False
             driver.save()
             product.quantity += request.session['selected_quantity']
             product.save()
