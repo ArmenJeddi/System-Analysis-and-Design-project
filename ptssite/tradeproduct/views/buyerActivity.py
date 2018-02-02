@@ -180,12 +180,14 @@ def driver_details(request, username):
         request.session['browse_notif'] = 1
         return redirect('tradeproduct:browse')
     driver = get_object_or_404(Driver, pk=username)
-    all_com = Comment.objects.all()
     comments = Comment.objects.filter(undercomment = driver)
-    print('driver: ', driver)
-    print('all: ', all_com)
-    print('mine: ', comments)
-    return render(request, 'tradeproduct/driver_details.html', {'driver': driver, 'comments': comments})
+    com_date = []
+    for comment in comments:
+        prod_tarikh = comment.date
+        tarikh = persian.from_gregorian(prod_tarikh.year, prod_tarikh.month, prod_tarikh.day)
+        com_date.append((comment, tarikh))
+
+    return render(request, 'tradeproduct/driver_details.html', {'driver': driver, 'comments': com_date})
 
 @customer_required
 def confirmIt(request, username):

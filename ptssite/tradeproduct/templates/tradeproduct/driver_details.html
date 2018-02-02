@@ -30,18 +30,33 @@
 
     <div id="id_container">
         <label style="font-weight: bold; margin-right: 20px;">امتیاز راننده:</label>
-        <span style="background-color: #4CAF50; width: 50px;padding: 6px;display: inline-block;border: 1px solid #ccc;border-radius: 4px;box-sizing: border-box;;">{{ driver.rate }}</span>
+        <span style="background-color: #eee; width: 50px;padding: 6px;display: inline-block;border: 1px solid #ccc;border-radius: 4px;box-sizing: border-box;;">{{ driver.rate }}</span>
 
+        <h3>نظرات درباره ی راننده:</h3>
+
+        <table id="myTable">
+        <thead>
+            <tr class="header">
+                <td>ردیف</td>
+                <td>نام نظر دهنده</td>
+                <td>تاریخ ثبت نظر</td>
+                <td>متن</td>
+            </tr>
+        </thead>
+        <tbody>
         {% if comments %}
-            <h3>نظرات درباره ی راننده:</h3>
             {% for comment in comments %}
-                <div>
-                    {{ comment.content }} <br>
-                    {{ comment.date }}
-                </div>
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ comment.0.commenter }} </td>
+                    <td>{{ comment.1.2 }} / {{ comment.1.1 }} / {{ comment.1.0 }} </td>
+                    <td>{{ comment.0.content }}</td>
+                </tr>
             {% endfor %}
 
         {% endif %}
+        </tbody>
+        </table>
     </div>
 
 {% endblock %}
