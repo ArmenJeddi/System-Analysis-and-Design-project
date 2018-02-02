@@ -2,6 +2,8 @@
 
 {% block head %}
     <link rel="stylesheet" type="text/css" href="/static/scripts/driver_list.css">
+    <link rel="stylesheet" type="text/css" href="/static/reporting/styles/listing.css">
+
     <title>driver list</title>
 {% endblock %}
 
@@ -32,41 +34,61 @@
     <div>
         {% if driverMap %}
             {% if option > 2 %}
-                <h4>مرتب شده بر اساس امتیاز</h4>
-                <ul>
+                <h3>مرتب شده بر اساس امتیاز</h3>
+
+                 <table id="myTable">
+              <thead>
+                <tr class="header">
+                  <th> ردیف </th>
+                  <th> نام راننده </th>
+                  <th> امتیاز از 10 </th>
+                  <th> قیمت به تومان </th>
+                  <th> مشخصات راننده </th>
+                  <th> انتخاب راننده </th>
+                </tr>
+              </thead>
+                <tbody>
                 {% for instance in driverMap %}
-                    <li>
-                        <span>{{ instance.0 }}</span> &nbsp &nbsp &nbsp
-                        <span>امتیاز: </span>
-                        <span>{{ instance.2 }} </span>
-                        <span> از 10</span>
-                        <br>
-                        <span>قیمت: </span>
-                        <span>{{ instance.1 }}</span>
-                        <a href="{% url 'tradeproduct:driver_details' instance.0.username %}" target="_blank"><button>مشاهده مشخصات راننده</button></a>
-                        <a href="{% url 'tradeproduct:confirmation' instance.0.username %}" ><button>انتخاب راننده</button></a>
-                    </li>
+                    <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ instance.0 }}</td>
+                    <td>{{ instance.2 }} </td>
+                    <td>{{ instance.1 }}</td>
+                    <td><a href="{% url 'tradeproduct:driver_details' instance.0.username %}" target="_blank"><button>مشاهده مشخصات راننده</button></a></td>
+                    <td><a href="{% url 'tradeproduct:confirmation' instance.0.username %}" ><button>انتخاب راننده</button></a></td>
+                    </tr>
                 {% endfor %}
-                </ul>
+                </tbody>
+             </table>
             {% else %}
-                <h4>مرتب شده بر اساس
+                <h3>مرتب شده بر اساس
                 {{ select_value }}
-                </h4>
-                <ul>
+                </h3>
+
+             <table id="myTable">
+              <thead>
+                <tr class="header">
+                  <th> ردیف </th>
+                  <th> نام راننده </th>
+                  <th> قیمت به تومان </th>
+                    <td>امتیاز از 10</td>
+                  <th> مشخصات راننده </th>
+                  <th> انتخاب راننده </th>
+                </tr>
+              </thead>
+                <tbody>
                 {% for instance in driverMap %}
-                    <li>
-                        <span>{{ instance.0 }}</span> &nbsp &nbsp &nbsp
-                        <span>قیمت: </span>
-                        <span>{{ instance.1 }} </span>
-                        <br>
-                        <span>امتیاز: </span>
-                        <span>{{ instance.2 }} </span>
-                        <span> از 10</span>
-                        <a href="{% url 'tradeproduct:driver_details' instance.0.username %}" target="_blank"><button>مشاهده مشخصات راننده</button></a>
-                        <a href="{% url 'tradeproduct:confirmation' instance.0.username %}"><button>انتخاب راننده</button></a>
-                    </li>
+                    <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ instance.0 }}</td>
+                    <td>{{ instance.1 }} </td>
+                    <td>{{ instance.2 }}</td>
+                    <td><a href="{% url 'tradeproduct:driver_details' instance.0.username %}" target="_blank"><button>مشاهده مشخصات راننده</button></a></td>
+                    <td><a href="{% url 'tradeproduct:confirmation' instance.0.username %}" ><button>انتخاب راننده</button></a></td>
+                    </tr>
                 {% endfor %}
-                </ul>
+                </tbody>
+             </table>
             {% endif %}
         {% else %}
             <h2>هیچ راننده ای یافت نشد.</h2>
