@@ -25,7 +25,7 @@ label{
     float: right;
     width: 50%;
     height: 20px;
-    background: #d3d3d3;
+    background: #4CAF50;
     outline: none;
     opacity: 0.7;
     -webkit-transition: .2s;
@@ -55,7 +55,7 @@ h1, h2, h3{
 
 input[type=text]{
     width: 20%;
-    padding: 12px;
+    padding: 4px;
     display: inline-block;
     border: 1px solid #ccc;
     border-radius: 4px;

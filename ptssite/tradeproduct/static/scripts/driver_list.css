@@ -1,0 +1,46 @@
+#option_container{
+    margin: auto;
+    width: 100%;
+    border: 3px solid #73AD21;
+    padding: 5px;
+    background: #eee;
+}
+
+label{
+    display: inline-block;
+    width: 200px;
+    margin-bottom: 5px;
+    margin-top: 10px;
+    font-size: large;
+}
+
+select{
+    width: 30%;
+    padding: 12px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 100%;
+}
+
+input[type=submit]{
+    width: 20%;
+    padding: 12px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: #45a049;
+    font-size: 100%;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+    /*font-weight : bold ;*/
+    font-size: 120%;
+}
+
+h1, h2, h3{
+    margin-right: 30px;
+}
