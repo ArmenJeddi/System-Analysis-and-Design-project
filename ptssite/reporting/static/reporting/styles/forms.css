@@ -1,0 +1,61 @@
+input[type=button], input[type=submit], input[type=reset] {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-decoration: none;
+    margin: auto ;
+    cursor: pointer;
+    position: relative;
+    right: 300px;
+}
+
+input[type=text], select , input[type=number]{
+    width: 20%;
+    padding: 12px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    /*position: relative;*/
+    /*right: 100px;*/
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+    font-weight : bold ;
+}
+
+.form_holder{
+    margin: auto;
+    width: 60%;
+    border: 3px solid #73AD21;
+    padding: 10px;
+    background: #eee;
+}
+
+label {
+    display: block;
+    width: 100px;
+    margin-bottom: 5px;
+    margin-top: 20px;
+}
+
+.vahed{
+    position: relative;
+}
+
+textarea{
+    width: 50%;
+    padding: 12px;
+    /*display: inline-block;*/
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    height: 80px;
+
+}
+
+h1, h2, h3{
+    margin-right: 30px;
+}

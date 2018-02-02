@@ -1,7 +1,7 @@
 {% extends "navbar_signedin.html" %}
 
 {% block head %}
-    <link rel="stylesheet" type="text/css" href=""> <!-- needs to add the link address for style sheet -->
+    <link rel="stylesheet" type="text/css" href="/static/scripts/details.css"> <!-- needs to add the link address for style sheet -->
 {% endblock %}
 
 {% block main %}
@@ -10,32 +10,37 @@
     <div>
         <ul>
             <li>
-                <span>نام فروشنده: </span>
-                {{ submittedProduct.0.submitter }}
+                <span class="span_holder">نام فروشنده: </span>
+                <span class="span_content">{{ submittedProduct.0.submitter }}</span>
             </li>
             <li>
-                <span>نوع محصول: </span>
-                {{ submittedProduct.0.product }}
+                <span class="span_holder">نوع محصول: </span>
+                <span class="span_content">{{ submittedProduct.0.product }}</span>
             </li>
             <li>
-                <span>تاریخ ثبت: </span>
-                {{ submittedProduct.1.2 }} / {{ submittedProduct.1.1 }} / {{ submittedProduct.1.0 }}
+                <span class="span_holder">تاریخ ثبت: </span>
+                <span class="span_content">{{ submittedProduct.1.2 }} / {{ submittedProduct.1.1 }} / {{ submittedProduct.1.0 }}</span>
             </li>
             <li>
-                <span>مقدار باقی مانده از محصول: </span>
-                {{ submittedProduct.0.quantity }}
+                <span class="span_holder">مقدار باقی مانده از محصول: </span>
+                <span class="span_content">{{ submittedProduct.0.quantity }}</span>
+                <span>کیلوگرم</span>
             </li>
             <li>
-                <span>قیمت: </span>
-                {{ submittedProduct.0.price }}
+                <span class="span_holder">قیمت: </span>
+                <span class="span_content">{{ submittedProduct.0.price }}</span>
+                <label>تومان</label>
             </li>
             <li>
-                <span>استان: </span>
-                {{ submittedProduct.0.getProvince }}
+                <span class="span_holder">استان: </span>
+                <span class="span_content">{{ submittedProduct.0.getProvince }}</span>
             </li>
             <li>
-                <span>آدرس: </span>
-                {{ submittedProduct.0.location|linebreaksbr }}
+                <span class="span_holder">آدرس: </span>
+                <div class="address_bar">
+
+                    <span >{{ submittedProduct.0.location|linebreaksbr }}</span>
+                </div>
             </li>
 
 
@@ -46,7 +51,7 @@
     {% else %}
         <script>
             setTimeout(function() { alert('این محصول در حال حاضر غیر فعال است.'); }, 5);
-            window.location.replace("http://127.0.0.1:8000/tradeproduct/updateSubmittedProduct/");
+            window.location.replace("http://127.0.0.1:8000/reporting/listproducts/");
         </script>
     {% endif %}
 
