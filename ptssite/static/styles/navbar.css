@@ -1,6 +1,9 @@
 body {
     margin: 0;
 }
+main {
+    margin-right: 5px;
+}
 #nav {
     position: sticky;
     top: 0px;
