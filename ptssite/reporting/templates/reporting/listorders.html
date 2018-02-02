@@ -1,7 +1,12 @@
-{% extends "systemmanagement/base.html" %}
+{% extends "systemmanagement/signedin_base.html" %}
 
 {% block head %}
-  <link rel="stylesheet" type="text/css" href="/static/reporting/styles/listing.css">
+<link rel="stylesheet" type="text/css" href="/static/reporting/styles/listing.css">
+{% endblock %}
+
+{% block nav %}
+{{ block.super }}
+<a class="nav-link" href="/systemmanagement/profile/">صفحه اصلی</a>
 {% endblock %}
 
 {% block main %}
