@@ -5,6 +5,7 @@ from django.views.generic.edit import UpdateView
 from django.forms import ModelForm, CharField, MultipleChoiceField,\
     CheckboxSelectMultiple, PasswordInput
 from authentication.mixins import UnprivilegedRequired
+from django.core.exceptions import ValidationError
 
 class UserForm(ModelForm):
     field_order = ['password', 'password2', 'first_name', 'last_name',

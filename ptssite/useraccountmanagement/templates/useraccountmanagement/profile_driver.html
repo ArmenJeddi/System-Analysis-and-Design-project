@@ -8,10 +8,12 @@
 <p>
   <a href="/useraccountmanagement/updateprofile/{{ view.request.user.username }}/">اطلاعات حساب</a>
   <a href="/reporting/listtransports/">گزارش جا به جایی ها</a>
+  {% if not view.request.user.unprivilegeduser.driver.reserved %}
   <form action="/useraccountmanagement/profile/" method="post">
     <p><label>آمادگی برای انتقال:
       <input type="checkbox" name="available" value="true"{% if view.request.user.unprivilegeduser.driver.availability %} checked {% endif %} /></label></p>
     <p><input type="submit" value="ثبت تغییرات" /></p>
   </form>
+  {% endif %}
 </p>
 {% endblock %}
