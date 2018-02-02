@@ -19,6 +19,7 @@ class ReceptionForm(forms.Form):
 def listpurchases(request):
 
     temp_list = Order.objects.filter(buyer=request.user.username)
+    temp_list = list(reversed(temp_list))
     purchase_list = [[0 for x in range(3)] for y in range(len(temp_list))]
     for i in range(0, len(temp_list)):
         purchase_list[i][0] = i + 1
