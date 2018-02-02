@@ -1,13 +1,33 @@
-{% extends "systemmanagement/base.html" %}
+{% extends "systemmanagement/signedin_base.html" %}
+
+{% block nav %}
+{{ block.super }}
+<a class="nav-link" href="/systemmanagement/profile/">صفحه اصلی</a>
+<a class="nav-link" href="/systemmanagement/browsecomments/">جستجوی نظرات</a>
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="/static/systemmanagement/styles/detail.css">
+{% endblock %}
 
 {% block main %}
-<p><a href="/systemmanagement/browsecomments/">جستجوی نظرات</a></p>
-<p>نویسنده: {{ comment.commenter.first_name }} {{ comment.commenter.last_name }}
-  <br />برای: {{ comment.undercomment.first_name }} {{ comment.undercomment.last_name }}
-  <br />ثبت در تاریخ: {{ comment.date_str }}
-  <blockquote>
-    {{ comment.content }}
-  </blockquote>
+<table>
+  <tr>
+    <th>نویسنده:</th>
+    <td>{{ comment.commenter.first_name }} {{ comment.commenter.last_name }}</td>
+  </tr>
+  <tr>
+    <th>برای:</th>
+    <td>{{ comment.undercomment.first_name }} {{ comment.undercomment.last_name }}</td>
+  </tr>
+  <tr>
+    <th>ثبت در تاریخ:</th>
+    <td>{{ comment.date_str }}</td>
+  </tr>
+</table>
+<blockquote>
+  {{ comment.content }}
+</blockquote>
 </p>
 <form action="/systemmanagement/detailcomment/{{ comment.pk }}/" method="post">
   <input type="submit" value="حذف نظر">

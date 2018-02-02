@@ -13,6 +13,10 @@ tr:nth-child(odd) {
 tr:nth-child(even) {
     background-color: lightgrey;
 }
+blockquote {
+    background: azure;
+    padding: 15px;
+}
 form {
     margin: 10px 40%;
 }
