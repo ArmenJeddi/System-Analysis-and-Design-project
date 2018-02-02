@@ -13,7 +13,7 @@ class DepositForm(forms.Form):
                                     'required': 'لطفا مبلغی را مشخص کنید',
                                     'min_value': 'مبلغ وارده باید حداقل 1000 تومان باشد'
                                 })
-
+    
 @customer_required
 def depositmoney(request):
     if request.method == 'GET':
