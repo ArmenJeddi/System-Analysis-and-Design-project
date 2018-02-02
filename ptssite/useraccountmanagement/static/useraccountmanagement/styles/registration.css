@@ -1,6 +1,10 @@
-main ul {
+h2 {
     display: block;
-    margin: 10% 38%;
+    margin: 30px 40%;
+}
+main ul {
+    margin: 10% 35%;
+    width: 260px;
 }
 main li {
     list-style-type: none;
