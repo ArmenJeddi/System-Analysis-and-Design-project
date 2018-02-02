@@ -4,6 +4,7 @@ from datastore.models.product import Product
 from datastore.models.prodsub import ProductSubmit
 from datastore.models.driver import Driver
 from datastore.models.order import Order
+from datastore.models.comt import Comment
 
 import datetime
 import random
@@ -183,7 +184,8 @@ def driver_details(request, username):
         request.session['browse_notif'] = 1
         return redirect('tradeproduct:browse')
     driver = get_object_or_404(Driver, pk=username)
-    return render(request, 'tradeproduct/driver_details.html', {'driver': driver})
+    comments = Comment.objects.filter(undercomment = driver)
+    return render(request, 'tradeproduct/driver_details.html', {'driver': driver, 'comments': comments})
 
 @customer_required
 def confirmIt(request, username):

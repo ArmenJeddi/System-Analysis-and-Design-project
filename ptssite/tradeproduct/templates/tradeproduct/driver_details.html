@@ -1,7 +1,8 @@
 {% extends "navbar_signedin.html" %}
 
 {% block head %}
-    <link rel="stylesheet" type="text/css" href=""> <!-- needs to add the link address for style sheet -->
+    <link rel="stylesheet" type="text/css" href="/static/scripts/details.css"> <!-- needs to add the link address for style sheet -->
+    <title>driver detail</title>
 {% endblock %}
 
 {% block main %}
@@ -20,9 +21,27 @@
 
             <li>
                 <span>ظرفیت ماشین:</span>
-                <span>{{ driver.vehicle_capacity }}</span>
+                <span>{{ driver.vehicle_capacity }}</span> &nbsp;
+                <span>کیلوگرم</span>
             </li>
 
         </ul>
     </div>
+
+    <div id="id_container">
+        <label>امتیاز راننده:</label>
+        <span>{{ driver.rate }}</span>
+
+        {% if comments %}
+            <h3>نظرات درباره ی راننده:</h3>
+            {% for comment in comments %}
+                <div>
+                    {{ comment.content }} <br>
+                    {{ comment.date }}
+                </div>
+            {% endfor %}
+
+        {% endif %}
+    </div>
+
 {% endblock %}

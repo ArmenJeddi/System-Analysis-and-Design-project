@@ -1,6 +1,6 @@
 #option_container{
     margin: auto;
-    width: 100%;
+    width: 99%;
     border: 3px solid #73AD21;
     padding: 5px;
     background: #eee;
@@ -38,9 +38,58 @@ input[type=submit]{
 input[type=submit]:hover {
     background-color: #45a049;
     /*font-weight : bold ;*/
-    font-size: 120%;
+    font-size: 105%;
 }
 
 h1, h2, h3{
     margin-right: 30px;
+}
+
+.dl_button{
+    width: 50%;
+    padding: 10px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    opacity: 0.7;
+    background-color: #45a049;
+    font-size: 100%;
+}
+
+.dl_button:hover {
+    background-color: #45a049;
+    /*font-weight : bold ;*/
+    opacity: 1;
+}
+
+#myTable {
+    border-collapse: collapse; /* Collapse borders */
+    width: 100%; /* Full-width */
+    border: 1px solid #ddd; /* Add a grey border */
+    font-size: 18px; /* Increase font-size */
+}
+
+#myTable th, #myTable td {
+    text-align: center;
+    padding: 12px; /* Add padding */
+}
+
+#myTable tr {
+    /* Add a bottom border to all table rows */
+    border-bottom: 1px solid #ddd;
+}
+
+#myTable tr.header, #myTable tr:hover {
+    /* Add a grey background color to the table header and on hover */
+    background-color: #f1f1f1;
+}
+
+#myInput input[type=submit] {
+    border-style: none;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+#myInput input[type=submit]:hover {
+    background-color: Azure;
 }

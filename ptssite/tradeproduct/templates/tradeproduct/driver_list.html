@@ -2,7 +2,7 @@
 
 {% block head %}
     <link rel="stylesheet" type="text/css" href="/static/scripts/driver_list.css">
-    <link rel="stylesheet" type="text/css" href="/static/reporting/styles/listing.css">
+{#    <link rel="stylesheet" type="text/css" href="/static/reporting/styles/listing.css">#}
 
     <title>driver list</title>
 {% endblock %}
@@ -22,6 +22,7 @@
             <input type="submit" value="انتخاب">
 
         </form>
+
     </div>
 
     <div>
@@ -54,8 +55,8 @@
                     <td>{{ instance.0 }}</td>
                     <td>{{ instance.2 }} </td>
                     <td>{{ instance.1 }}</td>
-                    <td><a href="{% url 'tradeproduct:driver_details' instance.0.username %}" target="_blank"><button>مشاهده مشخصات راننده</button></a></td>
-                    <td><a href="{% url 'tradeproduct:confirmation' instance.0.username %}" ><button>انتخاب راننده</button></a></td>
+                    <td><a href="{% url 'tradeproduct:driver_details' instance.0.username %}" target="_blank"><button class="dl_button">مشاهده مشخصات راننده</button></a></td>
+                    <td><a href="{% url 'tradeproduct:confirmation' instance.0.username %}" ><button class="dl_button">انتخاب راننده</button></a></td>
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -83,8 +84,8 @@
                     <td>{{ instance.0 }}</td>
                     <td>{{ instance.1 }} </td>
                     <td>{{ instance.2 }}</td>
-                    <td><a href="{% url 'tradeproduct:driver_details' instance.0.username %}" target="_blank"><button>مشاهده مشخصات راننده</button></a></td>
-                    <td><a href="{% url 'tradeproduct:confirmation' instance.0.username %}" ><button>انتخاب راننده</button></a></td>
+                    <td><a href="{% url 'tradeproduct:driver_details' instance.0.username %}" target="_blank"><button class="dl_button">مشاهده مشخصات راننده</button></a></td>
+                    <td><a href="{% url 'tradeproduct:confirmation' instance.0.username %}" ><button class="dl_button">انتخاب راننده</button></a></td>
                     </tr>
                 {% endfor %}
                 </tbody>
