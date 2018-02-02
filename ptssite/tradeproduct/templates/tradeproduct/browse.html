@@ -1,13 +1,13 @@
 {% extends my_template %}
 
 {% block head %}
-    <link rel="stylesheet" type="text/css" href=""> <!-- needs to add the link address for style sheet -->
+    <link rel="stylesheet" type="text/css" href="/static/scripts/browse.css"> <!-- needs to add the link address for style sheet -->
     <title>Browse Products</title>
 {% endblock %}
 
 {% block main %}
     <h2>جستجوی محصول</h2>
-    <div>
+    <div class="form_holder">
         <form method="POST" action="">
             {% csrf_token %}
             <label>محصول</label>

@@ -1,0 +1,24 @@
+.form_holder{
+    margin: auto;
+    width: 60%;
+    border: 3px solid #73AD21;
+    padding: 5px;
+    background: #eee;
+}
+
+h1, h2, h3{
+    margin-right: 30px;
+}
+
+
+
+input[type=text], select , input[type=number]{
+    width: 20%;
+    padding: 12px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    /*position: relative;*/
+    /*right: 100px;*/
+}
