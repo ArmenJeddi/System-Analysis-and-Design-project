@@ -15,7 +15,7 @@ def commentOnFarmer(request, order_id):
     if request.method == 'POST':
         comment = Comment(commenter = request.user.unprivilegeduser.customer, undercomment = rel_order.product.submitter, content = request.POST['comment'],
                           date = datetime.datetime.today(),
-                          order_id = rel_order)
+                          order = rel_order)
         comment.save()
         return redirect('reporting:listpurchases')
     else:
@@ -31,7 +31,7 @@ def commentOnDriver(request, order_id):
         comment = Comment(commenter=request.user.unprivilegeduser.customer, undercomment=rel_order.driver,
                           content=request.POST['comment'],
                           date=datetime.datetime.today(),
-                          order_id = rel_order)
+                          order = rel_order)
         comment.save()
         rate = int(request.POST['rate'])
         print('before: ',rel_order.driver.rate)
