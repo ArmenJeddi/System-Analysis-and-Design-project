@@ -5,9 +5,16 @@ from django.core.exceptions import ValidationError
 from django.http import HttpResponseRedirect
 
 class LoginForm(Form):
-    username = CharField(label='نام کاربری')
+    use_required_attribute = False
+    username = CharField(label='نام کاربری',
+                         error_messages={
+                             'required': 'نام کاربری را وارد کنید'
+                         })
     password = CharField(label='گذرواژه',
-                         widget=PasswordInput)
+                         widget=PasswordInput,
+                         error_messages={
+                             'required': 'گذرواژه را وارد کنید'
+                         })
 
     def clean(self):
         try:
@@ -33,11 +40,15 @@ class LoginView(FormView):
     def get(self, request, *args, **kwargs):
         if request.user.is_anonymous():
             return super().get(request, *args, **kwargs)
-        else:
+        elif request.user.is_unprivileged():
             return HttpResponseRedirect('/useraccountmanagement/profile/')
+        else:
+            return HttpResponseRedirect('/systemmanagement/profile/')
 
     def post(self, request, *args, **kwargs):
         if request.user.is_anonymous():
             return super().post(request, *args, **kwargs)
-        else:
+        elif request.user.is_unprivileged():
             return HttpResponseRedirect('/useraccountmanagement/profile/')
+        else:
+            return HttpResponseRedirect('/systemmanagement/profile/')

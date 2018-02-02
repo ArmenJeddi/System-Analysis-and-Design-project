@@ -17,3 +17,8 @@ input[type=submit] {
 input[type=submit]:hover {
     background-color: Azure;
 }
+.errorlist li {
+    background-color: red;
+    padding: 5px;
+    display: inline-block;
+}

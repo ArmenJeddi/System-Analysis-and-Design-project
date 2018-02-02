@@ -6,7 +6,9 @@
 
 {% block main %}
   <form id="login-form" action="/useraccountmanagement/login/" method="post">
-    {{ form }}
+    <table>
+      {{ form }}
+    </table>
     <a href="/useraccountmanagement/passwordrecovery/">گذرواژه خود را فراموش کرده ام</a>
     <input type="submit" value="ورود">
   </form>
