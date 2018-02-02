@@ -10,7 +10,20 @@ h1, h2, h3{
     margin-right: 30px;
 }
 
+.labeled {
+    display: block;
+    width: 100px;
+    margin-bottom: 5px;
+    margin-top: 10px;
+    font-size: large;
+}
 
+.content_holder{
+    width: 100px;
+    margin-bottom: 5px;
+    margin-top: 10px;
+    font-size: large;
+}
 
 input[type=text], select , input[type=number]{
     width: 20%;
@@ -21,4 +34,32 @@ input[type=text], select , input[type=number]{
     box-sizing: border-box;
     /*position: relative;*/
     /*right: 100px;*/
+}
+
+ul {
+    column-count: 8;
+    -webkit-column-count: 8;
+    -moz-column-count: 8;
+}
+
+ul li {
+    display: inline-block; /*necessary*/
+}
+
+input[type=button], input[type=submit], input[type=reset] {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-decoration: none;
+    margin: auto ;
+    cursor: pointer;
+    position: relative;
+    right: 300px;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+    /*font-weight : bold ;*/
+    font-size: large;
 }
