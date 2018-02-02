@@ -1,52 +1,126 @@
 {% extends "navbar_signedin.html" %}
 
 {% block head %}
-    <link rel="stylesheet" type="text/css" href=""> <!-- needs to add the link address for style sheet -->
     <title>Comment On Farmer</title>
+    <style>
+        .containIt{
+            margin: 30px;
+            width: 80%;
+            border: 3px solid #73AD21;
+            padding: 5px;
+            background: #eee;
+        }
+
+        label{
+            display: inline-block;
+            width: 150px;
+            margin-bottom: 5px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        h1, h2,h3,h4,h5{
+            margin-right: 20px;
+        }
+
+        ul{
+            list-style-type: none;
+        }
+
+        #form_container{
+            margin: 30px;
+            width: 80%;
+            border: 3px solid #73AD21;
+            padding: 5px;
+            background: #eee;
+            /*margin: 30px;*/
+        }
+
+        input[type=button], input[type=submit], input[type=reset] {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 16px 32px;
+            text-decoration: none;
+            margin-right: 30px ;
+            cursor: pointer;
+            position: relative;
+            right: 300px;
+        }
+
+        input[type=submit]:hover {
+            background-color: #45a049;
+            /*font-weight : bold ;*/
+            font-size: large;
+        }
+
+        textarea{
+            margin-right: 30px ;
+            width: 60%;
+            padding: 12px;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+    </style>
 {% endblock %}
 
 {% block main %}
     <h2>نظر درباره ی فروشنده</h2>
     {% if length == 0 %}
     <div>
-        <h5>مشخصات سفارش</h5>
-        <div>
+
+        <div class="containIt">
+            <h3>مشخصات سفارش</h3>
             <ul>
-                <li><span>نوع محصول: </span>
+                <li><label>نوع محصول: </label>
                 <span>{{ order.product.product }}</span></li>
 
-                <li><span>نام فروشنده: </span>
+                <li><label>نام فروشنده: </label>
                 <span>{{ order.product.submitter }}</span></li>
 
-                <li><span>حجم سفارش:</span>
-                <span>{{ order.product.quantity }}</span></li>
+                <li><label>حجم سفارش:</label>
+                <span>{{ order.product.quantity }}</span> &nbsp;
+                    <span>کیلوگرم</span>
 
-                <li><span>قیمت واحد محصول: </span>
-                <span>{{ order.product.price }}</span></li>
+                </li>
 
-                <li><span>قیمت مجموع محصول: </span>
-                <span id="product_whole_price"></span></li>
+                <li><label>قیمت واحد محصول: </label>
+                <span>{{ order.product.price }}</span> &nbsp;
+                <span>تومان</span>
+                </li>
 
-                <li><span>هزینه انتقال: </span>
-                <span>{{ order.driver_cost }}</span></li>
+                <li><label>قیمت مجموع محصول: </label>
+                <span id="product_whole_price"></span>&nbsp;
+                <span>تومان</span>
 
-                <li><span>هزینه کلی سفارش: </span>
-                <span id ="total_cost"></span></li>
+                </li>
+
+                <li><label>هزینه انتقال: </label>
+                <span>{{ order.driver_cost }}</span>&nbsp;
+                <span>تومان</span>
+                </li>
+
+                <li><label>هزینه کلی سفارش: </label>
+                <span id ="total_cost"></span>&nbsp;
+                <span>تومان</span>
+                </li>
 
             </ul>
         </div>
 
-        <div>
-            <h6>نظر خود را درباره ی این فروشنده بر اساس این سفارش در کادر زیر وارد نمایید.</h6>
+        <div id="form_container">
+            <h4>نظر خود را درباره ی این فروشنده بر اساس این سفارش در کادر زیر وارد نمایید.</h4>
             <form method="POST" action="" onsubmit="alert('نظر شما با موفقیت ثبت شد.')">
                 <textarea id = 'comment1' rows="5" cols="100" name="comment" placeholder = "نظر خود را در اینجا وارد کنید"></textarea>
-                <button type="submit" onClick="return empty()">ارسال</button>
+                <br>
+                <input type="submit" onClick="return empty()" value="ارسال">
             </form>
         </div>
 
-    </div>
-
-    <script>
+        <script>
         document.getElementById('product_whole_price').innerHTML = {{ order.quantity }} * {{ order.product.price }} ;
         document.getElementById('total_cost').innerHTML = {{ order.quantity }} * {{ order.product.price }} + {{ order.driver_cost }};
 
@@ -60,6 +134,10 @@
         }
 
     </script>
+
+    </div>
+
+
     {% else %}
         <script>
             setTimeout(function() { alert('شما قبلا بر اساس این سفارش، به این فروشنده نظر داده اید.'); }, 5);

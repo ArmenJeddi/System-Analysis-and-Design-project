@@ -1,0 +1,76 @@
+.containIt{
+    margin: 30px;
+    width: 80%;
+    border: 3px solid #73AD21;
+    padding: 5px;
+    background: #eee;
+}
+
+label {
+    display: inline-block;
+    width: 150px;
+    margin-bottom: 5px;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.content_holder{
+    width: 100px;
+    margin-bottom: 5px;
+    margin-top: 10px;
+    font-size: large;
+}
+
+input[type=text], select{
+    width: 20%;
+    padding: 12px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+textarea{
+    margin-right: 30px ;
+    width: 60%;
+    padding: 12px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=button], input[type=submit], input[type=reset] {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-decoration: none;
+    margin: auto ;
+    cursor: pointer;
+    position: relative;
+    right: 300px;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+    /*font-weight : bold ;*/
+    font-size: large;
+}
+
+h1, h2,h3,h4,h5{
+    margin-right: 20px;
+}
+
+ul{
+    list-style-type: none;
+}
+
+#form_container{
+    margin: 30px;
+    width: 80%;
+    border: 3px solid #73AD21;
+    padding: 5px;
+    background: #eee;
+    /*margin: 30px;*/
+}
