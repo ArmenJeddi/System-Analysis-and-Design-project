@@ -3,7 +3,7 @@ a:hover {
 }
 main p {
     margin: 15% 10%;
-    line-height: 60px;
+    line-height: 30px;
 }
 main a {
     background-color: darkseagreen;
@@ -12,6 +12,8 @@ main a {
     border: 2px solid black;
     text-decoration: none;
     color: white;
+    display: inline-block;
+    height: 30px;
 }
 main a:hover {
     background-color: lightgreen;

@@ -6,9 +6,10 @@
 
 {% block main %}
     <h2> فهرست محصولات ثبت شده شما </h2>
-    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="جستجوی محصول ...">
-    <a href="{% url 'tradeproduct:submit' %}"><button>بازگشت به صفحه ی ثبت محصول</button> </a>
-
+    <form>
+        <input type="text" id="myInput" placeholder="جستجوی نام محصول ..." name="search">
+        <input type="submit" id="searchSubmit" value="جستجو">
+    </form>
     <table id="myTable">
       <thead>
         <tr class="header">
@@ -23,20 +24,22 @@
       <tbody>
         {% for product in products %}
           <tr>
-
             <td>{{ product.0 }} </td>
             <td>{{ product.1.product }}</td>
             <td>{{ product.2.2 }} / {{ product.2.1 }} / {{ product.2.0 }}</td>
-            <td><a href="{% url 'tradeproduct:details' product.1.id %}" target="_blank"> <button>مشاهده جزییات</button> </a></td>
-            <td><a href="{% url 'tradeproduct:change' product.1.id %}"> <button>به روز رسانی</button> </a></td>
-            <td><form method="POST" action="{% url 'tradeproduct:delete' product.1.id %}">
-                <button  type="submit" onclick="alert('محصول با موفقیت حذف شد.')">حذف محصول</button>
+            <td><a href="{% url 'tradeproduct:details' product.1.id %}" target="_blank"> <button class="dropbtn">مشاهده جزییات</button> </a></td>
+            <td><a href="{% url 'tradeproduct:change' product.1.id %}"> <button class="dropbtn">به روز رسانی</button> </a></td>
+            <td>
+                <form method="POST" action="{% url 'tradeproduct:delete' product.1.id %}">
+                    <button class="dropbtn" type="submit" onclick="alert('محصول با موفقیت حذف شد.')">حذف محصول</button>
                 </form>
             </td>
           </tr>
         {% endfor %}
       </tbody>
     </table>
+    <br>
+    <a href="{% url 'tradeproduct:submit' %}"><button>بازگشت به صفحه ثبت محصول</button> </a>    
 
     {% if products.has_other_pages %}
       <ul class="pagination">
@@ -59,6 +62,4 @@
         {% endif %}
       </ul>
     {% endif %}
-
-    <script src="/static/scripts/Search.js" type="text/javascript"></script>
 {% endblock %}

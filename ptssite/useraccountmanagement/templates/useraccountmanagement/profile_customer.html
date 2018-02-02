@@ -7,6 +7,9 @@
 {% block main %}
 <p>
   <a href="/useraccountmanagement/updateprofile/{{ view.request.user.username }}/">اطلاعات حساب</a>
+  {% if "driver_id" in view.request.session %}
+  <a href="/tradeproduct/confirmIt/{{ view.request.session.driver_id }}/">تکمیل سفارش</a>
+  {% endif %}
   <a href="/finance/depositmoney/">افزایش اعتبار</a>
   <a href="/reporting/listpurchases/">گزارش سفارشات</a>
   <a href="/reporting/listproducts/">گزارش و به روزرسانی محصولات</a>

@@ -1,5 +1,8 @@
 body {
-    margin: 0;
+    margin: 1px;
+}
+main {
+    margin-right: 5px;
 }
 #nav {
     position: sticky;

@@ -8,7 +8,11 @@ from convertdate import persian
 @customer_required
 def listproducts(request):
     if request.method == 'GET':
+        
         temp_list = ProductSubmit.objects.filter(submitter=request.user.username)
+        if request.GET.get('search'):
+            temp_list = temp_list.filter(product__name__contains = request.GET.get('search'))
+        temp_list = list(reversed(temp_list))
         product_list = [[0 for x in range(3)] for y in range(len(temp_list))]
         for i in range(0, len(temp_list)):
             product_list[i][0] = i + 1

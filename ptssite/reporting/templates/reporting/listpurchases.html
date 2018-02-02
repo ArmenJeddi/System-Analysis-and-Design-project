@@ -8,8 +8,10 @@
 
 {% block main %}
     <h2> فهرست محصولات خریداری شده شما </h2>
-    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="جستجوی محصول ...">
-    
+    <form>
+        <input type="text" id="myInput" placeholder="جستجوی نام محصول ..." name="search">
+        <input type="submit" id="searchSubmit" value="جستجو">
+    </form>
     <table id="myTable" class="center">
       <thead>
         <tr class="header">
@@ -17,8 +19,6 @@
           <th> محصول </th>
           <th> جزییات سفارش </th>
           <th> وضعیت </th>
-            <th></th>
-            <th></th>
         </tr>
       </thead>
       <tbody>
@@ -26,39 +26,27 @@
           <tr>
             <td>{{ order.0 }}</td>
             <td>{{ order.1.product.product }}</td>
-            <td><a href="{% url 'tradeproduct:order_detail_buyer' order.1.id %}" target="_blank"><button>مشاهده جزییات</button></a></td>
-
-              {% if order.1.driver_receipt and order.1.buyer_receipt  %}
-                <td>محصول به شما تحویل داده شده است.</td>
-            {% elif order.1.driver_receipt and not order.1.buyer_receipt %}
-                <td>راننده محصول را دریافت کرده است.</td>
-            {% else %}
-                <td>راننده در مسیر دریافت محصول است.</td>
-            {% endif %}
-
-          {% if order.1.buyer_receipt %}
-              <td>
-                <a href="{% url 'support:commentOnFarmer' order.1.id %}"><button>نظر درباره فروشنده</button></a>
-              </td>
-              <td>
-                <a href="{% url 'support:commentOnDriver' order.1.id %}"><button>نظر درباره راننده</button></a>
-              </td>
-          {% elif order.1.driver_receipt %}
-              <td>
-                <form method = 'POST' action="">
-                    {% csrf_token %}
-                    <input type="submit" value="محصول دریافت شد" name="{{ order.1.id }}">
-                </form>
-
-              </td>
-
-              <td></td>
-
-           {% else %}
-              <td></td>
-              <td></td>
-          {% endif %}
-
+            <td><a href="{% url 'tradeproduct:order_detail_buyer' order.1.id %}" target="_blank"><button class="dropbtn">مشاهده جزییات</button></a></td>
+            <td class="dropdown">
+                <div class="center">
+                    {% if order.1.driver_receipt %}
+                        {% if order.1.buyer_receipt %}
+                            <p class="dropbtn"> محصول دریافت شد </p>
+                            <div class="dropdown-content">
+                                <a href="{% url 'support:commentOnFarmer' order.1.id %}"><button>نظر درباره فروشنده</button></a>
+                                <a href="{% url 'support:commentOnDriver' order.1.id %}"><button>نظر درباره راننده</button></a>
+                            </div>
+                        {% else %}
+                            <p class="dropbtn"> دریافت محصول توسط راننده </p>
+                            <form class="dropdown-content" method="POST" action="">
+                                {% csrf_token %}
+                                <input type="submit" value="دریافت از راننده" name="{{ order.1.id }}">
+                            </form>
+                        {% endif %}
+                    {% else %}
+                        <p class="dropbtn"> راننده در راه دریافت محصول </p>                        
+                    {% endif %}
+                </div>
           </tr>
         {% endfor %}
       </tbody>
@@ -85,6 +73,4 @@
         {% endif %}
       </ul>
     {% endif %}
-    <script src="/static/scripts/Search.js" type="text/javascript"></script>
-
 {% endblock %}
