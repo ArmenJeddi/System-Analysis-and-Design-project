@@ -1,9 +1,15 @@
 {% extends "systemmanagement/base.html" %}
 
+{% block head %}
+<link rel="stylesheet" type="text/css" href="/static/systemmanagement/styles/login.css" />
+{% endblock %}
+
 {% block main %}
 <form action="/systemmanagement/login/" method="post">
-  {{ form.as_p }}
-  <p><a href="/systemmanagement/passwordrecovery/">گذرواژه خود را فراموش کرده ام.</a></p>
+  <table>
+    {{ form }}
+  </table>
+  <p id="passrec"><a href="/systemmanagement/passwordrecovery/">گذرواژه خود را فراموش کرده ام.</a></p>
   <p><input type="submit" value="ورود"></p>
 </form>
 {% endblock %}

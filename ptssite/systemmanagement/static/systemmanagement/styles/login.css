@@ -1,11 +1,14 @@
 form {
-    padding: 5% 35%;
+    padding: 10% 35%;
 }
 
 input {
     border-style: none;
     background-color: LightGrey;
     padding: 10px 15px;
+}
+#passrec {
+    padding: 0px 10%;
 }
 input:focus {
     background-color:Azure;

@@ -1,25 +1,37 @@
-{% extends "systemmanagement/base.html" %}
+{% extends "systemmanagement/signedin_base.html" %}
+
+{% block nav %}
+{{ block.super }}
+<a class="nav-link" href="/systemmanagement/profile/">صفحه اصلی</a>
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="/static/systemmanagement/styles/browse.css">
+{% endblock %}
 
 {% block main %}
-<p><a href="/systemmanagement/profile/">صفحه اصلی</a></p>
 <form action="/systemmanagement/browsecomments/" method="get">
-  <p><label>نظر دهنده: <input type="text" name="commenter" /></label></p>
-  <p><label>ثبت شده برای: <input type="text" name="undercomment" /></label></p>
-  <p>
-    <label>از تاریخ: <input type="text" name="date_start" /></label>
-    <label>تا تاریخ: <input type="text" name="date_end" /></label>
-  </p>
-  <p><label>کلید واژه: <input type="text" name="keyword" /></label></p>
-  <p><input type="submit" value="جستجو"></p>
+  <label>نظر دهنده: <input type="text" name="commenter" /></label>
+  <label>ثبت شده برای: <input type="text" name="undercomment" /></label>
+  <label>از تاریخ: <input type="text" name="date_start" /></label>
+  <label>تا تاریخ: <input type="text" name="date_end" /></label>
+  <label>کلید واژه: <input type="text" name="keyword" /></label>
+  <br /><input type="submit" value="جستجو">
 </form>
-<ul>
+<table>
+  <tr>
+    <th>نویسنده</th>
+    <th>برای</th>
+    <th>تاریخ ثبت</th>
+    <th class="longer">جزئیات</th>
+  </tr>
   {% for comment in comments %}
-  <li>
-    نویسنده: {{ comment.commenter.first_name }} {{ comment.commenter.last_name }}
-    <br />برای: {{ comment.undercomment.first_name }} {{ comment.undercomment.last_name }}
-    <br />ثبت در تاریخ: {{ comment.date_str }}
-    <br /><a href="/systemmanagement/detailcomment/{{ comment.pk }}/">جزئیات</a>
-  </li>
+  <tr>
+    <td>{{ comment.commenter.first_name }} {{ comment.commenter.last_name }}</td>
+    <td>{{ comment.undercomment.first_name }} {{ comment.undercomment.last_name }}</td>
+    <td>{{ comment.date_str }}</td>
+    <td class="longer"><a href="/systemmanagement/detailcomment/{{ comment.pk }}/">{{ comment.content|truncatechars:60 }}</a></td>
+  </tr>
   {% endfor %}
-</ul>
+</table>
 {% endblock %}

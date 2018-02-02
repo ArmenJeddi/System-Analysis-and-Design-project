@@ -1,22 +1,54 @@
-{% extends "systemmanagement/base.html" %}
+{% extends "systemmanagement/signedin_base.html" %}
+
+{% block nav %}
+{{ block.super }}
+<a class="nav-link" href="/systemmanagement/profile/">صفحه اصلی</a>
+<a class="nav-link" href="/systemmanagement/browseusers/">جستجوی کاربران</a>
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="/static/systemmanagement/styles/detail.css" >
+{% endblock %}
 
 {% block main %}
-<p><a href="/systemmanagement/browseusers/">جستجوی کاربران</a></p>
-{% if successful %}
-<p>تغییرات با موفقیت ثبت شد</p>
-{% endif %}
-<p>{{ user.first_name }} {{ user.last_name }}
-<br />نام کاربری: {{ user.username }}
-<br />کد ملی: {{ user.national_id }}
-<br />شماره تلفن همراه: {{ user.phone_number }}
-<br />شماره حساب: {{ user.account_number }}
-{% if user.is_customer %}
-<br />موجودی حساب: {{ user.customer.account_balance }}
-{% endif %}
-{% if user.is_driver %}
-<br />شماره گواهینامه: {{ user.driver.certificate_number }}
-<br />شماره پلاک وسیله نقلیه: {{ user.driver.license_plate }}
-{% endif %}
+<table>
+  <tr>
+    <th>نام و نام خانوادگی:</th>
+    <td>{{ user.first_name }} {{ user.last_name }}</td>
+  </tr>
+  <tr>
+    <th>نام کاربری:</th>
+    <td>{{ user.username }}</td>
+  </tr>
+  <tr>
+    <th>کد ملی:</th>
+    <td>{{ user.national_id }}</td>
+  </tr>
+  <tr>
+    <th>شماره تلفن همراه:</th>
+    <td>{{ user.phone_number }}</td>
+  </tr>
+  <tr>
+    <th>شماره حساب:</th>
+    <td>{{ user.account_number }}</td>
+  </tr>
+  {% if user.is_customer %}
+  <tr>
+    <th>موجودی حساب:</th>
+    <td>{{ user.customer.account_balance_str }}</td>
+  </tr>
+  {% endif %}
+  {% if user.is_driver %}
+  <tr>
+    <th>شماره گواهینامه:</th>
+    <td>{{ user.driver.certificate_number }}</td>
+  </tr>
+  <tr>
+    <th>شماره پلاک وسیله نقلیه:</th>
+    <td>{{ user.driver.license_plate }}</td>
+  </tr>
+  {% endif %}
+</table>
 <form action="/systemmanagement/detailuser/{{ user.username }}/" method="post">
   {{ form.as_p }}
   <input type="submit" value="ثبت تغییرات">

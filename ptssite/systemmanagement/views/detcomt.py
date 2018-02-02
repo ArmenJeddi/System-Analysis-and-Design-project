@@ -13,7 +13,7 @@ class DetailCommentView(PrivilegedRequired, DeleteView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        comment = context[context_object_name]
+        comment = context[self.context_object_name]
         date = persian.from_gregorian(comment.date.year,
                                       comment.date.month,
                                       comment.date.day)

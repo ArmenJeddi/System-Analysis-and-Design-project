@@ -1,0 +1,40 @@
+table {
+    margin: 5% auto;
+}
+tr {
+    line-height: 30px;
+}
+th, td {
+    padding: 0px 15px;
+}
+tr:nth-child(odd) {
+    background-color: azure;
+}
+tr:nth-child(even) {
+    background-color: lightgrey;
+}
+blockquote {
+    background: azure;
+    padding: 15px;
+}
+form {
+    margin: 10px 40%;
+}
+label {
+    display: inline-block;
+    margin: 10px;
+}
+input {
+    border-style: none;
+    background-color: LightGrey;
+    padding: 10px 15px;
+}
+input:focus {
+    background-color:Azure;
+}
+input[type=submit] {
+    cursor: pointer;
+}
+input[type=submit]:hover {
+    background-color: Azure;
+} 

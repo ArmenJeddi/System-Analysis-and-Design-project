@@ -1,18 +1,48 @@
-{% extends "systemmanagement/base.html" %}
+{% extends "systemmanagement/signedin_base.html" %}
+
+{% block nav %}
+{{ block.super }}
+<a class="nav-link" href="/systemmanagement/profile/">صفحه اصلی</a>
+<a class="nav-link" href="/systemmanagement/browseproducts/">جستجوی محصولات</a>
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="/static/systemmanagement/styles/detail.css" />
+{% endblock %}
 
 {% block main %}
-<p><a href="/systemmanagement/browseproducts/">جستجوی محصولات</a></p>
-<p>
-  {{ product.product.name }}
-  <br />فروشنده: {{ product.submitter.first_name }} {{ product.submitter.last_name }}
-  <br />تاریخ ثبت: {{ product.date_str }}
-  <br />موجودی: {{ product.quantity_str }} کیلوگرم
-  <br />قیمت: {{ product.price_str }} تومان
-  <br />استان: {{ product.getProvince }}
-  <br />آدرس: {{ product.location }}
-  <form action="/systemmanagement/detailproduct/{{ product.pk }}/" method="post">
-    {{ form.as_p }}
-    <input type="submit" value="ثبت تغییرات">
-  </form>
-</p>
+<table>
+  <tr>
+    <th>نوع محصول:</th>
+    <td>{{ product.product.name }}</td>
+  </tr>
+  <tr>
+    <th>فروشنده:</th>
+    <td>{{ product.submitter.first_name }} {{ product.submitter.last_name }}</td>
+  </tr>
+  <tr>
+    <th>تاریخ ثبت:</th>
+    <td>{{ product.date_str }}</td>
+  </tr>
+  <tr>
+    <th>موجودی:</th>
+    <td>{{ product.quantity_str }} کیلوگرم</td>
+  </tr>
+  <tr>
+    <th>قیمت:</th>
+    <td>{{ product.price_str }} تومان</td>
+  </tr>
+  <tr>
+    <th>استان:</th>
+    <td>{{ product.getProvince }}</td>
+  </tr>
+  <tr>
+    <th>آدرس:</th>
+    <td>{{ product.location }}</td>
+  </tr>
+</table>
+<form action="/systemmanagement/detailproduct/{{ product.pk }}/" method="post">
+  {{ form.as_p }}
+  <input type="submit" value="ثبت تغییرات">
+</form>
 {% endblock %}

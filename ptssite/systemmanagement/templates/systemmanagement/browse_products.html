@@ -1,11 +1,18 @@
-{% extends "systemmanagement/base.html" %}
+{% extends "systemmanagement/signedin_base.html" %}
+
+{% block nav %}
+{{ block.super }}
+<a class="nav-link" href="/systemmanagement/profile/">صفحه اصلی</a>
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="/static/systemmanagement/styles/browse.css">
+{% endblock %}
 
 {% block main %}
-<a href="/systemmanagement/profile/">صفحه اصلی</a>
 <form action="/systemmanagement/browseproducts/" method="get">
-  <p><label>نوع محصول: <input type="text" name="product"></label></p>
-  <p><label>فروشنده: <input type="text" name="submitter"></label></p>
-  <p>
+  <label>نوع محصول: <input type="text" name="product"></label>
+  <label>فروشنده: <input type="text" name="submitter"></label>
     <label>استان:
       <select name="province">
 	<option value="east_azerbaijan">آذربایجان شرقی</option>
@@ -41,32 +48,30 @@
 	<option value="yazd">یزد</option>
       </select>
     </label>
-  </p>
-  <p>
     <label>حداقل قیمت: <input type="number" name="price_min" /></label>
     <label>حداکثر قیمت: <input type="number" name="price_max" /></label>
-  </p>
-  <p>
     <label>از تاریخ: <input type="text" name="start_date" /></label>
     <label>تا تاریخ: <input type="text" name="end_date" /></label>
-  </p>
-  <p>
     <label>حداقل موجودی: <input type="number" name="quantity_min" /></label>
     <label>حداکثر موجودی: <input type="number" name="quantity_max" /></label>
-  </p>
-  <p><input type="submit" value="جستجو"></p>
+  <br /><input type="submit" value="جستجو">
 </form>
-<ul>
+<table>
+  <tr>
+    <th>محصول</th>
+    <th>فروشنده</th>
+    <th>تاریخ ثبت</th>
+    <th>قیمت</th>
+    <th>استان</th>
+  </tr>
   {% for product in products %}
-  <li>
-    <a href="/systemmanagement/detailproduct/{{ product.pk }}/">{{ product.product.name }}</a>
-    <br />فروشنده: {{ product.submitter.first_name }} {{ product.submitter.last_name }}
-    <br />تاریخ ثبت: {{ product.date_str }}
-    <br />موجودی: {{ product.quantity_str }} کیلوگرم
-    <br />قیمت: {{ product.price_str }} تومان
-    <br />استان: {{ product.getProvince }}
-    <br />آدرس: {{ product.location }}
-  </li>
+  <tr>
+    <td><a href="/systemmanagement/detailproduct/{{ product.pk }}/">{{ product.product.name }}</a></td>
+    <td>{{ product.submitter.first_name }} {{ product.submitter.last_name }}</td>
+    <td>{{ product.date_str }}</td>
+    <td>{{ product.price_str }}</td>
+    <td>{{ product.getProvince }}</td>
+  </tr>
   {% endfor %}
-</ul>
+</table>
 {% endblock %}
