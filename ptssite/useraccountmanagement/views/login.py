@@ -2,7 +2,7 @@ from django.views.generic.edit import FormView
 from django.forms import Form, CharField, PasswordInput
 from authentication.auth import authenticate, login
 from django.core.exceptions import ValidationError
-from django.http import HttpResponseBadRequest
+from django.http import HttpResponseRedirect
 
 class LoginForm(Form):
     username = CharField(label='نام کاربری')
@@ -34,10 +34,10 @@ class LoginView(FormView):
         if request.user.is_anonymous():
             return super().get(request, *args, **kwargs)
         else:
-            return HttpResponseBadRequest()
+            return HttpResponseRedirect('/useraccountmanagement/profile/')
 
     def post(self, request, *args, **kwargs):
         if request.user.is_anonymous():
             return super().post(request, *args, **kwargs)
         else:
-            return HttpResponseBadRequest()
+            return HttpResponseRedirect('/useraccountmanagement/profile/')

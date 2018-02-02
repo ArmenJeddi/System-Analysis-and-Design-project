@@ -6,20 +6,21 @@
 
 {% block main %}
 <form action="/useraccountmanagement/registration/customer/" method="post">
+  {{ form.non_field_errors }}
   <table>
-    <tr><th><label for="id_first_name">نام:</label></th><td><input type="text" name="first_name" maxlength="20" required id="id_first_name" /></td></tr>
-    <tr><th><label for="id_last_name">نام خانوادگی:</label></th><td><input type="text" name="last_name" maxlength="20" required id="id_last_name" /></td></tr>
-    <tr><th><label for="id_username">نام کاربری:</label></th><td><input type="text" name="username" maxlength="200" required id="id_username" /></td></tr>
-    <tr><th><label for="id_password">گذرواژه:</label></th><td><input type="password" name="password" maxlength="200" required id="id_password" /></td></tr>
-    <tr><th><label for="id_password2">تکرار گذرواژه:</label></th><td><input type="password" name="password2" maxlength="200" required id="id_password2" /></td></tr>
-    <tr><th><label for="id_national_id">کد ملی:</label></th><td><input type="text" name="national_id" maxlength="10" required id="id_national_id" /></td></tr>
-    <tr><th><label for="id_phone_number">شماره تلفن همراه:</label></th><td><input type="text" name="phone_number" maxlength="11" required id="id_phone_number" /></td></tr>
-    <tr><th><label for="id_account_number">شماره کارت:</label></th><td><input type="text" name="account_number" maxlength="16" required id="id_account_number" /></td></tr>
+    <tr><th>{{ form.first_name.label_tag }}</th><td>{{ form.first_name }}{{ form.first_name.errors }}</td></tr>
+    <tr><th>{{ form.last_name.label_tag }}</th><td>{{ form.last_name }}{{ form.last_name.errors }}</td></tr>
+    <tr><th>{{ form.username.label_tag }}</th><td>{{ form.username }}{{ form.username.errors }}</td></tr>
+    <tr><th>{{ form.password.label_tag }}</th><td>{{ form.password }}{{ form.password.errors }}</td></tr>
+    <tr><th>{{ form.password2.label_tag }}</th><td>{{ form.password2 }}{{ form.password2.errors }}</td></tr>
+    <tr><th>{{ form.national_id.label_tag }}</th><td>{{ form.national_id }}{{ form.national_id.errors }}</td></tr>
+    <tr><th>{{ form.phone_number.label_tag }}</th><td>{{ form.phone_number }}{{ form.phone_number.errors }}</td></tr>
+    <tr><th>{{ form.account_number.label_tag }}</th><td>{{ form.account_number }}{{ form.account_number.errors }}</td></tr>
   </table>
   <section>
     قوانین و مقررات
   </section>
-  <p><label for="id_license_agreement">شرایط و ضوابط مذکور را قبول دارم:</label></th><td><input type="checkbox" name="license_agreement" required id="id_license_agreement" /></p>
+  <p>{{ form.license_agreement.label_tag }}{{ form.license_agreement }}{{ form.license_agreement.errors }}</p>
   <p><input type="submit" value="ثبت نام"></p>
 </form>
 {% endblock %}

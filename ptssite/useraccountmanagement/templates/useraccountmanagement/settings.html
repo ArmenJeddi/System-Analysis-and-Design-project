@@ -1,8 +1,14 @@
 {% extends "navbar_signedin.html" %}
 
+{% block head %}
+<link rel="stylesheet" type="text/css" href="/static/useraccountmanagement/styles/register.css">
+{% endblock %}
+
 {% block main %}
-  <form id="settings-form" action="/useraccountmanagement/updateprofile/{{ view.request.user.username }}/" method="post">
-    {{ form.as_p }}
-    <input type="submit" value="ثبت تغییرات">
+<form id="settings-form" action="/useraccountmanagement/updateprofile/{{ view.request.user.username }}/" method="post">
+  <table>
+    {{ form }}
+  </table>
+  <p><input type="submit" value="ثبت تغییرات"></p>
   </form>
 {% endblock %}

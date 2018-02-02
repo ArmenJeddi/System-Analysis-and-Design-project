@@ -9,19 +9,43 @@ from django.http import HttpResponseBadRequest
 from django.utils.datastructures import MultiValueDictKeyError
 
 class UserForm(forms.ModelForm):
-    field_order = ['first_name', 'last_name', 'username', 'password',
-                   'password2', 'national_id', 'phone_number',
-                   'account_number', 'license_agreement']
+    use_required_attribute = False
     class Meta:
         model = UnprivilegedUser
         fields = ['first_name', 'last_name', 'username', 'password',
                   'national_id', 'phone_number', 'account_number']
         widgets = {'password': widgets.PasswordInput}
+        error_messages = {
+            'first_name': {
+                'required': 'نام خود را وارد کنید'
+            },
+            'last_name': {
+                'required': 'نام خانوادگی خود را وارد کنید'
+            },
+            'username': {
+                'required': 'نام کاربری خود را وارد کنید'
+            },
+            'password': {
+                'required': 'گذرواژه خود را وارد کنید'
+            },
+            'national_id': {
+                'required': 'کد ملی خود را وارد کنید'
+            },
+            'phone_number': {
+                'required': 'شماره تلفن خود را وارد کنید'
+            },
+            'account_number': {
+                'required': 'شماره حساب خود را وارد کنید'
+            }
+        }
         
     password2 = forms.CharField(label='تکرار گذرواژه',
                                 widget=widgets.PasswordInput,
                                 max_length=UnprivilegedUser._meta.get_field(
-                                    'password').max_length)
+                                    'password').max_length,
+                                error_messages={
+                                    'required': 'تکرار گذرواژه خود را وارد کنید'
+                                })
     
 
     def license_agreed(value):
@@ -30,7 +54,8 @@ class UserForm(forms.ModelForm):
                                   code='disagreement')
         
     license_agreement = forms.BooleanField(label='شرایط و ضوابط مذکور را قبول دارم',
-                                           validators=[license_agreed])
+                                           validators=[license_agreed],
+                                           required=False)
     
     def clean(self):
         password1 = self.cleaned_data.get('password', '1')
@@ -49,10 +74,20 @@ class DriverForm(UserForm):
     class Meta(UserForm.Meta):
         model = Driver
         fields = UserForm.Meta.fields + ['license_plate', 'certificate_number']
+        error_messages = {
+            **UserForm.Meta.error_messages,
+            'license_plate': {
+                'required': 'شماره پلاک خود را وارد کنید'
+            },
+            'certificate_number': {
+                'required': 'شماره گواهینامه خود را وارد کنید'
+            }
+        }
         
-    regions = forms.MultipleChoiceField(label='از چه مناطقی درخواست جا به جایی می پذیرید؟',
+    regions = forms.MultipleChoiceField(label='از چه مناطقی درخواست جا به جایی می پذیرید',
                                         choices=provinces,
-                                        widget=widgets.CheckboxSelectMultiple)
+                                        widget=widgets.CheckboxSelectMultiple,
+                                        required=False)
 
     def register_regions(self):
         for province in self.cleaned_data['regions']:
