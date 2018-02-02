@@ -27,7 +27,7 @@ def commentOnFarmer(request, order_id):
 def commentOnDriver(request, order_id):
     rel_order = get_object_or_404(Order, pk = order_id)
     if request.method == 'POST':
-        comment = Comment(commenter=request.user.unprivilegeduser.customer, undercomment=rel_order.product.submitter,
+        comment = Comment(commenter=request.user.unprivilegeduser.customer, undercomment=rel_order.driver,
                           content=request.POST['comment'],
                           date=datetime.datetime.today())
         comment.save()
@@ -42,5 +42,6 @@ def commentOnDriver(request, order_id):
         this_user = request.user.unprivilegeduser.customer
         this_user_comments = Comment.objects.filter(commenter = this_user, undercomment = rel_order.driver)
         length_u_c = len(this_user_comments)
+        print(length_u_c)
         return render(request, 'support/commentOnDriver.html', {'order': rel_order, 'length': length_u_c})
 
