@@ -1,4 +1,4 @@
-#driver_id, #product_id{
+.containIt{
     margin: auto;
     width: 80%;
     border: 3px solid #73AD21;
@@ -6,16 +6,12 @@
     background: #eee;
 }
 
-h1, h2, h3{
-    margin-right: 30px;
-}
-
-.labeled {
-    display: block;
-    width: 100px;
+label {
+    display: inline-block;
+    width: 150px;
     margin-bottom: 5px;
     margin-top: 10px;
-    font-size: large;
+    font-weight: bold;
 }
 
 .content_holder{
@@ -36,16 +32,6 @@ input[type=text], select , input[type=number]{
     /*right: 100px;*/
 }
 
-ul {
-    column-count: 8;
-    -webkit-column-count: 8;
-    -moz-column-count: 8;
-}
-
-ul li {
-    display: inline-block; /*necessary*/
-}
-
 input[type=button], input[type=submit], input[type=reset] {
     background-color: #4CAF50;
     border: none;
@@ -62,4 +48,21 @@ input[type=submit]:hover {
     background-color: #45a049;
     /*font-weight : bold ;*/
     font-size: large;
+}
+
+h1, h2,h3,h4,h5{
+    margin-right: 20px;
+}
+
+ul{
+    list-style-type: none;
+}
+
+#form_container{
+    margin: auto;
+    width: 80%;
+    border: 3px solid #73AD21;
+    padding: 5px;
+    background: #eee;
+    /*margin: 30px;*/
 }

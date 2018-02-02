@@ -9,82 +9,94 @@
     <h2>اطلاعات سفارش</h2>
 
     <div>
-        <div id="product_id">
-            <h5>اطلاعات محصول</h5>
+        <div class="containIt">
+            <h3>اطلاعات محصول</h3>
             <ul>
                 <li>
-                    <span>نام فروشنده: </span>
+                    <label >نام فروشنده: </label>
                     {{ product.0.submitter }}
                 </li>
                 <li>
-                    <span>نوع محصول: </span>
+                    <label>نوع محصول: </label>
                     {{ product.0.product }}
                 </li>
                 <li>
-                    <span>تاریخ ثبت محصول: </span>
+                    <label>تاریخ ثبت محصول: </label>
                     {{ product.1.2 }} / {{ product.1.1 }} / {{ product.1.0 }}
                 </li>
                 <li>
-                    <span>مقدار سفارش داده شده: </span>
-                    {{ quantity }}
+                    <label>مقدار سفارش داده شده: </label>
+                    {{ quantity }} &nbsp;
+                    <span>کیلوگرم</span>
                 </li>
                 <li>
-                    <span>قیمت واحد: </span>
-                    {{ product.0.price }}
+                    <label>قیمت واحد: </label>
+                    {{ product.0.price }} &nbsp;
+                    <span>  تومان</span>
                 </li>
                 <li>
-                    <span>قیمت مجموع:</span>
-                    {{ cost }}
+                    <label>قیمت مجموع:</label>
+                    {{ cost }} &nbsp;
+                    <span>تومان</span>
                 </li>
                 <li>
-                    <span>استان: </span>
+                    <label>استان: </label>
                     {{ product.0.getProvince }}
                 </li>
                 <li>
-                    <span>آدرس: </span>
+                    <label>آدرس: </label>
                     {{ product.0.location|linebreaksbr }}
                 </li>
             </ul>
         </div>
 
-        <div id="driver_id">
-            <h5>اطلاعات راننده</h5>
+        <div class="containIt">
+            <h3>اطلاعات راننده</h3>
             <ul>
                 <li>
-                    <span>نام راننده: </span>
+                    <label>نام راننده: </label>
                     <span>{{ driver }}</span>
                 </li>
 
                 <li>
-                    <span>نوع ماشین: </span>
+                    <label>نوع ماشین: </label>
                     <span>{{ driver.vehicle_model }}</span> {#  #}
                 </li>
 
                 <li>
-                    <span>ظرفیت ماشین: </span>
-                    <span>{{ driver.vehicle_capacity }}</span>
+                    <label>ظرفیت ماشین: </label>
+                    <span>{{ driver.vehicle_capacity }}</span>&nbsp;
+                    <span>کیلوگرم</span>
                 </li>
 
                 <li>
-                    <span>هزینه انتقال: </span>
-                    <span>{{ driver_cost }}</span>
+                    <label>هزینه انتقال: </label>
+                    <span>{{ driver_cost }}</span>&nbsp;
+                    <span>تومان</span>
                 </li>
 
             </ul>
         </div>
-        <div>
-            <span>هزینه کل: </span>
-            <span id = 'totalC'>{{ total_cost }}</span> <br>
-            <span>موجودی شما: </span>
-            <span>{{ balance }}</span>
-
+        <div class="containIt">
+            <ul>
+                <li>
+                <label>هزینه کل: </label>
+                <span id = 'totalC'>{{ total_cost }}</span>&nbsp;
+                    <span>تومان</span>
+                </li>
+                <li>
+                <label>موجودی شما: </label>
+                <span>{{ balance }}</span>&nbsp;
+                    <span>تومان</span>
+                </li>
+            </ul>
         </div>
     </div>
-    <div>
+    <div id="form_container">
         <form method="POST" action="">
             {% csrf_token %}
             <label for="buyer_address">آدرس خود را در اینجا وارد کنید.</label>
-            <textarea id = 'adress_B' rows="5" cols="100" name="buyer_address" placeholder = "آدرس خود را در اینجا وارد کنید."></textarea>
+            <textarea id = 'adress_B' rows="5" cols="100" name="buyer_address" placeholder = "آدرس خود را در اینجا وارد کنید."></textarea><br>
             <input type="submit" name="order_confirm" value="خرید" onClick="return empty()" />
             <input type="submit" name="order_cancel" value="انصراف" />
         </form>
