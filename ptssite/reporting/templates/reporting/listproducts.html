@@ -6,8 +6,10 @@
 
 {% block main %}
     <h2> فهرست محصولات ثبت شده شما </h2>
-    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="جستجوی محصول ...">
-
+    <form>
+        <input type="text" id="myInput" placeholder="جستجوی نام محصول ..." name="search">
+        <input type="submit" id="searchSubmit" value="جستجو">
+    </form>
     <table id="myTable">
       <thead>
         <tr class="header">
@@ -60,6 +62,4 @@
         {% endif %}
       </ul>
     {% endif %}
-
-    <script src="/static/scripts/Search.js" type="text/javascript"></script>
 {% endblock %}

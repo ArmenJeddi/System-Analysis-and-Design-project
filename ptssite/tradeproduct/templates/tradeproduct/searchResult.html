@@ -2,6 +2,23 @@
 
 {% block head %}
     <link rel="stylesheet" type="text/css" href="/static/reporting/styles/listing.css"> <!-- needs to add the link address for style sheet -->
+    <title>search results</title>
+    <style>
+        #select_button{
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 16px 32px;
+            text-decoration: none;
+            margin: auto ;
+            cursor: pointer;
+            font-size: 15px;
+        }
+        #select_button:hover {
+            background-color: #45a049;
+            /*font-weight : bold ;*/
+        }
+    </style>
 {% endblock %}
 
 {% block main %}
@@ -33,14 +50,12 @@
                     <td>{{ product.1.price }}</td>
                     <td>{{ product.1.quantity }}</td>
                     <td>{{ product.1.location }}</td>
-                    <td><a href="{% url 'tradeproduct:select' product.1.id %}"><button>انتخاب</button></a></td>
+                    <td><a href="{% url 'tradeproduct:select' product.1.id %}"><button id = "select_button" >انتخاب</button></a></td>
                   </tr>
                 {% endfor %}
               </tbody>
             </table>
 
-        {% else %}
-            <h5>محصولی یافت نشد.</h5>
         {% endif %}
     </div>
 {% endblock %}

@@ -11,8 +11,10 @@
 
 {% block main %}
    <h2> فهرست باغ داران مشترک سامانه </h2>
-   <input type="text" id="myInput" onkeyup="myFunction()" placeholder="جستجوی کشاورز ...">
-
+    <form>
+        <input type="text" id="myInput" placeholder="جستجوی نام فروشنده ..." name="search">
+        <input type="submit" id="searchSubmit" value="جستجو">
+    </form>
     <table id="myTable">
       <thead>
         <tr class="header">
@@ -57,6 +59,4 @@
         {% endif %}
       </ul>
     {% endif %}
-    
-    <script src="/static/scripts/Search.js" type="text/javascript"></script>
 {% endblock %}

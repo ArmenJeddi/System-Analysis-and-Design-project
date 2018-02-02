@@ -1,26 +1,28 @@
 {% extends "navbar_signedin.html" %}
 
 {% block head %}
-    <link rel="stylesheet" type="text/css" href=""> <!-- needs to add the link address for style sheet -->
+    <link rel="stylesheet" type="text/css" href="/static/scripts/selectProduct.css"> <!-- needs to add the link address for style sheet -->
+    <title>Product Selection</title>
 {% endblock %}
 
 {% block main %}
-    <h2>اسناد یافت شده</h2>
+    <h2>انتخاب محصول</h2>
     {% if activiate%}
-    <div>
+    <div class="form_holder">
         <form method="POST" action="">
             {% csrf_token %}
             <label for = "rangeInput"> انتخاب حجم محصول (از 1 تا {{ selectedProduct.quantity }})</label>
-            <input type="range" name="rangeInput" min="1" max="{{ selectedProduct.quantity }}" onchange="updateTextInput(this.value);">
-            <input type="text" id="textInput" value="{{ halfvalue }}">
-            <button type="submit">انتخاب و انتقال به صفحه ی انتخاب راننده</button>
+            <input class="slider" type="range" name="rangeInput" min="1" max="{{ selectedProduct.quantity }}" oninput="updateTextInput(this.value);">
+            <input type="text" id="textInput" value="{{ halfvalue }}" disabled  >
+            <br><br><br>
+            <input id="select_button" type="submit" value="انتخاب و انتقال به صفحه ی انتخاب راننده">
         </form>
     </div>
 
     {% else %}
         <script>
             setTimeout(function() { alert('این محصول در حال حاضر غیر فعال است.'); }, 5);
-            window.location.replace("http://stackoverflow.com");
+            window.location.replace("http://127.0.0.1:8000/tradeproduct/browseProduct/");
         </script>
     {% endif %}
 

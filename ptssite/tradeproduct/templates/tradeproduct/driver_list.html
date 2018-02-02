@@ -1,12 +1,15 @@
 {% extends "navbar_signedin.html" %}
 
 {% block head %}
-    <link rel="stylesheet" type="text/css" href=""> <!-- needs to add the link address for style sheet -->
+    <link rel="stylesheet" type="text/css" href="/static/scripts/driver_list.css">
+    <link rel="stylesheet" type="text/css" href="/static/reporting/styles/listing.css">
+
+    <title>driver list</title>
 {% endblock %}
 
 {% block main %}
     <h2>راننده های موجود</h2>
-    <div>
+    <div id="option_container">
         <form method="POST" action="">
             {% csrf_token %}
             <label for="rule_select">مرتب سازی بر اساس</label>
@@ -16,61 +19,82 @@
                 <option value="3">امتیاز</option>
             </select>
 
-            <button type="submit">انتخاب</button>
+            <input type="submit" value="انتخاب">
 
+        </form>
+    </div>
+
+    <div>
+        <form method="post" action="">
+            {% csrf_token %}
+            <input style="position: relative;right: 200px; margin-top: 30px; margin-bottom: 15px;" type="submit" name="reject_and_browse_again" value="بازگشت و انتخاب محصول جدید" />
         </form>
     </div>
 
     <div>
         {% if driverMap %}
             {% if option > 2 %}
-                <h4>مرتب شده بر اساس امتیاز</h4>
-                <ul>
+                <h3>مرتب شده بر اساس امتیاز</h3>
+
+                 <table id="myTable">
+              <thead>
+                <tr class="header">
+                  <th> ردیف </th>
+                  <th> نام راننده </th>
+                  <th> امتیاز از 10 </th>
+                  <th> قیمت به تومان </th>
+                  <th> مشخصات راننده </th>
+                  <th> انتخاب راننده </th>
+                </tr>
+              </thead>
+                <tbody>
                 {% for instance in driverMap %}
-                    <li>
-                        <span>{{ instance.0 }}</span> &nbsp &nbsp &nbsp
-                        <span>امتیاز: </span>
-                        <span>{{ instance.2 }} </span>
-                        <span> از 10</span>
-                        <br>
-                        <span>قیمت: </span>
-                        <span>{{ instance.1 }}</span>
-                        <a href="{% url 'tradeproduct:driver_details' instance.0.username %}" target="_blank"><button>مشاهده مشخصات راننده</button></a>
-                        <a href="{% url 'tradeproduct:confirmation' instance.0.username %}" ><button>انتخاب راننده</button></a>
-                    </li>
+                    <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ instance.0 }}</td>
+                    <td>{{ instance.2 }} </td>
+                    <td>{{ instance.1 }}</td>
+                    <td><a href="{% url 'tradeproduct:driver_details' instance.0.username %}" target="_blank"><button>مشاهده مشخصات راننده</button></a></td>
+                    <td><a href="{% url 'tradeproduct:confirmation' instance.0.username %}" ><button>انتخاب راننده</button></a></td>
+                    </tr>
                 {% endfor %}
-                </ul>
+                </tbody>
+             </table>
             {% else %}
-                <h4>مرتب شده بر اساس
+                <h3>مرتب شده بر اساس
                 {{ select_value }}
-                </h4>
-                <ul>
+                </h3>
+
+             <table id="myTable">
+              <thead>
+                <tr class="header">
+                  <th> ردیف </th>
+                  <th> نام راننده </th>
+                  <th> قیمت به تومان </th>
+                    <td>امتیاز از 10</td>
+                  <th> مشخصات راننده </th>
+                  <th> انتخاب راننده </th>
+                </tr>
+              </thead>
+                <tbody>
                 {% for instance in driverMap %}
-                    <li>
-                        <span>{{ instance.0 }}</span> &nbsp &nbsp &nbsp
-                        <span>قیمت: </span>
-                        <span>{{ instance.1 }} </span>
-                        <br>
-                        <span>امتیاز: </span>
-                        <span>{{ instance.2 }} </span>
-                        <span> از 10</span>
-                        <a href="{% url 'tradeproduct:driver_details' instance.0.username %}" target="_blank"><button>مشاهده مشخصات راننده</button></a>
-                        <a href="{% url 'tradeproduct:confirmation' instance.0.username %}"><button>انتخاب راننده</button></a>
-                    </li>
+                    <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ instance.0 }}</td>
+                    <td>{{ instance.1 }} </td>
+                    <td>{{ instance.2 }}</td>
+                    <td><a href="{% url 'tradeproduct:driver_details' instance.0.username %}" target="_blank"><button>مشاهده مشخصات راننده</button></a></td>
+                    <td><a href="{% url 'tradeproduct:confirmation' instance.0.username %}" ><button>انتخاب راننده</button></a></td>
+                    </tr>
                 {% endfor %}
-                </ul>
+                </tbody>
+             </table>
             {% endif %}
         {% else %}
-            <h5>هیچ راننده ای یافت نشد.</h5>
+            <h2>هیچ راننده ای یافت نشد.</h2>
         {% endif %}
     </div>
 
-    <div>
-        <form method="post" action="">
-            {% csrf_token %}
-            <input type="submit" name="reject_and_browse_again" value="بازگشت و انتخاب محصول جدید" />
-        </form>
-    </div>
     {% if driver_notif %}
         <script>
             alert('شما در حال حاضر یک محصول انتخاب شده دارید. لطفا ابتدا این سفارش را به اتمام برسانید.')

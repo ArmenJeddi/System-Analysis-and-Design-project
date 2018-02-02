@@ -10,24 +10,23 @@
     <div class="form_holder">
         <form method="POST" action="">
             {% csrf_token %}
-            <label>محصول</label>
+            <label class="labeled">محصول</label>
             {{ form.product }}<br><br>
-            <label>قیمت(به تومان): از</label>
+            <span class="content_holder">قیمت(به تومان): از</span>
             <input type="number" name="from" id = "lowerbound" min="0" step="1" onchange="funcChecker()">
-            <label>تا</label>
+            <span class="content_holder">تا</span>
             <input type="number" name="to" id = "upperbound" min="0" step="1" onchange="funcChecker()">
-            <br><br><br>
-            <label> استان ها</label>
+            <label class="labeled"> استان ها</label>
             {{ form.province }}
             <br>
 
-            <button type="submit">جستجو</button>
+            <input type="submit" value="جستجو">
 
         </form>
     </div>
 
     <div>
-        {% if browse_notify %}
+        {% if browse_notify == 1 %}
             <script>
                 alert('لطفا محصولی را انتخاب کنید.')
             </script>

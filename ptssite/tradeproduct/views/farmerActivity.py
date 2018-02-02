@@ -27,15 +27,6 @@ def submitProduct(request):
     return render(request, 'tradeproduct/submitProduct.html', {'form':form})
 
 @customer_required
-def updateProducts(request):
-    submittedList = ProductSubmit.objects.filter(submitter = request.user.unprivilegeduser.customer)
-    list_with_dates = []
-    for sp in submittedList:
-        list_with_dates.append((sp, persian.from_gregorian(sp.date.year, sp.date.month, sp.date.day)))
-    # print(list_with_dates)
-    return render(request, 'tradeproduct/updateSubmittedProduct.html', {'submittedList': list_with_dates})
-
-@customer_required
 def submit_details(request, prodsub_id):
     subprod = get_object_or_404(ProductSubmit, pk=prodsub_id)
     prod_tarikh = subprod.date
