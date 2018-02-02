@@ -24,6 +24,7 @@ input[type=text], select , input[type=number]{
 input[type=submit]:hover {
     background-color: #45a049;
     font-weight : bold ;
+    font-size: 20px;
 }
 
 .form_holder{
